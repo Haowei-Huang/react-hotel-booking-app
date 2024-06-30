@@ -23,7 +23,7 @@ To run the project locally, follow these steps:
 1. Clone the repo
 ``` bash
 git clone [repository-url]
-cd hotel-booking-system
+cd react-hotel-booking-app
 ```
 2. Install dependencies
 ``` bash

@@ -29,7 +29,11 @@ cd react-hotel-booking-app
 ``` bash
 npm install
 ```
-3. Set up the backend:
+3. Create a .env file in the root directory and add your backend endpoint string:
+```env
+REACT_APP_DB_URL=[your_backend_url]
+```
+5. Set up the backend:
 Ensure the backend API is running and accessible.
 Create an admin in the database using the following format:
 ``` json
@@ -39,11 +43,11 @@ Create an admin in the database using the following format:
     "password": [adminPassword]
 }
 ```
-4. Start the frontend development server:
+5. Start the frontend development server:
 ``` bash
 npm start
 ```
-5. Open your browser and navigate to http://localhost:3000 to view the application.
+6. Open your browser and navigate to http://localhost:3000 to view the application.
 
 ## Tech Stack
 - Frontend:

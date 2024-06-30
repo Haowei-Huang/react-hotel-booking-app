@@ -33,7 +33,7 @@ npm install
 ```env
 REACT_APP_DB_URL=[your_backend_url]
 ```
-5. Set up the backend:
+4. Set up the backend:
 Ensure the backend API is running and accessible.
 Create an admin in the database using the following format:
 ``` json

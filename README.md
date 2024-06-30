@@ -22,7 +22,7 @@ This project is a hotel booking system built using React, Material-UI, and React
 To run the project locally, follow these steps:
 1. Clone the repo
 ``` bash
-    git clone [repository-url]
+git clone [repository-url]
 cd hotel-booking-system
 ```
 2. Install dependencies

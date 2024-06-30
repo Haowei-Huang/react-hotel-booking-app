@@ -1,7 +1,5 @@
 # Hotel Booking System
 
-## Overview
-
 This project is a hotel booking system built using React, Material-UI, and React Hook Form. It provides functionalities for users to search and filter hotels, create bookings, and manage their profiles. Admin users have additional privileges for managing users, hotels, and bookings.
 
 ## Features

@@ -129,7 +129,7 @@ function SearchBar() {
                         borderColor: 'divider',
                         borderRadius: 1,
                         p: 1,
-                        minWidth: isMobile ? '100%' : '150px'
+                        minWidth: isMobile ? '100%' : '200px'
                     }}
                 >
                     <PersonIcon color="primary" sx={{ mr: 1 }} />
@@ -143,7 +143,7 @@ function SearchBar() {
                     <Box
                         sx={{
                             mx: 2,
-                            minWidth: '10px',
+                            minWidth: '20px',
                             textAlign: 'center'
                         }}
                     >

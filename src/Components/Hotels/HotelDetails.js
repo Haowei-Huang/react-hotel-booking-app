@@ -1,9 +1,8 @@
-import { Card, CardContent, CardMedia, Chip, CircularProgress, Container, Divider, Typography, makeStyles } from "@mui/material";
+import { CircularProgress, Container } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import SearchContext from "../SearchHotelContext/SearchContext";
 import HotelDisplayContext from "./HotelDisplayContext";
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import React from 'react';
 import HotelOverview from './HotelOverview';
 import RoomDetailsList from "./RoomDetailsList";

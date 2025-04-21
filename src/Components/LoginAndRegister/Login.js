@@ -2,13 +2,11 @@ import { Container, Typography, Box, TextField, Button } from "@mui/material";
 import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../authSlice';
+import { userLogin } from "../../Helpers/users";
 
 function Login({ handleNavigate }) {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const dispatch = useDispatch();
 
     const { registrationData, setRegistrationData, errors, setErrors } = useContext(LoginAndRegisterFormContext);
@@ -16,20 +14,10 @@ function Login({ handleNavigate }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
         // find the user and compare password, have to use findAll as we can't directly find user by email
         try {
-            const response = await fetch(DB_URL + '/document/findAll/users', requestOptions);
-            const data = await response.json();
-            const user = data.data.find(u => u.email.toLowerCase() === registrationData.email.toLowerCase() && u.password === registrationData.password);
-
+            const loginResponse = await userLogin(registrationData.email, registrationData.password);
+            const user = loginResponse.user;
             // if password matched, log in
             if (user) {
                 setErrors({});

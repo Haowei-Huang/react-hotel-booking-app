@@ -1,8 +1,6 @@
-import { Button, Card, CardContent, Paper, Stack, Typography } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import BookingContext from "./BookingContext";
-import { useContext } from "react";
 
 function BookingSuccess() {
     const role = useSelector(state => state.auth.role);
@@ -12,7 +10,7 @@ function BookingSuccess() {
         <Paper elevation={3} sx={{ margin: "auto", p: 10 }}>
             <Stack spacing={2}>
                 <Typography variant="h4">Booked Successfully!</Typography>
-                <Typography variant="h4">We hanve sent a confirmation to your email.</Typography>
+                <Typography variant="h4">We have sent a confirmation to your email.</Typography>
                 {isAuthenticated && role === 'user' && <Button component={Link} variant="contained" size="large" to="/Bookings">View my bookings</Button>}
                 <Button component={Link} size="large" variant="contained" to="/">Go to Home Page</Button>
             </Stack>

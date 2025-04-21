@@ -1,5 +1,6 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { findAllUsers } from '../../Helpers/users';
 
 const ManageUsersContext = createContext();
 
@@ -34,7 +35,6 @@ const userTableReducer = (state, action) => {
 };
 
 export const ManageUsersProvider = ({ children }) => {
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const [userTable, dispatch] = useReducer(userTableReducer, initialUserTable);
     const methods = useForm({
         defaultValues: {
@@ -45,27 +45,16 @@ export const ManageUsersProvider = ({ children }) => {
         }
     });
 
-    const reloadUserTable = () => {
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
-        fetch(DB_URL + '/document/findAll/users', requestOptions)
-            .then(res => res.json())
-            .then(data => {
-                dispatch({
-                    type: 'initialize',
-                    payload: {
-                        'data': data.data,
-                    }
-                });
-            }).catch(error => {
-                console.error('Error:', error);
-            });;
+    const reloadUserTable = async () => {
+        const userList = await findAllUsers();
+        if (userList) {
+            dispatch({
+                type: 'initialize',
+                payload: {
+                    'data': userList
+                }
+            });
+        }
     }
 
     useEffect(() => {

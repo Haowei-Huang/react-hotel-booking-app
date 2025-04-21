@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Checkbox, CircularProgress, Divider, FormControlLabel, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Checkbox, CircularProgress, TextField, Typography } from "@mui/material";
 
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";
@@ -34,13 +34,13 @@ function BookingPayment({ nextStep, prevStep }) {
             const cardInfo = getValues("cardInfo");
 
             // card number trim, check if card number is valid
-            const trimedCardNumber = watchCardNumber.replace(/\s+/g, '');
+            const trimmedCardNumber = watchCardNumber.replace(/\s+/g, '');
             const cardNumberRegex = new RegExp('^[0-9]{16}$');
-            if (trimedCardNumber && !cardNumberRegex.test(trimedCardNumber)) {
+            if (trimmedCardNumber && !cardNumberRegex.test(trimmedCardNumber)) {
                 setError("cardInfo.cardNumber", { type: "format", message: "The card number is invalid, it should be 16 digits." })
                 return;
             } else {
-                setValue("cardInfo.cardNumber", trimedCardNumber);
+                setValue("cardInfo.cardNumber", trimmedCardNumber);
                 clearErrors("cardInfo.cardNumber");
             }
 
@@ -71,10 +71,13 @@ function BookingPayment({ nextStep, prevStep }) {
             }
 
             //set address values to upper cases
-            setValue("cardInfo.address.street", cardInfo.address.street.toUpperCase());
-            setValue("cardInfo.address.city", cardInfo.address.city.toUpperCase());
-            setValue("cardInfo.address.province", cardInfo.address.province.toUpperCase());
-            setValue("cardInfo.address.country", cardInfo.address.country.toUpperCase());
+            setValue("cardInfo.address", {
+                ...cardInfo.address,
+                street: cardInfo.address.street.toUpperCase(),
+                city: cardInfo.address.city.toUpperCase(),
+                province: cardInfo.address.province.toUpperCase(),
+                country: cardInfo.address.country.toUpperCase()
+            });
 
             dispatch({
                 type: "setCardInfo",

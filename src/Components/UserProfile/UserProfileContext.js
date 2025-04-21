@@ -1,6 +1,6 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import { findUserById } from '../../Helpers/users';
 
 const UserProfileContext = createContext();
 const initialUserProfile = {};
@@ -16,7 +16,6 @@ const userProfileReducer = (state, action) => {
 };
 
 export const UserProfileContextProvider = ({ children }) => {
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const sessionKey = useSelector(state => state.auth.sessionKey);
     // store the data from backend
     const [userProfile, dispatch] = useReducer(userProfileReducer, initialUserProfile);
@@ -28,22 +27,7 @@ export const UserProfileContextProvider = ({ children }) => {
 
 
     const loadUserProfile = async () => {
-        var userData;
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
-        try {
-            const response = await fetch(DB_URL + `/document/findOne/users/${sessionKey}`, requestOptions);
-            const responseData = await response.json();
-            userData = responseData.data;
-        } catch (error) {
-            console.error('Error during finding user:', error);
-        }
+        const userData = await findUserById(sessionKey);
 
         if (userData) {
             console.log(userData);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Chip, Box, Stack, Divider, CircularProgress } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import LocationOnIcon from '@mui/icons-material/LocationOn';

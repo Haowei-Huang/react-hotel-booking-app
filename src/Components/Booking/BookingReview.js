@@ -4,6 +4,7 @@ import BookingContext from "./BookingContext";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
+import { createBooking } from "../../Helpers/bookings";;
 
 function BookingReview({ prevStep }) {
     // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
@@ -20,7 +21,7 @@ function BookingReview({ prevStep }) {
         navigate(-1);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         // if log in, save the user id
         // save order time
@@ -28,50 +29,25 @@ function BookingReview({ prevStep }) {
         const roomIdList = bookingData.rooms.map(room => room.RoomId);
         const hotelId = bookingData.hotel._id;
 
-        if (isAuthenticated) {
-            setBookingDetail({
-                ...bookingData,
-                hotel: hotelId,
-                rooms: roomIdList,
-                userId: sessionKey,
-                time: dayjs()
-            });
-        } else {
-            setBookingDetail({
-                ...bookingData,
-                hotel: hotelId,
-                rooms: roomIdList,
-                userId: '',
-                time: dayjs()
-            });
-        }
+        setBookingDetail({
+            ...bookingData,
+            hotel: hotelId,
+            rooms: roomIdList,
+            userId: sessionKey || '',
+            time: dayjs()
+        });
 
         if (bookingDetail) {
             const { isBookingSuccess, ...pureBookingData } = bookingDetail;
-            console.log(pureBookingData);
-            const requestOptions = {
-                method: "POST",
-                headers: new Headers({
-                    // "Authorization": jwtToken,
-                    "Content-Type": "application/json"
-                }),
-                body: JSON.stringify({
-                    ...pureBookingData
-                }),
-            };
+            const isBookingCreated = await createBooking(pureBookingData);
 
-
-            fetch(DB_URL + "/document/createorupdate/bookings", requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    dispatch({ type: "setIsBookingSuccess" }); // make the order details not visible
-                    navigate("../success");
-                })
-                .catch(error => {
-                    dispatch({ type: "setIsBookingFailed" });
-                    console.error('Error:', error);
-                    setIsBookingFailed(true); // set the alert to visible
-                });
+            if (isBookingCreated) {
+                dispatch({ type: "setIsBookingSuccess" }); // make the order details not visible
+                navigate("../success");
+            } else {
+                dispatch({ type: "setIsBookingFailed" });
+                setIsBookingFailed(true); // set the alert to visible
+            }
         } else {
             setIsBookingFailed(true); // set the alert to visible
             return;

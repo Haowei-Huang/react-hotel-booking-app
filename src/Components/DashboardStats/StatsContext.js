@@ -1,5 +1,7 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
-
+import { findAllUsers } from '../../Helpers/users';
+import { findAllHotels } from '../../Helpers/hotels';
+import { findAllBookings } from '../../Helpers/bookings';
 
 const StatsContext = createContext();
 
@@ -40,40 +42,11 @@ export const StatsContextProvider = ({ children }) => {
         var hotelData;
         var userData;
         var bookingData;
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
 
-        // load user data
-        try {
-            const response = await fetch(DB_URL + '/document/findAll/users', requestOptions);
-            const responseData = await response.json();
-            userData = responseData.data;
-        } catch (error) {
-            console.error('Error during register:', error);
-        }
-
-        // load hotel data
-        try {
-            const response = await fetch(DB_URL + '/document/findAll/hotels', requestOptions);
-            const responseData = await response.json();
-            hotelData = responseData.data;
-        } catch (error) {
-            console.error('Error during register:', error);
-        }
-
-        // load booking data
-        try {
-            const response = await fetch(DB_URL + '/document/findAll/bookings', requestOptions);
-            const responseData = await response.json();
-            bookingData = responseData.data;
-        } catch (error) {
-            console.error('Error during register:', error);
-        }
+        // load data
+        userData = await findAllUsers();
+        hotelData = await findAllHotels();
+        bookingData = await findAllBookings();
 
         if (userData && hotelData && bookingData) {
             dispatch({

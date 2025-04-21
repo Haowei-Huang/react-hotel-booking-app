@@ -2,7 +2,6 @@ import { Box, Card, CardContent, CircularProgress, Container, Divider, Stack, St
 import { Route, Routes } from "react-router-dom";
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from "react";
 import BookingContext from "./BookingContext";
-import SearchContext from "../SearchHotelContext/SearchContext";
 import dayjs from "dayjs";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { FormProvider, useForm } from "react-hook-form";
@@ -12,6 +11,7 @@ import BookingReview from "./BookingReview"
 import BookingSuccess from "./BookingSuccess";
 import AdminRestrictedRoute from "../../AdminRestrictedRoute";
 import { useSelector } from "react-redux";
+import { findUserById } from "../../Helpers/users";
 
 const steps = ['Booking details', 'Payment details', 'Review your booking'];
 
@@ -39,12 +39,10 @@ const userInfoReuseReducer = (state, action) => {
 };
 
 function BookRooms() {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const sessionKey = useSelector(state => state.auth.sessionKey);
     const [activeStep, setActiveStep] = useState(0); //stepper value
     const { bookingData } = useContext(BookingContext);
-    const [userInfoReuseData, userInfoResueDispatch] = useReducer(userInfoReuseReducer, { isLoaded: false });
+    const [userInfoReuseData, userInfoReuseDispatch] = useReducer(userInfoReuseReducer, { isLoaded: false });
 
     const methods = useForm({
         defaultValues: {
@@ -74,7 +72,7 @@ function BookRooms() {
         if (sessionKey) {
             loadUserProfile();
         }
-        userInfoResueDispatch({
+        userInfoReuseDispatch({
             type: 'setIsLoaded'
         });
     }, [sessionKey]);
@@ -84,7 +82,7 @@ function BookRooms() {
         if (sessionKey) {
             loadUserProfile();
         }
-        userInfoResueDispatch({
+        userInfoReuseDispatch({
             type: 'setIsLoaded'
         });
     }, []);
@@ -92,18 +90,10 @@ function BookRooms() {
 
     const loadUserProfile = async () => {
         var userData;
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
 
         try {
-            const response = await fetch(DB_URL + `/document/findOne/users/${sessionKey}`, requestOptions);
-            const responseData = await response.json();
-            userData = responseData.data;
+            const responseData = await findUserById(sessionKey);
+            userData = responseData;
         } catch (error) {
             console.error('Error during finding user:', error);
         }
@@ -111,7 +101,7 @@ function BookRooms() {
         // if userData found
         if (userData) {
             if (userData.clientInfo) {
-                userInfoResueDispatch({
+                userInfoReuseDispatch({
                     type: 'setClientInfo',
                     payload: {
                         data: userData.clientInfo
@@ -119,7 +109,7 @@ function BookRooms() {
                 });
             }
             if (userData.cardInfo) {
-                userInfoResueDispatch({
+                userInfoReuseDispatch({
                     type: 'setCardInfo',
                     payload: {
                         data: userData.cardInfo
@@ -206,7 +196,7 @@ function BookRooms() {
                                     </CardContent>
                                 </Card>
                             </Stack>}
-                        <UserInfoReuseContext.Provider value={{ userInfoReuseData, userInfoResueDispatch }}>
+                        <UserInfoReuseContext.Provider value={{ userInfoReuseData, userInfoReuseDispatch }}>
                             <Routes>
                                 <Route path="/" >
                                     <Route index element={<ClientDetails nextStep={nextStep} />}>

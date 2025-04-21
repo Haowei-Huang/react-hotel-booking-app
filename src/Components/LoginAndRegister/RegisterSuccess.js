@@ -1,6 +1,4 @@
-import { Navigation } from "@mui/icons-material";
 import { Button, Stack, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 
 function RegisterSuccess({ onClose }) {
 

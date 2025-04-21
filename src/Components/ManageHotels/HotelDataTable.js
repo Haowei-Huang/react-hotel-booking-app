@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Stack } from '@mui/material';
 import ManageHotelsContext from './ManageHotelsContext';
 import { Link } from 'react-router-dom';
+import { updateHotel } from '../../Helpers/hotels';
 
 // only for display, should have functionality from Context for delete and edit
 function HotelDataTable() {
@@ -11,29 +12,19 @@ function HotelDataTable() {
 
     const handleEdit = async (row) => {
         console.log(row);
-        const _id = row._id;
+        const hotelId = row._id;
         // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
 
-        const updateRequestOptions = {
-            method: "PUT",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-            body: JSON.stringify({
-                ...row,
-                isActive: !row.isActive
-            }),
-        };
+        const newData = {
+            ...row,
+            isActive: !row.isActive
+        }
 
+        const isUpdated = await updateHotel(hotelId, newData);
 
-        fetch(DB_URL + `/document/updateOne/hotels/${_id}`, updateRequestOptions)
-            .then(res => res.json())
-            .then(data => {
-                reloadHotelTable();
-            }).catch(error => {
-                console.error('Error:', error);
-            });
+        if (isUpdated) {
+            reloadHotelTable();
+        }
     };
 
     const columns = [{ field: '_id', headerName: 'ID', width: 230 },

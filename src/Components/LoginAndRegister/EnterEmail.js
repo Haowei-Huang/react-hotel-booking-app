@@ -3,12 +3,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
 import { useNavigate } from 'react-router-dom';
+import { findUserByEmail } from "../../Helpers/users";
 
 function EnterEmail({ handleNavigate }) {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
-    const navigate = useNavigate();
-
     const { registrationData, setRegistrationData, errors, setErrors } = useContext(LoginAndRegisterFormContext);
 
     const handleSubmit = async (event) => {
@@ -22,20 +19,9 @@ function EnterEmail({ handleNavigate }) {
             return;
         }
 
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
         // check if the email has been registered
         try {
-            const response = await fetch(DB_URL + '/document/findAll/users', requestOptions);
-            const data = await response.json();
-            const user = data.data.find(u => u.email.toLowerCase() === registrationData.email.toLowerCase());
-
+            const user = await findUserByEmail(registrationData.email);
             if (user) {
                 handleNavigate("Login")
                 //navigate('Login');

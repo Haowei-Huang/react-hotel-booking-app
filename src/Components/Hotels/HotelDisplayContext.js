@@ -1,4 +1,5 @@
-import React, { useState, useReducer, createContext, useEffect } from 'react';
+import React, { useReducer, createContext, useEffect } from 'react';
+import { findAllHotels } from '../../Helpers/hotels';
 
 const HotelDisplayContext = createContext();
 
@@ -18,8 +19,6 @@ const hotelListReducer = (state, action) => {
 };
 
 export const HotelDisplayProvider = ({ children }) => {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     // store the data from backend
     const [hotelList, dispatch] = useReducer(hotelListReducer, initialHotelList);
 
@@ -28,35 +27,14 @@ export const HotelDisplayProvider = ({ children }) => {
     }, []);
 
 
-    const loadHotelList = () => {
-        // const loadData = () => JSON.parse(JSON.stringify(jsonData));
-        // dispatch({
-        //     type: 'initialize',
-        //     payload: {
-        //         'data': loadData().data,
-        //     }
-        // });
-
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                //  "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
-        console.log(DB_URL);
-
-        fetch(DB_URL + '/document/findAll/hotels', requestOptions)
-            .then(res => res.json())
-            .then(data => {
-                dispatch({
-                    type: 'initialize',
-                    payload: {
-                        'data': data.data,
-                    }
-                });
-            }).catch(error => console.error('Error:', error));;
+    const loadHotelList = async () => {
+        const responseData = await findAllHotels();
+        dispatch({
+            type: 'initialize',
+            payload: {
+                'data': responseData,
+            }
+        });
     }
 
     return (

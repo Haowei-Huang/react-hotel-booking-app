@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Stack } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../authSlice';
+import { useSelector } from 'react-redux';
 import { useFormContext } from 'react-hook-form';
 import ManageUsersContext from './ManageUsersContext';
+import { deleteUser } from '../../Helpers/users'
 
 // only for display, should have functionality from Context for delete and edit
 function UserDataTable() {
@@ -12,36 +12,21 @@ function UserDataTable() {
         = useFormContext();
     const sessionKey = useSelector(state => state.auth.sessionKey);
     const { dispatch, userTable, reloadUserTable } = useContext(ManageUsersContext);
-    const DB_URL = process.env.REACT_APP_DB_URL;
 
-    const handleDelete = (row) => {
-        //console.log(row);
-        const _id = row._id;
-        // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-        const requestOptions = {
-            method: "DELETE",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            })
-        };
+    const handleDelete = async (row) => {
+        const userId = row._id;
 
-        if (sessionKey === _id) {
+        if (sessionKey === userId) {
             setError("email", { type: 'custom', message: 'You can\'t delete your own account' });
             return;
         } else {
-            fetch(DB_URL + `/document/deleteOne/users/${_id}`, requestOptions)
-                .then(res => res.json())
-                .then(res => {
-                    if (getValues("email").toLowerCase() === row.email.toLowerCase()) {
-                        reset();
-                    }
-                })
-                .then(data => {
-                    reloadUserTable();
-                }).catch(error => {
-                    console.error('Error:', error);
-                });
+            const isDeleted = await deleteUser(userId);
+            if (isDeleted) {
+                if (getValues("email").toLowerCase() === row.email.toLowerCase()) {
+                    reset();
+                }
+                reloadUserTable();
+            }
         }
     };
 

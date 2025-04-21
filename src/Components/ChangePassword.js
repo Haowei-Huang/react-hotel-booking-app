@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { findUserById, updateUser } from '../Helpers/users';
 
 function ChangePassword() {
     // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
@@ -29,16 +30,7 @@ function ChangePassword() {
 
         //verify old password is correct
         try {
-            const requestOptions = {
-                method: "GET",
-                headers: new Headers({
-                    // "Authorization": jwtToken,
-                    "Content-Type": "application/json"
-                })
-            };
-            const response = await fetch(DB_URL + `/document/findOne/users/${sessionKey}`, requestOptions);
-            const data = await response.json();
-            const user = data.data;
+            const user = await findUserById(sessionKey);
             console.log(user);
 
             //set error message if password is wrong
@@ -56,21 +48,16 @@ function ChangePassword() {
 
         // update new password
         try {
-            const updateRequestOptions = {
-                method: "PUT",
-                headers: new Headers({
-                    // "Authorization": jwtToken,
-                    "Content-Type": "application/json"
-                }),
-                body: JSON.stringify({
-                    ...userData,
-                    isActive: true,
-                    password: newPassword.password
-                }),
+
+            const newData = {
+                ...userData,
+                isActive: true,
+                password: newPassword.password
             };
 
-            const response = await fetch(DB_URL + `/document/updateOne/users/${sessionKey}`, updateRequestOptions)
-            if (response.ok) {
+            const isUpdated = await updateUser(sessionKey, newData);
+
+            if (isUpdated) {
                 setPasswordChanged(true);
                 setErrors({});
                 setNewPassword({
@@ -80,7 +67,7 @@ function ChangePassword() {
                 });
                 setUserData({});
             } else {
-                console.error('Error during changing password:', response.statusText);
+                console.error('Error during changing password:');
                 setErrors({ ...errors, errorDuringUpdate: 'An error occurred during updating password' });
             }
         } catch (error) {

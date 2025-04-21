@@ -4,11 +4,12 @@ import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import ViewBookingsContext from './ViewBookingsContext';
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { findHotelById } from '../../Helpers/hotels';
+import { findUserById } from '../../Helpers/users';
 
 // only for display, should have functionality from Context for delete and edit
 function BookingDataTable() {
     // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const { dispatch, bookingTable, reloadBookingTable } = useContext(ViewBookingsContext);
     const navigate = useNavigate();
 
@@ -16,18 +17,11 @@ function BookingDataTable() {
         var hotelData;
         var userData;
 
+        console.log("Booking data: ", row.hotel);
         // get hotel data
         try {
-            const requestOptions = {
-                method: "GET",
-                headers: new Headers({
-                    // "Authorization": jwtToken,
-                    "Content-Type": "application/json"
-                })
-            };
-            const response = await fetch(DB_URL + `/document/findOne/hotels/${row.hotel}`, requestOptions);
-            const data = await response.json();
-            hotelData = data.data;
+            const hotelDataResponse = await findHotelById(row.hotel);
+            hotelData = hotelDataResponse;
         } catch (error) {
             console.error('Error during fetching hotel data:', error);
             return;
@@ -41,16 +35,8 @@ function BookingDataTable() {
 
             //get user data
             try {
-                const requestOptions = {
-                    method: "GET",
-                    headers: new Headers({
-                        // "Authorization": jwtToken,
-                        "Content-Type": "application/json"
-                    })
-                };
-                const response = await fetch(DB_URL + `/document/findOne/users/${row.userId}`, requestOptions);
-                const data = await response.json();
-                userData = data.data;
+                const userDataResponse = await findUserById(row.userId);
+                userData = userDataResponse;
             } catch (error) {
                 console.error('Error during fetching user data:', error);
             }

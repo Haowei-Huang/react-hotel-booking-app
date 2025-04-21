@@ -11,15 +11,6 @@ function BookingHome() {
         });
     });
 
-    // return (<React.Fragment>
-    //     <UserViewBookingContextProvider>
-    //         <Routes>
-    //             <Route index element={<ViewBookingList />}></Route>
-    //             <Route path=":id" element={<ViewBookingDetails />} />
-    //         </Routes>
-    //     </UserViewBookingContextProvider>
-    // </React.Fragment>)
-
     return (<React.Fragment>
         <UserViewBookingContextProvider>
             <Suspense fallback={<div>Loading...DETAILS...</div>}>

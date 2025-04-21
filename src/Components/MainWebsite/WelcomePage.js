@@ -1,4 +1,4 @@
-import { Container, Paper, Box, Stack, Typography, SliderMark } from "@mui/material"
+import { Paper, Stack, Typography } from "@mui/material"
 import SearchBar from "../SearchHotelContext/SearchBar";
 
 export const WelcomePage = () => {

@@ -3,9 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ManageHotelsContext from "./ManageHotelsContext";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import PersonIcon from '@mui/icons-material/Person';
-import BedIcon from '@mui/icons-material/Bed';
-import BookingContext from '../Booking/BookingContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function ViewHotelDetails() {

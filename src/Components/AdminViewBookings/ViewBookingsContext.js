@@ -1,5 +1,5 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { findAllBookings } from '../../Helpers/bookings';
 
 const ViewBookingsContext = createContext();
 
@@ -13,7 +13,8 @@ const bookingTableReducer = (state, action) => {
         case 'initialize':
             return {
                 ...state,
-                itemList: action.payload.data
+                itemList: action.payload.data,
+                isLoaded: true
             };
         case 'setIsLoaded':
             return {
@@ -25,34 +26,21 @@ const bookingTableReducer = (state, action) => {
 };
 
 export const ViewBookingsProvider = ({ children }) => {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const [bookingTable, dispatch] = useReducer(bookingTableReducer, initialBookingTable);
 
-    const reloadBookingTable = () => {
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
-        fetch(DB_URL + '/document/findAll/bookings', requestOptions)
-            .then(res => res.json())
-            .then(data => {
-                dispatch({
-                    type: 'initialize',
-                    payload: {
-                        'data': data.data,
-                    }
-                });
-            }).catch(error => {
-                console.error('Error:', error);
+    async function reloadBookingTable() {
+        if (bookingTable.isLoaded) return;
+        const bookingList = await findAllBookings();
+        if (bookingList) {
+            dispatch({
+                type: 'initialize',
+                payload: {
+                    'data': bookingList
+                }
             });
-        dispatch({
-            type: 'setIsLoaded'
-        });
+        } else {
+            console.error('Error fetching booking data');
+        }
     }
 
     useEffect(() => {

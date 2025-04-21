@@ -2,12 +2,10 @@ import { Alert, Box, Button, CircularProgress, Grid, TextField, Typography } fro
 import { useContext, useEffect, useState } from "react";
 import UserProfileContext from "./UserProfileContext";
 import { Controller, useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { updateUser } from "../../Helpers/users";
 
 function UserProfileClientInfo() {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const sessionKey = useSelector(state => state.auth.sessionKey);
     const [infoChanged, setInfoChanged] = useState(false);
     const { userProfile, dispatch, loadUserProfile } = useContext(UserProfileContext);
@@ -18,25 +16,18 @@ function UserProfileClientInfo() {
     const onSubmit = async (data, e) => {
         e.preventDefault();
         const clientInfoData = getValues("clientInfo");
-        const requestOptions = {
-            method: "PUT",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-            body: JSON.stringify({
-                ...userProfile,
-                clientInfo: clientInfoData
-            }),
-        };
 
-        fetch(DB_URL + `/document/updateOne/users/${sessionKey}`, requestOptions)
-            .then(res => res.json())
-            .then(() => {
-                loadUserProfile();
-                setInfoChanged(true);
-            })
-            .catch(error => console.error('Error:', error));
+
+        const newData = {
+            ...userProfile,
+            clientInfo: clientInfoData
+        }
+        const isUpdated = await updateUser(sessionKey, newData);
+
+        if (isUpdated) {
+            loadUserProfile();
+            setInfoChanged(true);
+        }
     }
 
     const watchPhone = watch("clientInfo.phone");

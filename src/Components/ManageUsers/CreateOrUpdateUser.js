@@ -3,13 +3,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import ManageUsersContext from "./ManageUsersContext";
-
+import { userRegister, updateUser } from "../../Helpers/users";
 
 const CreateOrUpdateUser = () => {
     const { control, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitSuccessful, isValid }, watch, setError, clearErrors, setValue, getValues }
         = useFormContext();
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const { dispatch, userTable, reloadUserTable } = useContext(ManageUsersContext);
 
     const resetForm = () => {
@@ -22,7 +21,7 @@ const CreateOrUpdateUser = () => {
     };
 
     // only contains email logic
-    const onSubmit = (data, e) => {
+    const onSubmit = async (data, e) => {
         e.preventDefault();
         const userData = getValues();
         // if the input _id is null, we can create but not update 
@@ -38,44 +37,19 @@ const CreateOrUpdateUser = () => {
         }
 
         if (userData._id === null) {
-            const requestOptions = {
-                method: "POST",
-                headers: new Headers({
-                    // "Authorization": jwtToken,
-                    "Content-Type": "application/json"
-                }),
-                body: JSON.stringify({
-                    ...userData,
-                    isActive: true
-                })
-            };
+            const response = await userRegister(userData.email, userData.password, userData.role);
+            if (response) {
+                reloadUserTable();
+            }
 
-            const createdUserData = { ...userData };
-            delete createdUserData._id;
-
-            fetch(DB_URL + "/document/createorupdate/users", requestOptions)
-                .then(response => response.text())
-                .then(() => { reloadUserTable(); })
-                .catch(error => console.error('Error:', error));
         } else {
             // update
-            const updatedUserData = { ...userData }; // Create a copy of errors object
-            const requestOptions = {
-                method: "PUT",
-                headers: new Headers({
-                    // "Authorization": jwtToken,
-                    "Content-Type": "application/json"
-                }),
-                body: JSON.stringify({
-                    ...updatedUserData,
-                    isActive: true
-                }),
-            };
+            const newUserData = { ...userData, isActive: true }; // Create a copy of errors object
+            const isUpdated = await updateUser(userData._id, newUserData);
 
-            fetch(DB_URL + `/document/updateOne/users/${updatedUserData._id}`, requestOptions)
-                .then(res => res.json())
-                .then(() => { reloadUserTable(); })
-                .catch(error => console.error('Error:', error));
+            if (isUpdated) {
+                reloadUserTable();
+            }
         }
         resetForm();
     };

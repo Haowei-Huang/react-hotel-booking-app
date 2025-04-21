@@ -1,8 +1,4 @@
-import { Search } from "@mui/icons-material";
-import dayjs from "dayjs";
 import { createContext, useContext, useEffect, useReducer, useState } from "react";
-import SearchContext from "../SearchHotelContext/SearchContext";
-import { duration } from "@mui/material";
 
 const initialBookingData = {
 };

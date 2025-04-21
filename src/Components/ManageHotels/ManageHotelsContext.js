@@ -1,4 +1,5 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
+import { findAllHotels } from '../../Helpers/hotels';
 
 const ManageHotelsContext = createContext();
 
@@ -18,32 +19,20 @@ const hotelTableReducer = (state, action) => {
 };
 
 export const ManageHotelsProvider = ({ children }) => {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const [hotelTable, dispatch] = useReducer(hotelTableReducer, initialHotelTable);
 
-    const reloadHotelTable = () => {
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-        };
-
-        fetch(DB_URL + '/document/findAll/hotels', requestOptions)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                dispatch({
-                    type: 'initialize',
-                    payload: {
-                        'data': data.data,
-                    }
-                });
-            }).catch(error => {
-                console.error('Error:', error);
-            });
+    const reloadHotelTable = async () => {
+        const hotelList = await findAllHotels();
+        if (hotelList) {
+            dispatch({
+                type: 'initialize',
+                payload: {
+                    'data': hotelList
+                }
+            })
+        } else {
+            console.error('Error fetching hotel data');
+        }
     }
 
     useEffect(() => {

@@ -2,13 +2,10 @@ import { Container, Typography, Box, TextField, Button } from "@mui/material";
 import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
-import { useNavigate } from 'react-router-dom';
+import { userRegister } from "../../Helpers/users";
 
 function Register({ handleNavigate }) {
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
-
     const { registrationData, setRegistrationData, errors, setErrors } = useContext(LoginAndRegisterFormContext);
 
     const handleSubmit = async (event) => {
@@ -28,27 +25,12 @@ function Register({ handleNavigate }) {
         const updatedRegistrationData = { ...registrationData }; // Create a copy of errors object
         delete updatedRegistrationData.confirmPassword;
 
-        const requestOptions = {
-            method: "POST",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-            body: JSON.stringify({
-                ...updatedRegistrationData,
-                isActive: true
-            }),
-        };
-
-        console.log(requestOptions);
-
-        // register user
-        fetch(DB_URL + "/document/createorupdate/users", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                handleNavigate("RegisterSuccess")
-            })
-            .catch(error => console.error('Error:', error));
+        const response = await userRegister(updatedRegistrationData.email, updatedRegistrationData.password, 'user');
+        if (response) {
+            handleNavigate("RegisterSuccess")
+        } else {
+            console.log("RegisterFailed")
+        }
 
         setErrors({});
         setRegistrationData({

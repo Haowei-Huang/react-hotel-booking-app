@@ -1,14 +1,9 @@
-import { Avatar, Box, Button, Card, CardContent, Checkbox, Chip, CircularProgress, Container, Divider, Grid, Rating, Stack, TextField, Typography } from "@mui/material";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import HotelDisplayContext from "../Hotels/HotelDisplayContext"
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Box, Button, Card, CardContent, Checkbox, Chip, CircularProgress, Container, Divider, Grid, Rating, Stack, TextField, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import BookingContext from "./BookingContext";
-import dayjs from "dayjs";
-import { Controller, set, useForm, useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import PersonIcon from '@mui/icons-material/Person';
-import BedIcon from '@mui/icons-material/Bed';
 import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { UserInfoReuseContext } from "./BookRooms";
 

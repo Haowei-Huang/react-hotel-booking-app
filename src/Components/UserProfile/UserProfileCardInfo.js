@@ -3,10 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import UserProfileContext from "./UserProfileContext";
 import { Controller, useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { updateUser } from "../../Helpers/users";
 
 function UserProfileCardInfo() {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const sessionKey = useSelector(state => state.auth.sessionKey);
     const [infoChanged, setInfoChanged] = useState(false);
     const { userProfile, dispatch, loadUserProfile } = useContext(UserProfileContext);
@@ -48,29 +47,27 @@ function UserProfileCardInfo() {
         }
 
         //set address to upper cases
-        setValue("cardInfo.address.street", cardInfoData.address.street.toUpperCase());
-        setValue("cardInfo.address.city", cardInfoData.address.city.toUpperCase());
-        setValue("cardInfo.address.province", cardInfoData.address.province.toUpperCase());
-        setValue("cardInfo.address.country", cardInfoData.address.country.toUpperCase());
+        setValue("cardInfo.address", {
+            ...cardInfoData.address,
+            street: cardInfoData.address.street.toUpperCase(),
+            city: cardInfoData.address.city.toUpperCase(),
+            province: cardInfoData.address.province.toUpperCase(),
+            country: cardInfoData.address.country.toUpperCase()
+        });
 
         cardInfoData = getValues("cardInfo");
 
-        const requestOptions = {
-            method: "PUT",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            }),
-            body: JSON.stringify({
-                ...userProfile,
-                cardInfo: cardInfoData
-            }),
-        };
+        const newData = {
+            ...userProfile,
+            cardInfo: cardInfoData
+        }
 
-        fetch(DB_URL + `/document/updateOne/users/${sessionKey}`, requestOptions)
-            .then(res => res.json())
-            .then(() => { loadUserProfile(); setInfoChanged(true); })
-            .catch(error => console.error('Error:', error));
+        const isUpdated = await updateUser(sessionKey, newData);
+        if (isUpdated) {
+            loadUserProfile();
+            setInfoChanged(true);
+        }
+
     }
 
     const watchCardNumber = watch("cardInfo.cardNumber");

@@ -9,7 +9,6 @@ import MainHeader from "./Header";
 import BookingHome from "../UserViewBooking/BookingHome";
 import ProtectedUserRoute from "../../ProtectedUserRoute";
 import UserProfileHome from "../UserProfile/UserProfileHome";
-import Footer from "./Footer";
 
 function Home() {
 
@@ -27,7 +26,6 @@ function Home() {
                 </ProtectedUserRoute>} />
             </Routes>
         </SearchContextProvider>
-        <Footer />
     </Container >);
 }
 

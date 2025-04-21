@@ -14,7 +14,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "dayjs": "^1.11.10",
-    "motion": "^12.7.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
@@ -51,8 +50,5 @@
   },
   "browser": {
     "fs": false
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.4.17"
   }
 }

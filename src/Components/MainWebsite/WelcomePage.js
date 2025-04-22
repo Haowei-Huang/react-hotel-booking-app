@@ -1,9 +1,9 @@
-import { Paper, Stack, Typography } from "@mui/material"
+import { Paper, Stack, Typography, Box } from "@mui/material"
 import SearchBar from "../SearchHotelContext/SearchBar";
 
 export const WelcomePage = () => {
     return (
-        <Paper
+        <Box
             sx={{
                 position: 'relative',
                 backgroundColor: 'grey.800',
@@ -12,6 +12,7 @@ export const WelcomePage = () => {
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
                 backgroundImage: `url("https://r-xx.bstatic.com/xdata/images/xphoto/2880x868/313564245.jpeg?k=c677d4c63f8a8218d275614559b8ccd5dc5f169b44667c3ff46328091c225b13&o=")`,
+                height: "30vh"
             }}>
             <Stack spacing={2} sx={{
                 position: 'relative',
@@ -25,9 +26,9 @@ export const WelcomePage = () => {
                 <Typography variant="h5" color="inherit" paragraph>
                     Make it a trip to remember in a holiday home
                 </Typography>
-                <Paper elevation={3} sx={{ width: '40%', p: 2, backgroundColor: "white" }}>
-                    <SearchBar sx={{ mt: 10 }} />
-                </Paper>
+                <Box sx={{ width: '40%' }}>
+                    <SearchBar />
+                </Box>
             </Stack>
             <Typography>
                 <br />
@@ -38,5 +39,5 @@ export const WelcomePage = () => {
                     password: "[adminPassword]"
                 }).replace(/\"/g, "")}
             </Typography>
-        </Paper>)
+        </Box>)
 };

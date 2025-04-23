@@ -26,9 +26,7 @@ export const WelcomePage = () => {
                 <Typography variant="h5" color="inherit" paragraph>
                     Make it a trip to remember in a holiday home
                 </Typography>
-                <Box sx={{ width: '40%' }}>
-                    <SearchBar />
-                </Box>
+                <SearchBar />
             </Stack>
             <Typography>
                 <br />

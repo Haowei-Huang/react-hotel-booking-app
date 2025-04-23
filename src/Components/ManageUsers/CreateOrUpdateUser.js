@@ -1,7 +1,7 @@
 import { Controller, useFormContext } from "react-hook-form";
 import React, { useState, useContext, useEffect } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Grid from '@mui/material/Grid';
 import ManageUsersContext from "./ManageUsersContext";
 import { userRegister, updateUser } from "../../Helpers/users";
 
@@ -99,7 +99,7 @@ const CreateOrUpdateUser = () => {
 
     return (
         <Grid container spacing={1} component="form" onSubmit={handleSubmit(onSubmit)} sx={{ width: "20%" }} >
-            <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
                 <Controller
                     control={control}
                     name="email"
@@ -124,7 +124,7 @@ const CreateOrUpdateUser = () => {
                 />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
                 <Controller
                     control={control}
                     name="password"
@@ -149,7 +149,7 @@ const CreateOrUpdateUser = () => {
                 />
             </Grid>
 
-            <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
 
                 <Controller
                     control={control}
@@ -178,14 +178,14 @@ const CreateOrUpdateUser = () => {
 
             </Grid>
 
-            <Grid xs={4}>
+            <Grid size={{ xs: 4 }}>
                 <Button id="updateData" variant="contained" type="submit"
                     disabled={!watchEmail.trim() || !watchPassword.trim() || errors.length > 0 || updateDisabled()} onClick={handleSubmit(onSubmit)}>Update</Button>
             </Grid>
-            <Grid xs={4}>
+            <Grid size={{ xs: 4 }}>
                 <Button id="resetForm" variant="contained" onClick={resetForm}>Reset</Button>
             </Grid>
-            <Grid xs={4}>
+            <Grid size={{ xs: 4 }}>
                 <Button id="createData" variant="contained" type="submit"
                     disabled={!watchEmail.trim() || !watchPassword.trim() || errors.length > 0 || createDisabled()} onClick={handleSubmit(onSubmit)}>Create</Button>
             </Grid>

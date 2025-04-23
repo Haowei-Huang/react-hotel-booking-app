@@ -13,6 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import SearchIcon from '@mui/icons-material/Search';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PersonIcon from '@mui/icons-material/Person';
+import Grid from '@mui/material/Grid';
 
 const today = dayjs();
 
@@ -54,107 +55,108 @@ function SearchBar() {
     }, [searchOption.from])
 
     return (
-        <Container sx={{ backgroundColor: "white", p: { xs: 1.5, sm: 2 }, borderRadius: 2, boxShadow: 3, width: '90%' }} maxWidth="sm">
-            {/* Setting responsive padding and width for the container */}
-            {/* Responsive spacing between stack items*/}
-            <Stack
-                spacing={{ xs: 1.5, sm: 2 }}
-                direction="column">
-                <Stack direction={{ xs: 'column', md: 'row' }}
-                    spacing={{ xs: 2 }}
-                >
-                    <TextField
-                        required
-                        id="location"
-                        label="City"
-                        name="location"
-                        value={searchOption.location || "Toronto"}
-                        onChange={handleChange}
-                        sx={{ backgroundColor: 'white', width: { xs: '100%', md: '50%' } }} // Responsive margin-top for different screen sizes
-                        InputProps={{
+        <Grid container columns={{ xs: 12, md: 15 }}
+            spacing={2}
+            maxWidth="md"
+            sx={{ backgroundColor: "white", p: { xs: 1.5, sm: 2 }, borderRadius: 2, boxShadow: 3, alignItems: 'center' }}>
+            <Grid size={{ xs: 6, md: 3 }}>
+                <TextField
+                    required
+                    id="location"
+                    label="City"
+                    name="location"
+                    value={searchOption.location || "Toronto"}
+                    onChange={handleChange}
+                    sx={{ backgroundColor: 'white', width: '100%' }} // Responsive margin-top for different screen sizes
+                    slotProps={{
+                        input: {
                             startAdornment: (
                                 <InputAdornment position="start" >
                                     <LocationOnIcon color="primary" />
                                 </InputAdornment>
                             )
-                        }}
-                    />
-                    <Stack
-                        direction="row"
-                        spacing={1}
-                        sx={{
-                            width: { xs: '100%', md: '50%' }, // Width and justification change based on screen size
-                        }}
-                    >
-                        <IconButton
-                            onClick={handleDecrease} disabled={searchOption.numberOfGuests <= 1}
-                            size={isXs ? "small" : "medium"}> {/* Button size changes based on extra small screen detection */}
-                            <RemoveIcon />
-                        </IconButton>
-                        <TextField
-                            id="numberOfGuests"
-                            value={searchOption.numberOfGuest}
-                            label="Guest Each Room"
-                            inputProps={{ readOnly: true }}
-                            InputLabelProps={{ shrink: true }}
-                            InputProps={{
+                        }
+                    }}
+                />
+            </Grid>
+
+            <Grid size={{ xs: 6, md: 4 }}>
+                <Stack
+                    direction="row"
+                    spacing={1}
+                >
+                    <IconButton
+                        onClick={handleDecrease} disabled={searchOption.numberOfGuests <= 1}
+                        size={isXs ? "small" : "medium"}> {/* Button size changes based on extra small screen detection */}
+                        <RemoveIcon />
+                    </IconButton>
+                    <TextField
+                        id="numberOfGuests"
+                        value={searchOption.numberOfGuest}
+                        label="Guest Each Room"
+                        sx={{ width: '100%' }}
+                        slotProps={{
+                            input: {
+                                readOnly: true,
                                 startAdornment: (
                                     <InputAdornment position="start" >
                                         <PersonIcon color="primary" />
                                     </InputAdornment>
                                 )
-                            }}
-                        />
-                        {/* Button size changes based on extra small screen detection */}
-                        <IconButton onClick={handleIncrease} size={isXs ? "small" : "medium"}>
-                            <AddIcon />
-                        </IconButton>
-                    </Stack>
+                            }
+                        }}
+                    />
+                    {/* Button size changes based on extra small screen detection */}
+                    <IconButton onClick={handleIncrease} size={isXs ? "small" : "medium"}>
+                        <AddIcon />
+                    </IconButton>
                 </Stack>
+            </Grid>
 
 
-                {/* Stack direction changes based on screen size - column on mobile, row on desktop */}
-                <Stack direction={{ xs: 'column', md: 'row' }}
-                    spacing={{ xs: 2 }}>
-                    <DatePicker margin="normal"
-                        id="from"
-                        label="From"
-                        autoComplete="from"
-                        value={searchOption.from}
-                        onChange={(newValue) => setSearchOption({ ...searchOption, "from": newValue })}
-                        sx={{ backgroundColor: 'white', width: { xs: '100%', md: '50%' } }} // DatePicker width changes based on screen size - full width on mobile, half width on desktop
-                        minDate={today}
-                        inputFormat="YYYY-MM-DD" />
-                    <DatePicker margin="normal"
-                        id="to"
-                        label="To"
-                        autoComplete="to"
-                        value={searchOption.to}
-                        onChange={(newValue) => setSearchOption({ ...searchOption, "to": newValue })}
-                        sx={{ backgroundColor: 'white', width: { xs: '100%', md: '50%' } }} // DatePicker width changes based on screen size - full width on mobile, half width on desktop
-                        minDate={minDate}
-                        inputFormat="YYYY-MM-DD" />
-                </Stack>
+            {/* Stack direction changes based on screen size - column on mobile, row on desktop */}
+            <Grid size={{ xs: 6, md: 3 }}>
+                <DatePicker margin="normal"
+                    id="from"
+                    label="From"
+                    autoComplete="from"
+                    value={searchOption.from}
+                    onChange={(newValue) => setSearchOption({ ...searchOption, "from": newValue })}
+                    sx={{ backgroundColor: 'white', width: '100%' }} // DatePicker width changes based on screen size - full width on mobile, half width on desktop
+                    minDate={today}
+                    inputFormat="YYYY-MM-DD" />
+            </Grid>
+            <Grid size={{ xs: 6, md: 3 }}>
+                <DatePicker margin="normal"
+                    id="to"
+                    label="To"
+                    autoComplete="to"
+                    value={searchOption.to}
+                    onChange={(newValue) => setSearchOption({ ...searchOption, "to": newValue })}
+                    sx={{ backgroundColor: 'white', width: '100%' }} // DatePicker width changes based on screen size - full width on mobile, half width on desktop
+                    minDate={minDate}
+                    inputFormat="YYYY-MM-DD"
+                />
+            </Grid>
 
+            <Grid size={{ xs: 12, md: 2 }}>
                 <Button
                     type="submit"
                     component={Link}
                     to="/Hotels"
                     variant="contained"
                     startIcon={<SearchIcon />}
-
                     sx={{
                         backgroundColor: 'primary.main',
                         '&:hover': { backgroundColor: 'primary.dark' },
-                        py: { xs: 1.5, sm: 1 }, // Responsive padding on y-axis
-                        mt: { xs: 1, sm: 0 }, // Responsive margin top
-                        width: { xs: '100%', md: '48%' } // Button width changes based on screen size - full width on mobile, half width on desktop
+                        width: '100%',
+                        minHeight: { xs: '3em', md: '3.5em' }
                     }}
                 >
                     Search
                 </Button>
-            </Stack>
-        </Container >);
+            </Grid>
+        </Grid >);
 };
 
 export default SearchBar;

@@ -1,6 +1,5 @@
 import { Avatar, Box, Button, CardMedia, Checkbox, Container, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper, Rating, Slider, Stack, Switch, Typography } from "@mui/material";
 import SearchBar from "../SearchHotelContext/SearchBar";
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import HotelDisplayContext from "./HotelDisplayContext";
 import { useContext, useEffect, useReducer, useState } from "react";
 import { Image } from "@mui/icons-material";

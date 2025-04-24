@@ -96,6 +96,9 @@ function ViewHotels() {
 
     // filter data
     useEffect(() => {
+        if (hotelList.length === 0) {
+            return;
+        }
         // only apply tag fitler that is set to true
         const filteredTags = Object.keys(searchOption.tags).filter(key => searchOption.tags[key] === true);
         dispatchDisplay({
@@ -103,14 +106,6 @@ function ViewHotels() {
             payload: { data: hotelList, minRating: searchOption.rating, location: searchOption.location, searchTags: filteredTags, priceRange: searchOption.price, numberOfGuest: searchOption.numberOfGuest }
         })
     }, [hotelList, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest])
-
-    useEffect(() => {
-        const filteredTags = Object.keys(searchOption.tags).filter(key => searchOption.tags[key] === true);
-        dispatchDisplay({
-            type: "filterData",
-            payload: { data: hotelList, minRating: searchOption.rating, location: searchOption.location, searchTags: filteredTags, priceRange: searchOption.price, numberOfGuest: searchOption.numberOfGuest }
-        })
-    }, [])
 
     return (<Container maxWidth={false} disableGutters sx={{
         width: "45%"
@@ -240,7 +235,7 @@ function ViewHotels() {
                 <Rating value={searchOption.rating} precision={0.5} name="rating" onChange={handleChange} />
             </Paper>
             <Container>
-                {displayData.itemList.map((item) => (
+                {displayData.itemList && displayData.itemList.map((item) => (
                     <Paper square={false} elevation={3} sx={{ mt: 2, p: 2 }} key={item._id}>
                         <Stack direction="row" alignItems="flex-start" spacing={2}>
                             <Link to={`/Hotels/${item.id}`} style={{ textDecoration: 'none' }}>

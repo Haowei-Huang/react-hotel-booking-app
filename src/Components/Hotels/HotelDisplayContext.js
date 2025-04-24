@@ -32,7 +32,7 @@ export const HotelDisplayProvider = ({ children }) => {
         dispatch({
             type: 'initialize',
             payload: {
-                'data': responseData,
+                'data': responseData || [],
             }
         });
     }

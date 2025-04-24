@@ -70,16 +70,16 @@ function BookingDataTable() {
         field: 'time',
         headerName: 'Booked at',
         width: 160,
-        valueGetter: (params) => {
-            return `${dayjs(params.row.time).format('MMM D, YYYY h:mm A')}`
+        valueGetter: (value, row) => {
+            return `${dayjs(row.time).format('MMM D, YYYY h:mm A')}`
         }, flex: 1
     },
     {
         field: 'from',
         headerName: 'From',
         width: 100,
-        valueGetter: (params) => {
-            return `${dayjs(params.row.from).format('MMM D, YYYY')}`
+        valueGetter: (value, row) => {
+            return `${dayjs(row.from).format('MMM D, YYYY')}`
         },
         editable: false, flex: 1
     },
@@ -87,8 +87,8 @@ function BookingDataTable() {
         field: 'to',
         headerName: 'To',
         width: 100,
-        valueGetter: (params) => {
-            return `${dayjs(params.row.to).format('MMM D, YYYY')}`
+        valueGetter: (value, row) => {
+            return `${dayjs(row.to).format('MMM D, YYYY')}`
         },
         editable: false, flex: 1
     },
@@ -96,16 +96,16 @@ function BookingDataTable() {
         field: 'totalPrice',
         headerName: 'Total Price',
         width: 110,
-        valueGetter: (params) => {
-            return `$${params.row.totalPrice.toFixed(2)}`
+        valueGetter: (value, row) => {
+            return `$${row.totalPrice.toFixed(2)}`
         },
         editable: false, flex: 1
     },
     {
         field: 'Cilent Fullname',
         headerName: 'Cilent Fullname',
-        valueGetter: (params) => {
-            return `${params.row.clientInfo.firstName} ${params.row.clientInfo.lastName}`;
+        valueGetter: (value, row) => {
+            return `${row.clientInfo.firstName} ${row.clientInfo.lastName}`;
         },
         width: 150,
         editable: false, flex: 1
@@ -113,8 +113,8 @@ function BookingDataTable() {
     {
         field: 'Cilent Email',
         headerName: 'Cilent Email',
-        valueGetter: (params) => {
-            return `${params.row.clientInfo.email}`;
+        valueGetter: (value, row) => {
+            return `${row.clientInfo.email}`;
         },
         width: 180,
         editable: false, flex: 1
@@ -122,8 +122,8 @@ function BookingDataTable() {
     {
         field: 'Cilent Phone',
         headerName: 'Cilent Phone',
-        valueGetter: (params) => {
-            return `${params.row.clientInfo.phone}`;
+        valueGetter: (value, row) => {
+            return `${row.clientInfo.phone}`;
         },
         width: 110,
         editable: false, flex: 1
@@ -131,8 +131,8 @@ function BookingDataTable() {
     {
         field: 'Card Holder Name',
         headerName: 'Card Holder Name',
-        valueGetter: (params) => {
-            return `${params.row.cardInfo.cardName}`;
+        valueGetter: (value, row) => {
+            return `${row.cardInfo.cardName}`;
         },
         width: 150,
         editable: false, flex: 1
@@ -140,8 +140,8 @@ function BookingDataTable() {
     {
         field: 'Card Number',
         headerName: 'Card Number',
-        valueGetter: (params) => {
-            return `${params.row.cardInfo.cardNumber.substring(0, 4)}-xxxx-xxxx-${params.row.cardInfo.cardNumber.substring(params.row.cardInfo.cardNumber.length - 4)}`;
+        valueGetter: (value, row) => {
+            return `${row.cardInfo.cardNumber.substring(0, 4)}-xxxx-xxxx-${row.cardInfo.cardNumber.substring(row.cardInfo.cardNumber.length - 4)}`;
         },
         width: 200,
         editable: false, flex: 1

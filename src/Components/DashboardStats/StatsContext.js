@@ -1,7 +1,7 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
-import { findAllUsers } from '../../Helpers/users';
-import { findAllHotels } from '../../Helpers/hotels';
-import { findAllBookings } from '../../Helpers/bookings';
+import { findAllUsers } from '../../helpers/users';
+import { findAllHotels } from '../../helpers/hotels';
+import { findAllBookings } from '../../helpers/bookings';
 
 const StatsContext = createContext();
 

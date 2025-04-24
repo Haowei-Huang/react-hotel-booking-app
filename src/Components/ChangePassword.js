@@ -1,7 +1,7 @@
 import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { findUserById, updateUser } from '../Helpers/users';
+import { findUserById, updateUser } from '../helpers/users';
 
 function ChangePassword() {
     // const jwtToken = process.env.REACT_APP_JWT_TOKEN;

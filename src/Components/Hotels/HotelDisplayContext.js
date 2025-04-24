@@ -1,5 +1,5 @@
 import React, { useReducer, createContext, useEffect } from 'react';
-import { findAllHotels } from '../../Helpers/hotels';
+import { findAllHotels } from '../../helpers/hotels';
 
 const HotelDisplayContext = createContext();
 

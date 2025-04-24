@@ -3,7 +3,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ManageUsersContext from "./ManageUsersContext";
-import { userRegister, updateUser } from "../../Helpers/users";
+import { userRegister, updateUser } from "../../helpers/users";
 
 const CreateOrUpdateUser = () => {
     const { control, handleSubmit, reset, formState: { errors, isSubmitted, isSubmitSuccessful, isValid }, watch, setError, clearErrors, setValue, getValues }

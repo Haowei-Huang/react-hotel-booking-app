@@ -11,7 +11,7 @@ import BookingReview from "./BookingReview"
 import BookingSuccess from "./BookingSuccess";
 import AdminRestrictedRoute from "../../AdminRestrictedRoute";
 import { useSelector } from "react-redux";
-import { findUserById } from "../../Helpers/users";
+import { findUserById } from "../../helpers/users";
 
 const steps = ['Booking details', 'Payment details', 'Review your booking'];
 

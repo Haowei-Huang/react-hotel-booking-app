@@ -3,8 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
 import { useDispatch } from 'react-redux';
-import { login } from '../../authSlice';
-import { userLogin } from "../../Helpers/users";
+import { login } from '../../features/authSlice';
+import { userLogin } from "../../helpers/users";
 
 function Login({ handleNavigate }) {
     const dispatch = useDispatch();

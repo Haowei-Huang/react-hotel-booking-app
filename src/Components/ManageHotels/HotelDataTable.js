@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Stack } from '@mui/material';
 import ManageHotelsContext from './ManageHotelsContext';
 import { Link } from 'react-router-dom';
-import { updateHotel } from '../../Helpers/hotels';
+import { updateHotel } from '../../helpers/hotels';
 
 // only for display, should have functionality from Context for delete and edit
 function HotelDataTable() {

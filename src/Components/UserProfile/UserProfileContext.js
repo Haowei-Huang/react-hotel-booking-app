@@ -1,6 +1,6 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { findUserById } from '../../Helpers/users';
+import { findUserById } from '../../helpers/users';
 
 const UserProfileContext = createContext();
 const initialUserProfile = {};

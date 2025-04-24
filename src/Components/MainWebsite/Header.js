@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../../authSlice';
+import { logout } from '../../features/authSlice';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Container, Menu, MenuItem } from '@mui/material';
 import LoginAndRegisterForm from '../LoginAndRegister/LoginRegisterForm';
@@ -42,7 +42,7 @@ function MainHeader() {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ width: '100%', flexGrow: 1 }} >
             <AppBar position="static">
                 <Toolbar>
                     <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>

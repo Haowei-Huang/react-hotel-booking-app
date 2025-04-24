@@ -7,7 +7,8 @@ export const authSlice = createSlice({
         isAuthenticated: false,
         username: null,
         sessionKey: null,
-        role: 'user'
+        role: 'user',
+        token: null
     },
 
     reducers: {
@@ -16,16 +17,21 @@ export const authSlice = createSlice({
             state.username = action.payload.username;
             state.sessionKey = action.payload.sessionKey;
             state.role = action.payload.role;
+            state.token = action.payload.token;
         },
         logout: (state, action) => {
             state.isAuthenticated = false;
             state.username = null;
             state.sessionKey = null;
             state.role = 'user';
-        }
+            state.token = null;
+        },
+        setToken: (state, action) => {
+            state.token = action.payload.token;
+        },
     }
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setToken } = authSlice.actions;
 
 export default authSlice.reducer;

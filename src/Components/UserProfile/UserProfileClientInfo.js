@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import UserProfileContext from "./UserProfileContext";
 import { Controller, useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { updateUser } from "../../Helpers/users";
+import { updateUser } from "../../helpers/users";
 
 function UserProfileClientInfo() {
     const sessionKey = useSelector(state => state.auth.sessionKey);

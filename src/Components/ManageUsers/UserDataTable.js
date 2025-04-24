@@ -4,7 +4,7 @@ import { Box, Button, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useFormContext } from 'react-hook-form';
 import ManageUsersContext from './ManageUsersContext';
-import { deleteUser } from '../../Helpers/users'
+import { deleteUser } from '../../helpers/users'
 
 // only for display, should have functionality from Context for delete and edit
 function UserDataTable() {

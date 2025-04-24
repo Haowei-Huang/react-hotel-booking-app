@@ -4,7 +4,7 @@ import BookingContext from "./BookingContext";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { createBooking } from "../../Helpers/bookings";;
+import { createBooking } from "../../helpers/bookings";;
 
 function BookingReview({ prevStep }) {
     // const jwtToken = process.env.REACT_APP_JWT_TOKEN;

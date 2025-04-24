@@ -4,8 +4,8 @@ import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import ViewBookingsContext from './ViewBookingsContext';
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { findHotelById } from '../../Helpers/hotels';
-import { findUserById } from '../../Helpers/users';
+import { findHotelById } from '../../helpers/hotels';
+import { findUserById } from '../../helpers/users';
 
 // only for display, should have functionality from Context for delete and edit
 function BookingDataTable() {

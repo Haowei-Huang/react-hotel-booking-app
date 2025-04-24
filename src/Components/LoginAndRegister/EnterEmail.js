@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
 import { useNavigate } from 'react-router-dom';
-import { findUserByEmail } from "../../Helpers/users";
+import { findUserByEmail } from "../../helpers/users";
 
 function EnterEmail({ handleNavigate }) {
     const { registrationData, setRegistrationData, errors, setErrors } = useContext(LoginAndRegisterFormContext);

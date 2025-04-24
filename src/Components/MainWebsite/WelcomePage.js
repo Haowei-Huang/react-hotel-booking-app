@@ -32,16 +32,23 @@ export const WelcomePage = () => {
                     </Box>
                 </Stack>
             </Box>
-            <Container maxWidth="md" sx={{ my: 4 }}>
-                <Typography>
+            <Paper maxWidth="md" sx={{ my: 4 }}>
+                <Typography variant="h6" gutterBottom>
+                    Admin Dashboard Login
+                </Typography>
+                <Typography variant="body2" >
                     To view the admin dashboard, please create your admin account first in the database following this format:
-                    <br />
+                </Typography>
+                <Box sx={{
+                    backgroundColor: 'grey.900',
+                    color: 'white'
+                }}>
                     {JSON.stringify({
                         email: "[adminEmail]",
                         role: "admin",
                         password: "[adminPassword]"
                     }, null, 2)}
-                </Typography>
-            </Container>
+                </Box>
+            </Paper>
         </React.Fragment>);
 };

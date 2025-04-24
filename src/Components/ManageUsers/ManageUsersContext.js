@@ -1,6 +1,6 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { findAllUsers } from '../../Helpers/users';
+import { findAllUsers } from '../../helpers/users';
 
 const ManageUsersContext = createContext();
 

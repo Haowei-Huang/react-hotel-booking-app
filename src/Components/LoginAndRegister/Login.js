@@ -22,7 +22,7 @@ function Login({ handleNavigate }) {
             if (user) {
                 setErrors({});
                 console.log(user);
-                dispatch(login({ username: user.email, sessionKey: user._id, role: user.role }));
+                dispatch(login({ username: user.email, sessionKey: user._id, role: user.role, token: loginResponse.token }));
                 handleNavigate("LoginSuccess");
             } else {
                 setErrors({ PasswordIncorrect: "The password you entered is incorrect, please try again" });

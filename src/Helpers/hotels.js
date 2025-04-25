@@ -1,20 +1,13 @@
-const DB_URL = process.env.REACT_APP_DB_URL;
-const FIND_ALL_HOTELS = DB_URL + '/document/findAll/hotels';
-const GET_HOTEL_COUNT = DB_URL + '/document/countDocuments/hotels';
-
+import api from '../features/interceptor';
+const FIND_ALL_HOTELS = '/document/findAll/hotels';
+const GET_HOTEL_COUNT = '/document/countDocuments/hotels';
 
 export async function findAllHotels() {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('findAllHotels called');
     try {
-        const response = await fetch(FIND_ALL_HOTELS, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(FIND_ALL_HOTELS);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);
@@ -22,16 +15,11 @@ export async function findAllHotels() {
 }
 
 export async function findHotelById(hotelId) {
+    console.log('findHotelById called: ', hotelId);
     try {
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            })
-        };
-        const response = await fetch(DB_URL + `/document/findOne/hotels/${hotelId}`, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(`/document/findOne/hotels/${hotelId}`);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);
@@ -39,17 +27,11 @@ export async function findHotelById(hotelId) {
 }
 
 export async function getHotelCount() {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('getHotelCount called');
     try {
-        const response = await fetch(GET_HOTEL_COUNT, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(GET_HOTEL_COUNT);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.count;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);
@@ -57,20 +39,13 @@ export async function getHotelCount() {
 }
 
 export async function updateHotel(hotelId, newData) {
-    const requestOptions = {
-        method: "PUT",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({
-            ...newData
-        })
-    };
-
+    console.log('updateHotel called: ', hotelId);
+    const newHotelData = JSON.stringify({
+        ...newData
+    });
     try {
-        const response = await fetch(DB_URL + `/document/updateOne/hotels/${hotelId}`, requestOptions);
-        await response.json();
+        const response = await api.put(`/document/updateOne/hotels/${hotelId}`, newHotelData);
+        await response.data;
         return true; // update successfully
     } catch (error) {
         console.error('Error during updating hotel data:', error);
@@ -79,17 +54,11 @@ export async function updateHotel(hotelId, newData) {
 }
 
 export async function getUserBookedHotels(userId) {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('getUserBookedHotels called: ', userId);
     try {
-        const response = await fetch(DB_URL + `/hotel/getUserBookedHotels/${userId}`, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(`/hotel/getUserBookedHotels/${userId}`);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);

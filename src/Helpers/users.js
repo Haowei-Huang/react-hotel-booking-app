@@ -1,21 +1,17 @@
-const DB_URL = process.env.REACT_APP_DB_URL;
-const FIND_ALL_USERS = DB_URL + '/document/findAll/users';
-const GET_USER_COUNT = DB_URL + '/document/countDocuments/users';
-const USER_LOGIN = DB_URL + '/user/login';
-const USER_REGISTER = DB_URL + '/user/register';
+import api from '../features/interceptor';
+const FIND_ALL_USERS = '/document/findAll/users';
+const GET_USER_COUNT = '/document/countDocuments/users';
+const USER_LOGIN = '/user/login';
+const USER_LOGOUT = '/user/logout';
+const USER_REGISTER = '/user/register';
+
 
 export async function findAllUsers() {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('findAllUsers called');
     try {
-        const response = await fetch(FIND_ALL_USERS, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(FIND_ALL_USERS);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching user data:', error);
@@ -23,16 +19,11 @@ export async function findAllUsers() {
 }
 
 export async function findUserById(userId) {
+    console.log('findUserById called: ', userId);
     try {
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            })
-        };
-        const response = await fetch(DB_URL + `/document/findOne/users/${userId}`, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(`/document/findOne/users/${userId}`);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching user data:', error);
@@ -40,17 +31,11 @@ export async function findUserById(userId) {
 }
 
 export async function findUserByEmail(userEmail) {
+    console.log('findUserByEmail called: ', userEmail);
     try {
-        const requestOptions = {
-            method: "GET",
-            headers: new Headers({
-                // "Authorization": jwtToken,
-                "Content-Type": "application/json"
-            })
-        };
-
-        const response = await fetch(DB_URL + `/user/findUserByEmail/${userEmail}`, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(`/user/findUserByEmail/${userEmail}`);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching user data:', error);
@@ -58,17 +43,11 @@ export async function findUserByEmail(userEmail) {
 }
 
 export async function getUserCount() {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('getUserCount called');
     try {
-        const response = await fetch(GET_USER_COUNT, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(GET_USER_COUNT);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.count;
     } catch (error) {
         console.error('Error during fetching user data:', error);
@@ -76,20 +55,14 @@ export async function getUserCount() {
 }
 
 export async function userLogin(email, password) {
-    const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({ email: email, password: password })
-    };
-
+    console.log('userLogin called: ', email);
+    const loginData = JSON.stringify({ email: email, password: password });
     try {
-        const response = await fetch(USER_LOGIN, requestOptions);
-        if (response.ok) {
-            const responseJson = await response.json();
-            return responseJson;
+        const response = await api.post(USER_LOGIN, loginData);
+        if (response.status === 200) {
+            const responseJson = await response.data;
+            console.log('responseJson', responseJson);
+            return responseJson; // not sure
         } else {
             throw new Error('Login failed');
         }
@@ -98,21 +71,33 @@ export async function userLogin(email, password) {
     }
 }
 
+// send logout request to server, delete the refresh token from the database
+export async function userLogout() {
+    try {
+        const response = await api.post(USER_LOGOUT);
+        if (response.status === 200) {
+            // const responseJson = await response.data;
+            // console.log('responseJson', responseJson);
+            return true;
+        } else {
+            throw new Error('Login failed');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        return false; // error occurred
+    }
+}
+
 export async function userRegister(email, password, role) {
-    const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({ email: email, password: password, role: role, isActive: true })
-    };
+    console.log('userRegister called: ', email);
+    const registrationData = JSON.stringify({ email: email, password: password, role: role, isActive: true });
 
     try {
-        const response = await fetch(USER_REGISTER, requestOptions);
-        if (response.ok) {
-            const responseJson = await response.json();
-            return responseJson;
+        const response = await api.post(USER_REGISTER, registrationData);
+        if (response.status === 200) {
+            const responseJson = await response.data;
+            console.log('responseJson', responseJson);
+            return responseJson; // not sure
         } else {
             throw new Error('Register failed');
         }
@@ -122,20 +107,14 @@ export async function userRegister(email, password, role) {
 }
 
 export async function updateUser(userId, newData) {
-    const requestOptions = {
-        method: "PUT",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({
-            ...newData
-        })
-    };
+    console.log('updateUser called: ', userId);
+    const newUserData = JSON.stringify({
+        ...newData
+    });
 
     try {
-        const response = await fetch(DB_URL + `/document/updateOne/users/${userId}`, requestOptions);
-        await response.json();
+        const response = await api.put(`/document/updateOne/users/${userId}`, newUserData);
+        await response.data;
         return true; // update successfully
     } catch (error) {
         console.error('Error during updating user data:', error);
@@ -144,16 +123,9 @@ export async function updateUser(userId, newData) {
 }
 
 export async function deleteUser(userId) {
-    const requestOptions = {
-        method: "DELETE",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        })
-    };
-
+    console.log('deleteUser called: ', userId);
     try {
-        await fetch(DB_URL + `/document/deleteOne/users/${userId}`, requestOptions);
+        await api.delete(`/document/deleteOne/users/${userId}`);
         return true;
     } catch (error) {
         console.error('Error during deleting user data:', error);

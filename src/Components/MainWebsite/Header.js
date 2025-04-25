@@ -12,14 +12,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Container, Menu, MenuItem } from '@mui/material';
 import LoginAndRegisterForm from '../LoginAndRegister/LoginRegisterForm';
 import { useState } from 'react';
+import { userLogout } from '../../helpers/users';
 
 
 function MainHeader() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const role = useSelector(state => state.auth.role);
     const dispatch = useDispatch();
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(logout());
+        await userLogout();
     };
 
     const [openDialog, setOpenDialog] = useState(false);

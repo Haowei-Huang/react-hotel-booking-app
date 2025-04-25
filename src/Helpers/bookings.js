@@ -1,19 +1,13 @@
-const DB_URL = process.env.REACT_APP_DB_URL;
-const FIND_ALL_BOOKINGS = DB_URL + '/document/findAll/bookings';
-const GET_BOOKING_COUNT = DB_URL + '/document/countDocuments/bookings';
+import api from '../features/interceptor';
+const FIND_ALL_BOOKINGS = '/document/findAll/bookings';
+const GET_BOOKING_COUNT = '/document/countDocuments/bookings';
 
 export async function findAllBookings() {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('findAllBookings called');
     try {
-        const response = await fetch(FIND_ALL_BOOKINGS, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(FIND_ALL_BOOKINGS);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching booking data:', error);
@@ -21,17 +15,11 @@ export async function findAllBookings() {
 }
 
 export async function findBookingByUserId(userId) {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            //"Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('findBookingByUserId called: ', userId);
     try {
-        const response = await fetch(DB_URL + `/booking/findBookingByUserId/${userId}`, requestOptions);
-        const responseJson = await response.json();
+        const response = await api.get(`/booking/findBookingByUserId/${userId}`);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching booking data:', error);
@@ -39,20 +27,14 @@ export async function findBookingByUserId(userId) {
 }
 
 export async function createBooking(bookingData) {
-    const requestOptions = {
-        method: "POST",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-        body: JSON.stringify({
-            ...bookingData
-        })
-    };
+    console.log('createBooking called: ', bookingData);
+    const data = JSON.stringify({
+        ...bookingData
+    });
 
     try {
-        const response = await fetch(DB_URL + "/document/createorupdate/bookings", requestOptions);
-        await response.text();
+        const response = await api.post("/document/createorupdate/bookings", data);
+        await response.data;
         return true; // Booking created successfully
     } catch (error) {
         console.error('Error during creating booking:', error);
@@ -61,17 +43,11 @@ export async function createBooking(bookingData) {
 }
 
 export async function getBookingCount() {
-    const requestOptions = {
-        method: "GET",
-        headers: new Headers({
-            // "Authorization": jwtToken,
-            "Content-Type": "application/json"
-        }),
-    };
-
+    console.log('getBookingCount called');
     try {
-        const response = await fetch(GET_BOOKING_COUNT, requestOptions);
-        const responseJson = await response.json();
+        const response = await fetch(GET_BOOKING_COUNT);
+        const responseJson = await response.data;
+        console.log('responseJson', responseJson);
         return responseJson.count;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);

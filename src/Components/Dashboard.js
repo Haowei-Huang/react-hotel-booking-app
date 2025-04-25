@@ -23,12 +23,14 @@ import ManageHotels from './ManageHotels/ManageHotels';
 import AdminViewBookings from './AdminViewBookings/AdminViewBookings';
 import Stats from './DashboardStats/Stats';
 import { StatsContextProvider } from './DashboardStats/StatsContext';
+import { userLogout } from '../helpers/users';
 
 export const Dashboard = () => {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const dispatch = useDispatch();
-    const handleLogout = () => {
+    const handleLogout = async () => {
         dispatch(logout());
+        await userLogout();
     };
 
     const drawerWidth = "12%";

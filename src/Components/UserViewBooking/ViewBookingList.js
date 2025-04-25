@@ -50,7 +50,7 @@ function ViewBookingList() {
                     }}>My Bookings</Typography>
                     <Grid container spacing={5}>
                         {bookingList.bookings.map((booking) => (
-                            <Grid item xs={12} sm={6} md={4} key={booking._id}>
+                            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={booking._id}>
                                 <Card sx={{ maxWidth: 345, my: 2, ":hover": { boxShadow: 6 }, boxShadow: 3 }}>
                                     <CardContent>
                                         <Typography gutterBottom variant="h6">

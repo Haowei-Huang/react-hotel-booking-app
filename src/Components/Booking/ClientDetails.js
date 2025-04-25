@@ -70,47 +70,47 @@ function ClientDetails({ nextStep }) {
                         {isAuthenticated && userInfoReuseData.hasOwnProperty("clientInfo") &&
                             <Box display="flex" flexDirection="row" justifyContent="space-between" sx={{ p: 2, border: 1, my: 1 }}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             First Name
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             {userInfoReuseData.clientInfo.firstName}
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             Last Name
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             {userInfoReuseData.clientInfo.lastName}
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             Email
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             {userInfoReuseData.clientInfo.email}
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             Phone
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid size={6}>
                                         <Typography>
                                             {userInfoReuseData.clientInfo.phone}
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={12} display="flex" flexDirection="row" alignItems="center">
+                                    <Grid size={12} display="flex" flexDirection="row" alignItems="center">
                                         <Typography color="primary" sx={{ mr: 2 }}>
                                             Reuse this information
                                         </Typography>

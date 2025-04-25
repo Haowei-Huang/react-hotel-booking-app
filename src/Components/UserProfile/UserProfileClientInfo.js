@@ -63,15 +63,15 @@ function UserProfileClientInfo() {
         );
     } else {
         return (<Grid container component="form" onSubmit={handleSubmit(onSubmit)} spacing={2}>
-            <Grid item xs={12}>
+            <Grid size={12}>
                 <Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
                     Client Info
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={12}>
                 <Typography variant="h6">Save time for your next booking by providing the information below</Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={6}>
                 <Controller
                     control={control}
                     name="clientInfo.firstName"
@@ -95,7 +95,7 @@ function UserProfileClientInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={6}>
                 <Controller
                     control={control}
                     name="clientInfo.lastName"
@@ -119,7 +119,7 @@ function UserProfileClientInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={6}>
                 <Controller
                     control={control}
                     name="clientInfo.email"
@@ -143,7 +143,7 @@ function UserProfileClientInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={6}>
                 <Controller
                     control={control}
                     name="clientInfo.phone"
@@ -170,19 +170,20 @@ function UserProfileClientInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+            {infoChanged && <Grid size={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert severity="success">Information Saved!</Alert>
+            </Grid>}
+            <Grid size={12} sx={{ display: 'flex', justifyContent: 'right' }}>
+
                 <Button
                     variant="contained" size="large"
                     onClick={handleSubmit(onSubmit)}
                     color="primary"
-                    sx={{ mt: 1, alignSelf: 'center', width: "200px" }}  // Align the button to the end of the flex container
+                    sx={{ mt: 1 }}  // Align the button to the end of the flex container
                 >
                     Save
                 </Button>
             </Grid>
-            {infoChanged && <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert severity="success">Infomation Saved!</Alert>
-            </Grid>}
         </Grid >);
     }
 }

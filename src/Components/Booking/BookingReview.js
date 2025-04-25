@@ -97,7 +97,7 @@ function BookingReview({ prevStep }) {
                 <Card sx={{ boxShadow: 3 }}>
                     <CardContent>
                         <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                                 <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
                                     Billing Address
                                 </Typography>
@@ -111,7 +111,7 @@ function BookingReview({ prevStep }) {
                                     {bookingData.cardInfo.address.postalCode}, {bookingData.cardInfo.address.country.toUpperCase()}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                                 <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
                                     Payment Details
                                 </Typography>

@@ -42,7 +42,7 @@ function Stats() {
 
         return (<Container maxWidth={false}>
             <Grid container spacing={2}>
-                <Grid item xs={4}>
+                <Grid size={4}>
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -56,7 +56,7 @@ function Stats() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid size={4}>
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -70,7 +70,7 @@ function Stats() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid size={4}>
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -84,7 +84,7 @@ function Stats() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid size={4}>
                     <Card>
                         <CardContent>
                             <Typography color="textSecondary" gutterBottom>
@@ -95,16 +95,16 @@ function Stats() {
                                 <Typography variant="h5">${stats.hasOwnProperty("bookings") ? totalRevenue.toFixed(2) : 0}</Typography>
                             </Box>
 
-                            <Grid item container spacing={2} >
-                                <Grid item xs={4}>
+                            <Grid container spacing={2} >
+                                <Grid size={4}>
                                     <Typography variant="h6">Last 24 Hours</Typography>
                                     <Typography variant="h6">${stats.hasOwnProperty("bookings") ? yesterdayRevenue.toFixed(2) : 0}</Typography>
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid size={4}>
                                     <Typography variant="h6">Last Week</Typography>
                                     <Typography variant="h6">${stats.hasOwnProperty("bookings") ? lastWeekRevenue.toFixed(2) : 0}</Typography>
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid size={4}>
                                     <Typography variant="h6">Last Month</Typography>
                                     <Typography variant="h6">${stats.hasOwnProperty("bookings") ? lastMonthRevenue.toFixed(2) : 0}</Typography>
                                 </Grid>

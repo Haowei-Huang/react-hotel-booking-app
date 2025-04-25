@@ -113,7 +113,7 @@ function ViewBookingDetails() {
                     <Card sx={{ boxShadow: 3 }}>
                         <CardContent>
                             <Grid container spacing={3}>
-                                <Grid item xs={12} md={4}>
+                                <Grid size={{ xs: 12, md: 4 }}>
                                     <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
                                         Billing Address
                                     </Typography>
@@ -127,7 +127,7 @@ function ViewBookingDetails() {
                                         {location.state.bookingDetails.cardInfo.address.postalCode}, {location.state.bookingDetails.cardInfo.address.country.toUpperCase()}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} md={8}>
+                                <Grid size={{ xs: 12, md: 8 }} >
                                     <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
                                         Payment Details
                                     </Typography>

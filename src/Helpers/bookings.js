@@ -1,6 +1,7 @@
 import api from '../features/interceptor';
-const FIND_ALL_BOOKINGS = '/document/findAll/bookings';
-const GET_BOOKING_COUNT = '/document/countDocuments/bookings';
+const FIND_ALL_BOOKINGS = '/booking/findAllBookings';
+const CREATE_BOOKING = '/booking/createBooking';
+//const GET_BOOKING_COUNT = '/document/countDocuments/bookings';
 
 export async function findAllBookings() {
     console.log('findAllBookings called');
@@ -33,7 +34,7 @@ export async function createBooking(bookingData) {
     });
 
     try {
-        const response = await api.post("/document/createorupdate/bookings", data);
+        const response = await api.post(CREATE_BOOKING, data);
         await response.data;
         return true; // Booking created successfully
     } catch (error) {
@@ -42,14 +43,14 @@ export async function createBooking(bookingData) {
     }
 }
 
-export async function getBookingCount() {
-    console.log('getBookingCount called');
-    try {
-        const response = await fetch(GET_BOOKING_COUNT);
-        const responseJson = await response.data;
-        console.log('responseJson', responseJson);
-        return responseJson.count;
-    } catch (error) {
-        console.error('Error during fetching hotel data:', error);
-    }
-}
+// export async function getBookingCount() {
+//     console.log('getBookingCount called');
+//     try {
+//         const response = await fetch(GET_BOOKING_COUNT);
+//         const responseJson = await response.data;
+//         console.log('responseJson', responseJson);
+//         return responseJson.count;
+//     } catch (error) {
+//         console.error('Error during fetching hotel data:', error);
+//     }
+// }

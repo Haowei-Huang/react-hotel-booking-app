@@ -1,6 +1,6 @@
 import api from '../features/interceptor';
-const FIND_ALL_HOTELS = '/document/findAll/hotels';
-const GET_HOTEL_COUNT = '/document/countDocuments/hotels';
+const FIND_ALL_HOTELS = '/hotel/findAllHotels';
+//const GET_HOTEL_COUNT = '/document/countDocuments/hotels';
 
 export async function findAllHotels() {
     console.log('findAllHotels called');
@@ -17,7 +17,7 @@ export async function findAllHotels() {
 export async function findHotelById(hotelId) {
     console.log('findHotelById called: ', hotelId);
     try {
-        const response = await api.get(`/document/findOne/hotels/${hotelId}`);
+        const response = await api.get(`/hotel/findHotelById/${hotelId}`);
         const responseJson = await response.data;
         console.log('responseJson', responseJson);
         return responseJson.data;
@@ -26,17 +26,17 @@ export async function findHotelById(hotelId) {
     }
 }
 
-export async function getHotelCount() {
-    console.log('getHotelCount called');
-    try {
-        const response = await api.get(GET_HOTEL_COUNT);
-        const responseJson = await response.data;
-        console.log('responseJson', responseJson);
-        return responseJson.count;
-    } catch (error) {
-        console.error('Error during fetching hotel data:', error);
-    }
-}
+// export async function getHotelCount() {
+//     console.log('getHotelCount called');
+//     try {
+//         const response = await api.get(GET_HOTEL_COUNT);
+//         const responseJson = await response.data;
+//         console.log('responseJson', responseJson);
+//         return responseJson.count;
+//     } catch (error) {
+//         console.error('Error during fetching hotel data:', error);
+//     }
+// }
 
 export async function updateHotel(hotelId, newData) {
     console.log('updateHotel called: ', hotelId);
@@ -44,7 +44,7 @@ export async function updateHotel(hotelId, newData) {
         ...newData
     });
     try {
-        const response = await api.put(`/document/updateOne/hotels/${hotelId}`, newHotelData);
+        const response = await api.put(`/hotel/updateHotel/${hotelId}`, newHotelData);
         await response.data;
         return true; // update successfully
     } catch (error) {

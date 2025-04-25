@@ -1,6 +1,6 @@
 import api from '../features/interceptor';
-const FIND_ALL_USERS = '/document/findAll/users';
-const GET_USER_COUNT = '/document/countDocuments/users';
+const FIND_ALL_USERS = '/user/findAllUsers';
+// const GET_USER_COUNT = '/document/countDocuments/users';
 const USER_LOGIN = '/user/login';
 const USER_LOGOUT = '/user/logout';
 const USER_REGISTER = '/user/register';
@@ -21,7 +21,7 @@ export async function findAllUsers() {
 export async function findUserById(userId) {
     console.log('findUserById called: ', userId);
     try {
-        const response = await api.get(`/document/findOne/users/${userId}`);
+        const response = await api.get(`/user/findUserById/${userId}`);
         const responseJson = await response.data;
         console.log('responseJson', responseJson);
         return responseJson.data;
@@ -42,17 +42,17 @@ export async function findUserByEmail(userEmail) {
     }
 }
 
-export async function getUserCount() {
-    console.log('getUserCount called');
-    try {
-        const response = await api.get(GET_USER_COUNT);
-        const responseJson = await response.data;
-        console.log('responseJson', responseJson);
-        return responseJson.count;
-    } catch (error) {
-        console.error('Error during fetching user data:', error);
-    }
-}
+// export async function getUserCount() {
+//     console.log('getUserCount called');
+//     try {
+//         const response = await api.get(GET_USER_COUNT);
+//         const responseJson = await response.data;
+//         console.log('responseJson', responseJson);
+//         return responseJson.count;
+//     } catch (error) {
+//         console.error('Error during fetching user data:', error);
+//     }
+// }
 
 export async function userLogin(email, password) {
     console.log('userLogin called: ', email);
@@ -113,7 +113,7 @@ export async function updateUser(userId, newData) {
     });
 
     try {
-        const response = await api.put(`/document/updateOne/users/${userId}`, newUserData);
+        const response = await api.put(`/user/updateUser/${userId}`, newUserData);
         await response.data;
         return true; // update successfully
     } catch (error) {
@@ -125,7 +125,7 @@ export async function updateUser(userId, newData) {
 export async function deleteUser(userId) {
     console.log('deleteUser called: ', userId);
     try {
-        await api.delete(`/document/deleteOne/users/${userId}`);
+        await api.delete(`/user/deleteUser/${userId}`);
         return true;
     } catch (error) {
         console.error('Error during deleting user data:', error);

@@ -44,22 +44,18 @@ function MainHeader() {
     };
 
     return (
-        <Box sx={{ width: '100%', flexGrow: 1 }} >
+        <Box sx={{ width: '100%' }} >
             <AppBar position="static">
                 <Toolbar>
-                    <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-                        <Box sx={{ width: '120px', margin: 'auto' }}>
-                            <Typography component={Link}
-                                to="/"
-                                variant="h4"
-                                color="inherit"
-                                align="center"
-                                noWrap
-                                sx={{ flex: 1, textDecoration: 'none', width: '100px', margin: 'auto', fontWeight: 'bold' }}>
-                                Booking
-                            </Typography>
-                        </Box>
-                    </Box>
+                    <Typography component={Link}
+                        to="/"
+                        variant="h4"
+                        color="inherit"
+                        align="center"
+                        noWrap
+                        sx={{ flex: 1, textDecoration: 'none', width: '10%', margin: 'auto', fontWeight: 'bold' }}>
+                        Booking
+                    </Typography>
 
                     {!isAuthenticated && <Button color="inherit" variant="outlined" sx={{ mr: 2 }} onClick={handleDialogOpen}>Register</Button>}
                     {!isAuthenticated && <Button color="inherit" variant="outlined" sx={{ mr: 2, }} onClick={handleDialogOpen}>Login</Button>}

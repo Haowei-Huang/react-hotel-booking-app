@@ -32,23 +32,29 @@ export const WelcomePage = () => {
                     </Box>
                 </Stack>
             </Box>
-            <Paper maxWidth="md" sx={{ my: 4 }}>
-                <Typography variant="h6" gutterBottom>
-                    Admin Dashboard Login
-                </Typography>
-                <Typography variant="body2" >
-                    To view the admin dashboard, please create your admin account first in the database following this format:
-                </Typography>
-                <Box sx={{
-                    backgroundColor: 'grey.900',
-                    color: 'white'
-                }}>
-                    {JSON.stringify({
-                        email: "[adminEmail]",
-                        role: "admin",
-                        password: "[adminPassword]"
-                    }, null, 2)}
-                </Box>
-            </Paper>
+            <Container maxWidth="md" sx={{ my: 4, height: '100%' }}>
+                <Paper sx={{ p: 3 }} elevation={3}>
+                    <Typography variant="h6" gutterBottom sx={{ textAlign: 'center' }}>
+                        Admin Dashboard Login
+                    </Typography>
+                    <Typography variant="body1" sx={{ textAlign: 'center' }} gutterBottom >
+                        To view the admin dashboard, please create your admin account first in the database following this format:
+                    </Typography>
+                    <Box sx={{
+                        backgroundColor: 'grey.900',
+                        color: 'white',
+                        whiteSpace: 'pre-wrap',
+                        p: 3,
+                        mt: 1,
+                        borderRadius: 1
+                    }}>
+                        {JSON.stringify({
+                            email: "[adminEmail]",
+                            role: "admin",
+                            password: "[adminPassword]"
+                        }, null, 2)}
+                    </Box>
+                </Paper>
+            </Container>
         </React.Fragment>);
 };

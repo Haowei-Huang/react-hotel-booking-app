@@ -11,16 +11,14 @@ function App() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Container maxWidth={false} disableGutters>
-        <Router>
-          <Routes>
-            <Route path="/*" element={<Home />} />
-            <Route path="/Dashboard/*" element={<ProtectedAdminRoute>
-              <Dashboard />
-            </ProtectedAdminRoute>} />
-          </Routes>
-        </Router>
-      </Container>
+      <Router>
+        <Routes>
+          <Route path="/*" element={<Home />} />
+          <Route path="/Dashboard/*" element={<ProtectedAdminRoute>
+            <Dashboard />
+          </ProtectedAdminRoute>} />
+        </Routes>
+      </Router>
     </LocalizationProvider >
   );
 }

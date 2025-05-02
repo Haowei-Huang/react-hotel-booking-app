@@ -13,7 +13,7 @@ import Footer from "./Footer";
 
 function Home() {
 
-    return (<Container maxWidth={false} disableGutters>
+    return (<Container maxWidth={false} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }} disableGutters>
         <MainHeader />
         <SearchContextProvider>
             <Routes>

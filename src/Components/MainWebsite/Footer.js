@@ -7,7 +7,7 @@ export default function Footer() {
         <Box component="footer" sx={{
             width: '100%',
             bgcolor: 'grey.900', color: 'grey.50', height: '20%',
-            mt: 'auto', position: 'fixed', bottom: 0
+            mt: 'auto', bottom: 0
         }}>
             <Container maxWidth="lg" sx={{ p: 4 }}>
                 <Grid container spacing={4}>

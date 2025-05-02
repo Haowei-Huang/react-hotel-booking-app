@@ -6,6 +6,7 @@ import { Image } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import SearchContext from "../SearchHotelContext/SearchContext";
 import WifiIcon from '@mui/icons-material/Wifi';
+import { useDebounce } from "../../hooks/hooks";
 
 const initialDisplayData = {
     itemList: []
@@ -77,6 +78,8 @@ function ViewHotels() {
     const { dispatch, hotelList, reloadHotelList } = useContext(HotelDisplayContext);
     const [displayData, dispatchDisplay] = useReducer(displayDataReducer, initialDisplayData);
     const { searchOption, setSearchOption } = useContext(SearchContext);
+    // debounce the filter data function to avoid too many re-renders
+    const debouncedFilterData = useDebounce(dispatchDisplay, 1000);
 
     const handleChange = (event) => {
         setSearchOption({ ...searchOption, [event.target.name]: event.target.value });
@@ -99,27 +102,25 @@ function ViewHotels() {
         if (hotelList.length === 0) {
             return;
         }
-        // only apply tag fitler that is set to true
+        // only apply tag filter that is set to true
         const filteredTags = Object.keys(searchOption.tags).filter(key => searchOption.tags[key] === true);
-        dispatchDisplay({
+        debouncedFilterData({
             type: "filterData",
             payload: { data: hotelList, minRating: searchOption.rating, location: searchOption.location, searchTags: filteredTags, priceRange: searchOption.price, numberOfGuest: searchOption.numberOfGuest }
         })
-    }, [hotelList, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest])
+    }, [hotelList, debouncedFilterData, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest])
 
-    return (<Container maxWidth={false} disableGutters sx={{
-        width: "45%"
-    }}>
-        <Container maxWidth={false} sx={{ margin: "auto", mt: 2 }} id="searchBar">
-            <SearchBar />
-        </Container>
+    return (<Container maxWidth={false} disableGutters sx={{ width: "50%", display: "flex", flexDirection: "column", margin: "auto" }}>
+        <Box sx={{ margin: "auto", alignItems: 'center', justifyContent: 'center', mt: 2 }} id="searchBar">
+            <SearchBar sx={{ margin: "auto", mt: 2 }} />
+        </Box>
         <Divider sx={{ mt: 3 }} />
         <Stack id="hotelList" direction="row" sx={{
             mt: 2,
             margin: "auto",
             justifyContent: "center"
         }}>
-            <Paper square={false} elevation={3} sx={{ mt: 2, p: 4, width: "260px" }}>
+            <Paper square={false} elevation={3} sx={{ mt: 2, p: 4, width: "30%" }}>
                 <Typography variant="text">
                     Filter by:
                 </Typography>

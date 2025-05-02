@@ -53,7 +53,7 @@ function MainHeader() {
                         color="inherit"
                         align="center"
                         noWrap
-                        sx={{ flex: 1, textDecoration: 'none', width: '10%', margin: 'auto', fontWeight: 'bold' }}>
+                        sx={{ flexGrow: 1, textDecoration: 'none', margin: 'auto', fontWeight: 'bold' }}>
                         Booking
                     </Typography>
 
@@ -84,7 +84,7 @@ function MainHeader() {
                 </Toolbar>
             </AppBar >
             <LoginAndRegisterForm open={openDialog} onClose={handleDialogClose} />
-        </Box>);
+        </Box >);
 }
 
 export default MainHeader;

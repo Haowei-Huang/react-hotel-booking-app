@@ -1,5 +1,5 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -9,11 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../../features/authSlice';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Container, Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 import LoginAndRegisterForm from '../LoginAndRegister/LoginRegisterForm';
-import { useState } from 'react';
 import { userLogout } from '../../helpers/users';
-
 
 function MainHeader() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -34,7 +32,7 @@ function MainHeader() {
         setOpenDialog(false);
     };
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -46,41 +44,62 @@ function MainHeader() {
     return (
         <Box sx={{ width: '100%' }} >
             <AppBar position="static">
-                <Toolbar>
+                {/* use Grid to center the logo text,  */}
+                <Toolbar sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr auto 1fr',
+                    alignItems: 'center',
+                    px: 2
+                }}>
+                    {/* Empty Box to reserve left space */}
+                    <Box />
+                    {/* Logo in the center of the header */}
                     <Typography component={Link}
                         to="/"
                         variant="h4"
                         color="inherit"
-                        align="center"
                         noWrap
-                        sx={{ flexGrow: 1, textDecoration: 'none', margin: 'auto', fontWeight: 'bold' }}>
-                        Booking
+                        sx={{
+                            textDecoration: 'none',
+                            fontWeight: 'bold',
+                            justifySelf: 'center' // the key to center the logo text
+                        }}>
+                        SimpliiBook
                     </Typography>
-
-                    {!isAuthenticated && <Button color="inherit" variant="outlined" sx={{ mr: 2 }} onClick={handleDialogOpen}>Register</Button>}
-                    {!isAuthenticated && <Button color="inherit" variant="outlined" sx={{ mr: 2, }} onClick={handleDialogOpen}>Login</Button>}
-                    {isAuthenticated && role === 'admin' && <Button color="inherit" component={Link} to="/Dashboard" variant="outlined" sx={{ mr: 2, }}>Dashboard</Button>}
-                    {isAuthenticated && <Button color="inherit" variant="outlined" sx={{ mr: 2 }} onClick={handleLogout}>Logout</Button>}
-                    {isAuthenticated && role === 'user' && <div>
-                        <IconButton id="basic-button"
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick} color="inherit"><AccountCircleIcon /></IconButton>
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem component={Link} to="/UserProfile">Profile</MenuItem>
-                            <MenuItem component={Link} to="/Bookings">My bookings</MenuItem>
-                            {/* <MenuItem component={Link} to="/UserProfile">Logout</MenuItem> */}
-                        </Menu>
-                    </div>}
+                    {/*display buttons on the right side of the header */}
+                    <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                        {!isAuthenticated ?
+                            (<>
+                                <Button color="inherit" variant="outlined" onClick={handleDialogOpen}>Register</Button>
+                                <Button color="inherit" variant="outlined" onClick={handleDialogOpen}>Login</Button>
+                            </>) : (
+                                <>
+                                    {role === 'admin' && <Button color="inherit" component={Link} to="/Dashboard" variant="outlined">Dashboard</Button>}
+                                    <Button color="inherit" variant="outlined" onClick={handleLogout}>Logout</Button>
+                                    {role === 'user' && <div>
+                                        <IconButton id="basic-button"
+                                            aria-controls={open ? 'basic-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={open ? 'true' : undefined}
+                                            onClick={handleClick} color="inherit"><AccountCircleIcon /></IconButton>
+                                        <Menu
+                                            id="basic-menu"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            MenuListProps={{
+                                                'aria-labelledby': 'basic-button',
+                                            }}
+                                        >
+                                            <MenuItem component={Link} to="/UserProfile">Profile</MenuItem>
+                                            <MenuItem component={Link} to="/Bookings">My bookings</MenuItem>
+                                            {/* <MenuItem component={Link} to="/UserProfile">Logout</MenuItem> */}
+                                        </Menu>
+                                    </div>}
+                                </>
+                            )
+                        }
+                    </Box>
                 </Toolbar>
             </AppBar >
             <LoginAndRegisterForm open={openDialog} onClose={handleDialogClose} />

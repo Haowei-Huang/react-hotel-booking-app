@@ -110,28 +110,28 @@ function ViewHotels() {
         })
     }, [hotelList, debouncedFilterData, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest])
 
-    return (<Container maxWidth={false} disableGutters sx={{ width: "50%", display: "flex", flexDirection: "column", margin: "auto" }}>
-        <Box sx={{ margin: "auto", alignItems: 'center', justifyContent: 'center', mt: 2 }} id="searchBar">
-            <SearchBar sx={{ margin: "auto", mt: 2 }} />
+    return (<Container maxWidth="lg" disableGutters sx={{ display: "flex", flexDirection: "column", margin: "auto" }}>
+        <Box sx={{ margin: "auto", my: 2 }} >
+            <SearchBar sx={{ margin: "auto" }} />
         </Box>
-        <Divider sx={{ mt: 3 }} />
-        <Stack id="hotelList" direction="row" sx={{
-            mt: 2,
-            margin: "auto",
-            justifyContent: "center"
-        }}>
-            <Paper square={false} elevation={3} sx={{ mt: 2, p: 4, width: "30%" }}>
-                <Typography variant="text">
-                    Filter by:
+        <Divider />
+        <Stack direction="row" sx={{ margin: "auto", width: "90%" }} >
+            <Container component={Paper} square={false} elevation={3} sx={{ my: 2, p: 4, width: "35%", height: '50%', position: 'sticky', top: '1rem' }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                    Filter by
                 </Typography>
                 <Divider sx={{ my: 1 }} />
-                <Typography variant="text">
-                    Your budget per night:
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }} gutterBottom>
+                    Price
                 </Typography>
-                <br></br>
-                <Typography variant="text">
-                    CAD {searchOption.price[0]} - CAD {searchOption.price[1]}
-                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography variant="text">
+                        $ {searchOption.price[0]} - $ {searchOption.price[1]}
+                    </Typography>
+                    <Typography variant="text">
+                        Each night
+                    </Typography>
+                </Box>
                 <Slider
                     getAriaLabel={() => 'Price range'}
                     name="price"
@@ -141,22 +141,22 @@ function ViewHotels() {
                     value={searchOption.price}
                     onChange={handleChange}
                     valueLabelDisplay="auto"
-                    sx={{ mt: 1 }}
+                    sx={{ my: 1, mx: 'auto' }}
                 />
                 <Divider />
+                <Typography variant="subtitle1" sx={{ my: 1, fontWeight: 'bold' }} gutterBottom>
+                    Facilities
+                </Typography>
                 <List disablePadding
                     sx={{ bgcolor: 'background.paper' }}
-                    subheader={<ListSubheader component="div">Facilities</ListSubheader>}
                     spacing={1}
+                    alignItems="flex-start"
                     dense
                 >
                     <ListItem disablePadding key="wifi">
                         <Checkbox
                             checked={searchOption.tags.wifi}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-wifi',
-                            }}
                             name="wifi"
                         />
                         <ListItemText id="switch-list-label-wifi" primary="Wi-Fi" />
@@ -165,9 +165,6 @@ function ViewHotels() {
                         <Checkbox
                             checked={searchOption.tags.parking}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-parking',
-                            }}
                             name="parking"
                         />
                         <ListItemText id="switch-list-label-parking" primary="Parking" />
@@ -176,9 +173,6 @@ function ViewHotels() {
                         <Checkbox
                             checked={searchOption.tags.laundry}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-laundry',
-                            }}
                             name="laundry"
                         />
                         <ListItemText id="switch-list-label-laundry" primary="Laundry" />
@@ -187,9 +181,6 @@ function ViewHotels() {
                         <Checkbox
                             checked={searchOption.tags.bar}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-bar',
-                            }}
                             name="bar"
                         />
                         <ListItemText id="switch-list-label-bar" primary="Bar" />
@@ -198,9 +189,6 @@ function ViewHotels() {
                         <Checkbox
                             checked={searchOption.tags.restaurant}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-restaurant',
-                            }}
                             name="restaurant"
                         />
                         <ListItemText id="switch-list-label-restaurant" primary="Restaurant" />
@@ -209,9 +197,7 @@ function ViewHotels() {
                         <Checkbox
                             checked={searchOption.tags.pool}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-pool',
-                            }}
+
                             name="pool"
                         />
                         <ListItemText id="switch-list-label-pool" primary="Pool" />
@@ -220,33 +206,29 @@ function ViewHotels() {
                         <Checkbox
                             checked={searchOption.tags.breakfast}
                             onChange={handleCheck}
-                            inputProps={{
-                                'aria-labelledby': 'switch-list-label-breakfast',
-                            }}
                             name="breakfast"
                         />
                         <ListItemText id="switch-list-label-breakfast" primary="Breakfast" />
                     </ListItem>
                 </List>
                 <Divider sx={{ my: 1 }} />
-                <Typography variant="text" gutterBottom>
+                <Typography variant="subtitle1" sx={{ my: 1, fontWeight: 'bold' }} gutterBottom>
                     Rating
                 </Typography>
-                <br></br>
                 <Rating value={searchOption.rating} precision={0.5} name="rating" onChange={handleChange} />
-            </Paper>
-            <Container>
+            </Container>
+            <Container >
                 {displayData.itemList && displayData.itemList.map((item) => (
-                    <Paper square={false} elevation={3} sx={{ mt: 2, p: 2 }} key={item._id}>
-                        <Stack direction="row" alignItems="flex-start" spacing={2}>
+                    <Paper square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%' }} key={item._id}>
+                        <Stack direction="row" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
                             <Link to={`/Hotels/${item.id}`} style={{ textDecoration: 'none' }}>
                                 <CardMedia
-                                    sx={{ height: "200px", width: "200px", objectFit: "cover" }}
+                                    sx={{ height: "12rem", width: "12rem", objectFit: "cover" }}
                                     image={item.Photo}
                                     component="img"
                                 />
                             </Link>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1, height: '200px' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1, height: '12rem' }}>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%' }}>
                                     <Box>
                                         <Typography variant="h5" gutterBottom component="div">
@@ -254,19 +236,18 @@ function ViewHotels() {
                                                 {item.HotelName}
                                             </Link>
                                         </Typography>
-
                                         <Typography variant="subtitle1" color="text.secondary">
                                             {item.Address.StreetAddress}, {item.Address.City}
                                         </Typography>
                                     </Box>
-                                    <Box>
-                                        <Stack direction="row" spacing={1} alignItems="center">
+                                    <Box >
+                                        <Stack direction="row" spacing={1} alignItems="center" justifySelf={"flex-end"}>
                                             <Rating value={item.Rating} precision={0.5} readOnly />
                                             <Avatar sx={{ bgcolor: "darkblue" }} variant="rounded">{item.Rating}</Avatar>
                                         </Stack>
                                     </Box>
                                 </Box>
-                                <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ width: "200px", alignSelf: 'end' }}>
+                                <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ width: "30%", alignSelf: 'end' }}>
                                     See availability
                                 </Button>
                             </Box>

@@ -6,20 +6,15 @@ import { HotelDisplayProvider } from "./HotelDisplayContext";
 import HotelDetails from "./HotelDetails";
 import { BookingContextProvider } from "../Booking/BookingContext";
 
-const LazyViewHotels = React.lazy(() => {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(import("./ViewHotels")), 2000)
-    })
-});
-
 function HotelHome() {
     return (<Container maxWidth={false} disableGutters>
         <HotelDisplayProvider>
-            <Suspense fallback={<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-                <CircularProgress />
-            </Box>}>
+            <Suspense
+                fallback={<Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+                    <CircularProgress />
+                </Box>}>
                 <Routes>
-                    <Route index element={<LazyViewHotels />} />
+                    <Route index element={<ViewHotels />} />
                     <Route path=":id/*" element={<BookingContextProvider>
                         <HotelDetails />
                     </BookingContextProvider>

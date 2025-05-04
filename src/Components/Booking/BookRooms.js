@@ -126,7 +126,7 @@ function BookRooms() {
     } else {
         return (<FormProvider {...methods}>
             <AdminRestrictedRoute>
-                <Container sx={{ margin: 'auto' }} >
+                <Container sx={{ margin: 'auto', mb: 3 }} >
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
                         {steps.map((label) => (
                             <Step key={label}>

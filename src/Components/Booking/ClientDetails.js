@@ -219,7 +219,7 @@ function ClientDetails({ nextStep }) {
                     return (<Card key={room.RoomId} sx={{ boxShadow: 3, p: 1 }}>
                         <CardContent
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                            <Typography gutterBottom variant="h6" component="div">
+                            <Typography gutterBottom variant="h6" fontWeight="500">
                                 {room.Description}
                             </Typography>
                             <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
@@ -227,8 +227,8 @@ function ClientDetails({ nextStep }) {
                                     <PersonIcon key={k} sx={{ verticalAlign: "bottom" }} />
                                 ))}
                             </Typography>
-                            {room.Tags && room.Tags.map((tag, tagIndex) => (
-                                <Chip sx={{ mr: 1 }} label={tag} key={tagIndex} color="primary" variant="outlined" />
+                            {room.Tags && room.Tags.map((tag) => (
+                                <Chip sx={{ mr: 1, textTransform: 'capitalize' }} label={tag} key={tag} color="primary" variant="outlined" />
                             ))}
                         </CardContent></Card>);
                 }
@@ -240,7 +240,7 @@ function ClientDetails({ nextStep }) {
                         variant="contained" size="large"
                         onClick={handleSubmit(onSubmit)}
                         color="primary"
-                        sx={{ mt: 2, alignSelf: 'flex-end' }}  // Align the button to the end of the flex container
+                        sx={{ my: 1.5, alignSelf: 'flex-end' }}  // Align the button to the end of the flex container
                     >
                         Next
                     </Button>

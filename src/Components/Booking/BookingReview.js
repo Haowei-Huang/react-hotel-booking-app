@@ -10,11 +10,9 @@ function BookingReview({ prevStep }) {
     // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
     const { bookingData, dispatch } = useContext(BookingContext);
     const sessionKey = useSelector(state => state.auth.sessionKey);
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const navigate = useNavigate();
     const [bookingDetail, setBookingDetail] = useState(null);
     const [isBookingFailed, setIsBookingFailed] = useState(false);
-    const DB_URL = process.env.REACT_APP_DB_URL;
 
     const goBack = () => {
         prevStep();
@@ -57,48 +55,60 @@ function BookingReview({ prevStep }) {
     return (
         <Container maxWidth="md">
             <Stack direction="column" spacing={2}>
-                <Card sx={{ mb: 2, boxShadow: 3 }}>
+                <Card sx={{ boxShadow: 3, px: 1 }}>
                     <CardContent>
-                        <Typography variant="h6" gutterBottom>
+                        <Typography variant="h6" color="text.secondary" gutterBottom>
                             Personal Details
                         </Typography>
-                        <Stack direction="row" spacing={8}>
-                            <Stack>
-                                <Typography variant="body1" gutterBottom>
+                        <Grid container columnSpacing={0} rowSpacing={1}>
+                            <Grid size={6} >
+                                <Typography variant="body1" >
                                     First Name
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    Last Name
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    Email
-                                </Typography>
-                                <Typography variant="body1" gutterBottom>
-                                    Phone
-                                </Typography>
-                            </Stack>
-                            <Stack>
-                                <Typography variant="body1" gutterBottom>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1" >
                                     {bookingData.clientInfo.firstName}
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1" >
+                                    Last Name
+                                </Typography>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1" >
                                     {bookingData.clientInfo.lastName}
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1">
+                                    Email
+                                </Typography>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1">
                                     {bookingData.clientInfo.email}
                                 </Typography>
-                                <Typography variant="body1" gutterBottom>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1">
+                                    Phone
+                                </Typography>
+                            </Grid>
+                            <Grid size={6} >
+                                <Typography variant="body1" >
                                     {bookingData.clientInfo.phone}
                                 </Typography>
-                            </Stack>
-                        </Stack>
+                            </Grid>
+                        </Grid>
                     </CardContent>
                 </Card>
-                <Card sx={{ boxShadow: 3 }}>
+                <Card sx={{ boxShadow: 3, px: 1 }}>
                     <CardContent>
-                        <Grid container spacing={3}>
+                        <Grid container columnSpacing={0} rowSpacing={1}>
                             <Grid size={{ xs: 12, md: 6 }}>
-                                <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
+                                <Typography variant="h6" color="text.secondary" gutterBottom>
                                     Billing Address
                                 </Typography>
                                 <Typography variant="body1" gutterBottom>
@@ -111,37 +121,47 @@ function BookingReview({ prevStep }) {
                                     {bookingData.cardInfo.address.postalCode}, {bookingData.cardInfo.address.country.toUpperCase()}
                                 </Typography>
                             </Grid>
-                            <Grid size={{ xs: 12, md: 6 }}>
-                                <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
-                                    Payment Details
-                                </Typography>
-                                <Stack direction="row" spacing={8}>
-                                    <Stack>
+                            <Grid size={{ xs: 12, md: 6 }} sx={{ mt: { xs: 2, md: 0 } }}>
+                                <Grid size={12}>
+                                    <Typography variant="h6" color="text.secondary" gutterBottom>
+                                        Payment Details
+                                    </Typography>
+                                </Grid>
+                                <Grid container size={12} columnSpacing={0} rowSpacing={1}>
+                                    <Grid size={6} >
                                         <Typography variant="body1" gutterBottom>
                                             Card Holder Name
                                         </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Card Number
-                                        </Typography>
-                                        <Typography variant="body1" gutterBottom>
-                                            Expiry Date
-                                        </Typography>
-                                    </Stack>
-                                    <Stack>
+                                    </Grid>
+                                    <Grid size={6} >
                                         <Typography variant="body1" gutterBottom>
                                             {bookingData.cardInfo.cardName}
                                         </Typography>
+                                    </Grid>
+                                    <Grid size={6} >
+                                        <Typography variant="body1" gutterBottom>
+                                            Card Number
+                                        </Typography>
+                                    </Grid>
+                                    <Grid size={6} >
+
                                         <Typography variant="body1" gutterBottom>
                                             {"xxxx-xxxx-xxxx-" + bookingData.cardInfo.cardNumber.slice(-4)}
                                         </Typography>
+                                    </Grid>
+                                    <Grid size={6} >
+                                        <Typography variant="body1" gutterBottom>
+                                            Expiry Date
+                                        </Typography>
+                                    </Grid>
+                                    <Grid size={6} >
                                         <Typography variant="body1" gutterBottom>
                                             {`${bookingData.cardInfo.expDate.substring(0, 2)}/${bookingData.cardInfo.expDate.substring(2)}`}
                                         </Typography>
-                                    </Stack>
-                                </Stack>
+                                    </Grid>
+                                </Grid>
                             </Grid>
                         </Grid>
-
                     </CardContent>
                 </Card>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}> {/* Use flexbox to align the button */}

@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Checkbox, CircularProgress, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Checkbox, CircularProgress, Divider, TextField, Typography } from "@mui/material";
 
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";
@@ -114,12 +114,12 @@ function BookingPayment({ nextStep, prevStep }) {
     if (!userInfoReuseData.isLoaded) {
         return (<CircularProgress />);
     } else {
-        return (<Card component="form" onSubmit={handleSubmit(onSubmit)} sx={{ boxShadow: 3 }}>
+        return (<Card component="form" onSubmit={handleSubmit(onSubmit)} sx={{ boxShadow: 3, p: 1.5, mb: 3, maxHeight: '50%' }}>
             <CardContent>
-                <Typography variant="h6">Payment Details</Typography>
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom>Payment Details</Typography>
                 {isAuthenticated && userInfoReuseData.hasOwnProperty("cardInfo") &&
                     <Box display="flex" flexDirection="row" justifyContent="space-between" sx={{ p: 2, border: 1, my: 2 }}>
-                        <Grid container spacing={2}>
+                        <Grid container rowSpacing={0} columnSpacing={2}>
                             <Grid size={6}>
                                 <Typography>
                                     Card Holder Name
@@ -177,10 +177,10 @@ function BookingPayment({ nextStep, prevStep }) {
                     </Box>}
 
                 {!useExistingInfo && <React.Fragment>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" sx={{ mt: 1 }} >
                         Card Info
                     </Typography>
-                    <Grid container spacing={3}>
+                    <Grid container rowSpacing={0} columnSpacing={2}>
                         <Grid size={{ xs: 12, md: 6 }}>
                             <Controller
                                 control={control}
@@ -283,10 +283,10 @@ function BookingPayment({ nextStep, prevStep }) {
                             />
                         </Grid>
                     </Grid>
-                    <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
+                    <Typography variant="h6" sx={{ mt: 5 }} >
                         Billing Address
                     </Typography>
-                    <Grid container spacing={3}>
+                    <Grid container rowSpacing={0} columnSpacing={2}>
                         <Grid size={12}>
                             <Controller
                                 control={control}
@@ -417,7 +417,7 @@ function BookingPayment({ nextStep, prevStep }) {
                             />
                         </Grid>
                     </Grid></React.Fragment>}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}> {/* Use flexbox to align the button */}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}> {/* Use flexbox to align the button */}
                     <Button
                         size="large"
                         onClick={goBack}

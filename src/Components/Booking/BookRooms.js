@@ -68,56 +68,46 @@ function BookRooms() {
     });
 
     useEffect(() => {
+        const loadUserProfile = async () => {
+            var userData;
+
+            try {
+                const responseData = await findUserById(sessionKey);
+                userData = responseData;
+            } catch (error) {
+                console.error('Error during finding user:', error);
+            }
+
+            // if userData found
+            if (userData) {
+                if (userData.clientInfo) {
+                    userInfoReuseDispatch({
+                        type: 'setClientInfo',
+                        payload: {
+                            data: userData.clientInfo
+                        }
+                    });
+                }
+                if (userData.cardInfo) {
+                    userInfoReuseDispatch({
+                        type: 'setCardInfo',
+                        payload: {
+                            data: userData.cardInfo
+                        }
+                    });
+                }
+            }
+        }
+
         // load user profile data if logged in
         if (sessionKey) {
             loadUserProfile();
         }
+
         userInfoReuseDispatch({
             type: 'setIsLoaded'
         });
     }, [sessionKey]);
-
-    useEffect(() => {
-        // load user profile data if logged in
-        if (sessionKey) {
-            loadUserProfile();
-        }
-        userInfoReuseDispatch({
-            type: 'setIsLoaded'
-        });
-    }, []);
-
-
-    const loadUserProfile = async () => {
-        var userData;
-
-        try {
-            const responseData = await findUserById(sessionKey);
-            userData = responseData;
-        } catch (error) {
-            console.error('Error during finding user:', error);
-        }
-
-        // if userData found
-        if (userData) {
-            if (userData.clientInfo) {
-                userInfoReuseDispatch({
-                    type: 'setClientInfo',
-                    payload: {
-                        data: userData.clientInfo
-                    }
-                });
-            }
-            if (userData.cardInfo) {
-                userInfoReuseDispatch({
-                    type: 'setCardInfo',
-                    payload: {
-                        data: userData.cardInfo
-                    }
-                });
-            }
-        }
-    }
 
     // use to control the stepper status
     const nextStep = () => {

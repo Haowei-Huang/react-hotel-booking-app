@@ -47,19 +47,17 @@ function HotelDetails() {
     else {
         //console.log(hotelData);
         return (
-            <Container maxWidth={false}>
-                <Routes>
-                    <Route index element={
-                        <Container maxWidth={false}>
-                            <HotelOverview hotel={hotelData} />
-                            {hotelData.Rooms && <RoomDetailsList rooms={hotelData.Rooms} />}
-                        </Container>}>
-                    </Route>
-                    <Route path="booking/*" element={
-                        <BookRooms />}>
-                    </Route>
-                </Routes>
-            </Container>
+            <Routes>
+                <Route index element={
+                    <Container sx={{ minWidth: '70%' }}>
+                        <HotelOverview hotel={hotelData} />
+                        {hotelData.Rooms && <RoomDetailsList rooms={hotelData.Rooms} />}
+                    </Container>}>
+                </Route>
+                <Route path="booking/*" element={
+                    <BookRooms />}>
+                </Route>
+            </Routes>
         );
     };
 

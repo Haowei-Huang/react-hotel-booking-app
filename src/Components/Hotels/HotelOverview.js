@@ -13,7 +13,7 @@ const HotelOverview = ({ hotel }) => {
         : 'Address not available';
 
     return (
-        <Card sx={{}}>
+        <Card square={true} sx={{ mt: 2 }}>
             <CardMedia
                 component="img"
                 height="300"
@@ -21,10 +21,10 @@ const HotelOverview = ({ hotel }) => {
                 alt={HotelName}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" fontWeight="500" component="div">
                     {HotelName}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body1" color="text.secondary">
                     {Description}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, mb: 2 }}>
@@ -39,9 +39,9 @@ const HotelOverview = ({ hotel }) => {
                         {fullAddress}
                     </Typography>
                 </Stack>
-                <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {Tags && Tags.map((tag, index) => (
-                        <Chip label={tag} key={index} />
+                <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1, textTransform: 'capitalize' }} >
+                    {Tags && Tags.map((tag) => (
+                        <Chip label={tag} key={tag} />
                     ))}
                 </Box>
             </CardContent>

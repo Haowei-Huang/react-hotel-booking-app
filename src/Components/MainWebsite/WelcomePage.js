@@ -24,7 +24,7 @@ export const WelcomePage = () => {
                         A dream stay
                         for a bucket list trip
                     </Typography>
-                    <Typography variant="h5" color="inherit" paragraph>
+                    <Typography variant="h5" color="inherit">
                         Make it a trip to remember in a holiday home
                     </Typography>
                     <Box>

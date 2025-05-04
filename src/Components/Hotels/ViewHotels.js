@@ -6,7 +6,9 @@ import { Image } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import SearchContext from "../SearchHotelContext/SearchContext";
 import WifiIcon from '@mui/icons-material/Wifi';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useDebounce } from "../../hooks/hooks";
+import { Grid } from "@mui/material";
 
 const initialDisplayData = {
     itemList: []
@@ -219,40 +221,41 @@ function ViewHotels() {
             </Container>
             <Container >
                 {displayData.itemList && displayData.itemList.map((item) => (
-                    <Paper square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%' }} key={item._id}>
-                        <Stack direction="row" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
-                            <Link to={`/Hotels/${item.id}`} style={{ textDecoration: 'none' }}>
+                    <Grid container spacing={2} component={Paper} square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%', minWidth: '43rem' }} key={item._id}>
+                        <Grid size={3.5}>
+                            <Link to={`/Hotels/${item.id}`} sx={{ textDecoration: 'none', display: 'block' }}>
                                 <CardMedia
                                     sx={{ height: "12rem", width: "12rem", objectFit: "cover" }}
                                     image={item.Photo}
                                     component="img"
                                 />
                             </Link>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flexGrow: 1, height: '12rem' }}>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%' }}>
-                                    <Box>
-                                        <Typography variant="h5" gutterBottom component="div">
-                                            <Link to={`/Hotels/${item._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                                {item.HotelName}
-                                            </Link>
-                                        </Typography>
-                                        <Typography variant="subtitle1" color="text.secondary">
-                                            {item.Address.StreetAddress}, {item.Address.City}
-                                        </Typography>
-                                    </Box>
-                                    <Box >
-                                        <Stack direction="row" spacing={1} alignItems="center" justifySelf={"flex-end"}>
-                                            <Rating value={item.Rating} precision={0.5} readOnly />
-                                            <Avatar sx={{ bgcolor: "darkblue" }} variant="rounded">{item.Rating}</Avatar>
-                                        </Stack>
-                                    </Box>
-                                </Box>
-                                <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ width: "30%", alignSelf: 'end' }}>
-                                    See availability
-                                </Button>
+                        </Grid>
+                        <Grid size={5.5}>
+                            <Typography variant="h5" gutterBottom>
+                                <Link to={`/Hotels/${item._id}`} style={{ textDecoration: 'none', color: 'primary' }}>
+                                    {item.HotelName}
+                                </Link>
+                            </Typography>
+                            <Box sx={{ display: "flex", alignItems: 'center', gap: 0.5 }}>
+                                <LocationOnIcon color="action" />
+                                <Typography variant="subtitle1" color="text.secondary">
+                                    {item.Address.StreetAddress}, {item.Address.City}
+                                </Typography>
                             </Box>
-                        </Stack>
-                    </Paper>
+                        </Grid>
+                        <Grid size={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                            <Box >
+                                <Stack direction="row" spacing={1} alignItems="center" justifySelf={"flex-end"}>
+                                    <Rating value={item.Rating} precision={0.5} readOnly />
+                                    <Avatar sx={{ bgcolor: "darkblue" }} variant="rounded">{item.Rating}</Avatar>
+                                </Stack>
+                            </Box>
+                            <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ alignSelf: 'end' }}>
+                                See availability
+                            </Button>
+                        </Grid>
+                    </Grid>
                 ))
                 }
             </Container >

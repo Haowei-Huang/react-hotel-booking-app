@@ -11,7 +11,7 @@ import { logout } from '../../features/authSlice';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Menu, MenuItem } from '@mui/material';
 import LoginAndRegisterForm from '../LoginAndRegister/LoginRegisterForm';
-import { userLogout } from '../../helpers/users';
+import { userLogout } from '../../helpers/authentication';
 
 function MainHeader() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);

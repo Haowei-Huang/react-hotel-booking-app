@@ -4,7 +4,7 @@ import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
 import { useDispatch } from 'react-redux';
 import { login } from '../../features/authSlice';
-import { userLogin } from "../../helpers/users";
+import { userLogin } from "../../helpers/authentication";
 
 function Login({ handleNavigate }) {
     const dispatch = useDispatch();

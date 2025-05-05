@@ -23,7 +23,7 @@ import ManageHotels from './ManageHotels/ManageHotels';
 import AdminViewBookings from './AdminViewBookings/AdminViewBookings';
 import Stats from './DashboardStats/Stats';
 import { StatsContextProvider } from './DashboardStats/StatsContext';
-import { userLogout } from '../helpers/users';
+import { userLogout } from '../helpers/authentication';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MuiAppBar from '@mui/material/AppBar';

@@ -11,8 +11,7 @@ function BookingSuccess() {
 
     useEffect(() => {
         reward();
-    }
-        , [reward]);
+    }, [reward]);
 
     return (
         <Paper elevation={3} sx={{ display: 'flex', flexDirection: 'column', margin: "auto", p: 5, width: "40%", textAlign: "center", alignItems: 'center', gap: 2, maxWidth: '30rem' }}>

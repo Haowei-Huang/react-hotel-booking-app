@@ -13,27 +13,33 @@ function UserProfileDetails() {
             </Box>
         );
     } else {
-        return (<Grid container spacing={2}>
-            <Grid size={12}><Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
+        return (<Grid container spacing={2} sx={{ m: 2 }}>
+            <Grid size={12}><Typography component="h1" variant="h5" gutterBottom >
                 Account Details
             </Typography>
             </Grid>
-            <Grid size={6}>
+            <Grid size={5}>
                 <Typography>
                     User ID
                 </Typography>
             </Grid>
-            <Grid size={6}>
-                <Typography>
+            <Grid size={7}>
+                <Typography sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                }}>
                     {userProfile._id}
                 </Typography>
             </Grid>
-            <Grid size={6}>
+            <Grid size={5}>
                 <Typography>
                     Email
                 </Typography>
             </Grid>
-            <Grid size={6}>
+            <Grid size={7} sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+            }}>
                 <Typography>
                     {userProfile.email}
                 </Typography>

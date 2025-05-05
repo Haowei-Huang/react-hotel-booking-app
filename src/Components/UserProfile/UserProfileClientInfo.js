@@ -1,4 +1,4 @@
-import { Alert, Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Grid, TextField, Typography, Container } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import UserProfileContext from "./UserProfileContext";
 import { Controller, useFormContext } from "react-hook-form";
@@ -62,129 +62,113 @@ function UserProfileClientInfo() {
             </Box>
         );
     } else {
-        return (<Grid container component="form" onSubmit={handleSubmit(onSubmit)} spacing={2}>
-            <Grid size={12}>
-                <Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
-                    Client Info
-                </Typography>
-            </Grid>
-            <Grid size={12}>
-                <Typography variant="h6">Save time for your next booking by providing the information below</Typography>
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    control={control}
-                    name="clientInfo.firstName"
-                    defaultValue=""
-                    rules={{ required: { value: true, message: 'Invalid input' }, pattern: { value: /^[a-zA-Z ,.'-]+$/i, message: "Name format is incorrect" } }}
-                    render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id={name}
-                            label="First Name"
-                            name={name}
-                            autoComplete="firstName"
-                            type="text"
-                            error={!!error}
-                            helperText={error ? error.message : null}
-                            value={value}
-                            onChange={onChange}
-                        />
-                    )}
-                />
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    control={control}
-                    name="clientInfo.lastName"
-                    defaultValue=""
-                    rules={{ required: { value: true, message: 'Invalid input' }, pattern: { value: /^[a-zA-Z ,.'-]+$/i, message: "Name format is incorrect" } }}
-                    render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id={name}
-                            label="Last Name"
-                            name={name}
-                            autoComplete="lastName"
-                            type="text"
-                            error={!!error}
-                            helperText={error ? error.message : null}
-                            value={value}
-                            onChange={onChange}
-                        />
-                    )}
-                />
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    control={control}
-                    name="clientInfo.email"
-                    defaultValue=""
-                    rules={{ required: { value: true, message: 'Invalid input' }, pattern: { value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, message: "Email format is incorrect" } }}
-                    render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id={name}
-                            label="Email Address"
-                            name={name}
-                            autoComplete="email"
-                            type="email"
-                            error={!!error}
-                            helperText={error ? error.message : null}
-                            value={value}
-                            onChange={onChange}
-                        />
-                    )}
-                />
-            </Grid>
-            <Grid size={6}>
-                <Controller
-                    control={control}
-                    name="clientInfo.phone"
-                    defaultValue=""
-                    rules={{
-                        required: { value: true, message: 'Invalid input' },
-                        pattern: { value: /^[0-9]{10}$/, message: "Phone number is invalid, it must be 10 digits without any space or other characters" }
-                    }}
-                    render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id={name}
-                            label="Phone Number"
-                            name={name}
-                            autoComplete="phone"
-                            type="tel"
-                            error={!!error}
-                            helperText={error ? error.message : null}
-                            value={value}
-                            onChange={onChange}
-                        />
-                    )}
-                />
-            </Grid>
-            {infoChanged && <Grid size={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert severity="success">Information Saved!</Alert>
-            </Grid>}
-            <Grid size={12} sx={{ display: 'flex', justifyContent: 'right' }}>
-
-                <Button
-                    variant="contained" size="large"
-                    onClick={handleSubmit(onSubmit)}
-                    color="primary"
-                    sx={{ mt: 1 }}  // Align the button to the end of the flex container
-                >
-                    Save
-                </Button>
-            </Grid>
-        </Grid >);
+        return (<Box component="form" sx={{ margin: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }} onSubmit={handleSubmit(onSubmit)} rowSpacing={1} columnSpacing={2}>
+            <Typography component="h1" variant="h5" gutterBottom>
+                Client Info
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'text.secondary', mb: 2 }}>Save time for your next booking by providing the information below</Typography>
+            <Controller
+                control={control}
+                name="clientInfo.firstName"
+                defaultValue=""
+                rules={{ required: { value: true, message: 'Invalid input' }, pattern: { value: /^[a-zA-Z ,.'-]+$/i, message: "Name format is incorrect" } }}
+                render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id={name}
+                        label="First Name"
+                        name={name}
+                        autoComplete="firstName"
+                        type="text"
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
+            />
+            <Controller
+                control={control}
+                name="clientInfo.lastName"
+                defaultValue=""
+                rules={{ required: { value: true, message: 'Invalid input' }, pattern: { value: /^[a-zA-Z ,.'-]+$/i, message: "Name format is incorrect" } }}
+                render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id={name}
+                        label="Last Name"
+                        name={name}
+                        autoComplete="lastName"
+                        type="text"
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
+            />
+            <Controller
+                control={control}
+                name="clientInfo.email"
+                defaultValue=""
+                rules={{ required: { value: true, message: 'Invalid input' }, pattern: { value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, message: "Email format is incorrect" } }}
+                render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id={name}
+                        label="Email Address"
+                        name={name}
+                        autoComplete="email"
+                        type="email"
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
+            />
+            <Controller
+                control={control}
+                name="clientInfo.phone"
+                defaultValue=""
+                rules={{
+                    required: { value: true, message: 'Invalid input' },
+                    pattern: { value: /^[0-9]{10}$/, message: "Phone number is invalid, it must be 10 digits without any space or other characters" }
+                }}
+                render={({ field: { name, value, onChange }, fieldState: { error }, formState }) => (
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id={name}
+                        label="Phone Number"
+                        name={name}
+                        autoComplete="phone"
+                        type="tel"
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                        value={value}
+                        onChange={onChange}
+                    />
+                )}
+            />
+            {infoChanged && <Alert severity="success" sx={{ alignSelf: 'end' }}>Information Saved!</Alert>
+            }
+            <Button
+                variant="contained" size="large"
+                onClick={handleSubmit(onSubmit)}
+                color="primary"
+                sx={{ mt: 1, alignSelf: 'end' }}  // Align the button to the end of the flex container
+            >
+                Save
+            </Button>
+        </Box >);
     }
 }
 

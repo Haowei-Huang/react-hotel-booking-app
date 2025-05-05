@@ -102,14 +102,14 @@ function UserProfileCardInfo() {
             </Box>
         );
     } else {
-        return (<Grid container component="form" onSubmit={handleSubmit(onSubmit)} spacing={2}>
+        return (<Grid container component="form" sx={{ mx: 2 }} onSubmit={handleSubmit(onSubmit)} rowSpacing={1} columnSpacing={3}>
             <Grid size={{ xs: 12 }}>
-                <Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
+                <Typography component="h1" variant="h5" >
                     Card Info
                 </Typography>
             </Grid>
             <Grid size={{ xs: 12 }}>
-                <Typography variant="h6">Save time for your next booking by providing the information below</Typography>
+                <Typography variant="h6" sx={{ color: 'text.secondary' }}>Save time for your next booking by providing the information below</Typography>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
@@ -213,7 +213,7 @@ function UserProfileCardInfo() {
                 />
             </Grid>
             <Grid size={{ xs: 12 }}>
-                <Typography component="h1" variant="h5" gutterBottom sx={{ my: 2 }}>
+                <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                     Billing Address
                 </Typography>
             </Grid>
@@ -353,7 +353,7 @@ function UserProfileCardInfo() {
                     variant="contained" size="large"
                     onClick={handleSubmit(onSubmit)}
                     color="primary"
-                    sx={{ mt: 1, alignSelf: 'center', width: "200px" }}  // Align the button to the end of the flex container
+                    sx={{ mt: 2, alignSelf: 'center', width: "20%" }}  // Align the button to the end of the flex container
                 >
                     Save
                 </Button>

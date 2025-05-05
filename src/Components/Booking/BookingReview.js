@@ -144,7 +144,6 @@ function BookingReview({ prevStep }) {
                                         </Typography>
                                     </Grid>
                                     <Grid size={6} >
-
                                         <Typography variant="body1" gutterBottom>
                                             {"xxxx-xxxx-xxxx-" + bookingData.cardInfo.cardNumber.slice(-4)}
                                         </Typography>

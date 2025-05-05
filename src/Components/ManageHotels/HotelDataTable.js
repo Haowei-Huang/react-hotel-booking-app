@@ -96,10 +96,10 @@ function HotelDataTable() {
         width: 180,
         renderCell: ({ row }) => {
             return (
-                <Stack direction="row" spacing={1} sx={{ mr: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, my: 1 }}>
                     <Button variant="outlined" color="primary" size="small" onClick={() => (handleEdit(row))}>{row.isActive ? "Deactivate" : "Activate"}</Button>
                     <Button variant="outlined" color="primary" size="small" component={Link} to={`/Dashboard/ManageHotels/${row._id}`}>View</Button>
-                </Stack>
+                </Box>
             );
         }
     }
@@ -114,11 +114,20 @@ function HotelDataTable() {
             initialState={{
                 pagination: {
                     paginationModel: {
-                        pageSize: 20,
+                        pageSize: 10,
                     },
                 },
             }}
-            pageSizeOptions={[20]}
+            sx={{
+                boxShadow: 2,
+                border: 1,
+                borderColor: 'primary.light',
+                '& .MuiDataGrid-cell:hover': {
+                    color: 'primary.main',
+                },
+                bgcolor: '#f8fafc'
+            }}
+            pageSizeOptions={[10]}
             getRowId={(row) => row._id}
             disableRowSelectionOnClick
         />

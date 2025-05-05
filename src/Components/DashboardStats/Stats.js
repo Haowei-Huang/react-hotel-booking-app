@@ -40,7 +40,7 @@ function Stats() {
             lastMonthRevenue = bookingMonth.reduce((acc, booking) => acc + booking.totalPrice, 0);
         }
 
-        return (<Container maxWidth={false}>
+        return (<Container sx={{ margin: "auto" }} maxWidth="xl">
             <Grid container spacing={2}>
                 <Grid size={4}>
                     <Card>
@@ -48,10 +48,10 @@ function Stats() {
                             <Typography color="textSecondary" gutterBottom>
                                 USERS
                             </Typography>
-                            <Typography variant="h5">{stats.hasOwnProperty("users") ? stats.users.length : 0}</Typography>
+                            <Typography variant="h5" color="primary">{stats.hasOwnProperty("users") ? stats.users.length : 0}</Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: "space-between" }}>
                                 <Link to="/Dashboard/ManageUsers">Manager Users</Link>
-                                <IconButton component={Link} to="/Dashboard/ManageUsers"><SupervisedUserCircleIcon /></IconButton>
+                                <IconButton component={Link} to="/Dashboard/ManageUsers"><SupervisedUserCircleIcon sx={{ "&:hover": { color: (theme) => theme.palette.primary.main } }} /></IconButton>
                             </Box>
                         </CardContent>
                     </Card>
@@ -62,10 +62,10 @@ function Stats() {
                             <Typography color="textSecondary" gutterBottom>
                                 HOTELS
                             </Typography>
-                            <Typography variant="h5">{stats.hasOwnProperty("hotels") ? stats.hotels.length : 0}</Typography>
+                            <Typography variant="h5" color="primary">{stats.hasOwnProperty("hotels") ? stats.hotels.length : 0}</Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: "space-between" }}>
                                 <Link to="/Dashboard/ManageHotels">Manage Hotels</Link>
-                                <IconButton component={Link} to="/Dashboard/ManageHotels"><HotelIcon /></IconButton>
+                                <IconButton component={Link} to="/Dashboard/ManageHotels"><HotelIcon sx={{ "&:hover": { color: (theme) => theme.palette.primary.main } }} /></IconButton>
                             </Box>
                         </CardContent>
                     </Card>
@@ -76,37 +76,37 @@ function Stats() {
                             <Typography color="textSecondary" gutterBottom>
                                 BOOKINGS
                             </Typography>
-                            <Typography variant="h5">{stats.hasOwnProperty("bookings") ? stats.bookings.length : 0}</Typography>
+                            <Typography variant="h5" color="primary">{stats.hasOwnProperty("bookings") ? stats.bookings.length : 0}</Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: "space-between" }}>
                                 <Link to="/Dashboard/ViewBookings">View Bookings</Link>
-                                <IconButton component={Link} to="/Dashboard/ViewBookings"><PaymentIcon /></IconButton>
+                                <IconButton component={Link} to="/Dashboard/ViewBookings"><PaymentIcon sx={{ "&:hover": { color: (theme) => theme.palette.primary.main } }} /></IconButton>
                             </Box>
                         </CardContent>
                     </Card>
                 </Grid>
                 <Grid size={4}>
                     <Card>
-                        <CardContent>
+                        <CardContent sx={{ display: 'flex', flexDirection: 'column', }}>
                             <Typography color="textSecondary" gutterBottom>
                                 EARNINGS
                             </Typography>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 2 }}>
                                 <Typography variant="h5">Total Earnings</Typography>
-                                <Typography variant="h5">${stats.hasOwnProperty("bookings") ? totalRevenue.toFixed(2) : 0}</Typography>
+                                <Typography variant="h5" color="primary">${stats.hasOwnProperty("bookings") ? totalRevenue.toFixed(2) : 0}</Typography>
                             </Box>
 
                             <Grid container spacing={2} >
-                                <Grid size={4}>
+                                <Grid size={4} sx={{ textAlign: 'center' }}>
                                     <Typography variant="h6">Last 24 Hours</Typography>
-                                    <Typography variant="h6">${stats.hasOwnProperty("bookings") ? yesterdayRevenue.toFixed(2) : 0}</Typography>
+                                    <Typography variant="h6" color="primary">${stats.hasOwnProperty("bookings") ? yesterdayRevenue.toFixed(2) : 0}</Typography>
                                 </Grid>
-                                <Grid size={4}>
+                                <Grid size={4} sx={{ textAlign: 'center' }}>
                                     <Typography variant="h6">Last Week</Typography>
-                                    <Typography variant="h6">${stats.hasOwnProperty("bookings") ? lastWeekRevenue.toFixed(2) : 0}</Typography>
+                                    <Typography variant="h6" color="primary">${stats.hasOwnProperty("bookings") ? lastWeekRevenue.toFixed(2) : 0}</Typography>
                                 </Grid>
-                                <Grid size={4}>
+                                <Grid size={4} sx={{ textAlign: 'center' }}>
                                     <Typography variant="h6">Last Month</Typography>
-                                    <Typography variant="h6">${stats.hasOwnProperty("bookings") ? lastMonthRevenue.toFixed(2) : 0}</Typography>
+                                    <Typography variant="h6" color="primary">${stats.hasOwnProperty("bookings") ? lastMonthRevenue.toFixed(2) : 0}</Typography>
                                 </Grid>
                             </Grid>
                         </CardContent>

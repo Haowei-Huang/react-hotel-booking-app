@@ -94,7 +94,7 @@ function BookingDataTable() {
     },
     {
         field: 'totalPrice',
-        headerName: 'Total Price',
+        headerName: 'Price',
         width: 110,
         valueGetter: (value, row) => {
             return `$${row.totalPrice.toFixed(2)}`
@@ -102,8 +102,8 @@ function BookingDataTable() {
         editable: false, flex: 1
     },
     {
-        field: 'Cilent Fullname',
-        headerName: 'Cilent Fullname',
+        field: 'Client Name',
+        headerName: 'Client Name',
         valueGetter: (value, row) => {
             return `${row.clientInfo.firstName} ${row.clientInfo.lastName}`;
         },
@@ -111,8 +111,8 @@ function BookingDataTable() {
         editable: false, flex: 1
     },
     {
-        field: 'Cilent Email',
-        headerName: 'Cilent Email',
+        field: 'Client Email',
+        headerName: 'Client Email',
         valueGetter: (value, row) => {
             return `${row.clientInfo.email}`;
         },
@@ -120,8 +120,8 @@ function BookingDataTable() {
         editable: false, flex: 1
     },
     {
-        field: 'Cilent Phone',
-        headerName: 'Cilent Phone',
+        field: 'Client Phone',
+        headerName: 'Client Phone',
         valueGetter: (value, row) => {
             return `${row.clientInfo.phone}`;
         },
@@ -150,12 +150,10 @@ function BookingDataTable() {
         field: "action",
         headerName: "Action",
         sortable: false,
-        width: 180,
+        width: 100,
         renderCell: ({ row }) => {
             return (
-                <Stack direction="row" spacing={1}>
-                    <Button variant="outlined" color="primary" size="small" onClick={() => { checkBookingDetails(row) }}>View</Button>
-                </Stack>
+                <Button variant="outlined" color="primary" size="small" onClick={() => { checkBookingDetails(row) }}>View</Button>
             );
         }
     }
@@ -173,12 +171,22 @@ function BookingDataTable() {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 20,
+                            pageSize: 10,
                         },
                     },
                 }}
                 autoHeight
-                pageSizeOptions={[20]}
+
+                sx={{
+                    boxShadow: 2,
+                    border: 1,
+                    borderColor: 'primary.light',
+                    '& .MuiDataGrid-cell:hover': {
+                        color: 'primary.main',
+                    },
+                    bgcolor: '#f8fafc'
+                }}
+                pageSizeOptions={[10]}
                 getRowId={(row) => row._id}
                 disableRowSelectionOnClick
             />

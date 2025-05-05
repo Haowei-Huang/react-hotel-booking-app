@@ -31,7 +31,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-const drawerWidth = "10%";
+const drawerWidth = "15%";
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })( // do not forward the open prop to the DOM element
     ({ theme }) => ({

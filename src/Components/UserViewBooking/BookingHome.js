@@ -5,17 +5,11 @@ import ViewBookingDetails from "./ViewBookingDetails";
 import ViewBookingList from "./ViewBookingList";
 
 function BookingHome() {
-    const ViewBookingListLazyLoad = React.lazy(() => {
-        return new Promise(resolve => {
-            setTimeout(() => resolve(import('./ViewBookingList')), 1000);
-        });
-    });
-
     return (<React.Fragment>
         <UserViewBookingContextProvider>
             <Suspense fallback={<div>Loading...DETAILS...</div>}>
                 <Routes>
-                    <Route index element={<ViewBookingListLazyLoad />}></Route>
+                    <Route index element={<ViewBookingList />}></Route>
                     <Route path=":id" element={<ViewBookingDetails />} />
                 </Routes>
             </Suspense>

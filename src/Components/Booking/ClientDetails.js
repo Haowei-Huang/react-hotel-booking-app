@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { UserInfoReuseContext } from "./BookRooms";
+import { Skeleton } from "@mui/material";
 
 function ClientDetails({ nextStep }) {
     const { bookingData, dispatch } = useContext(BookingContext);
@@ -57,7 +58,40 @@ function ClientDetails({ nextStep }) {
     }, [watchPhone]);
 
     if (!userInfoReuseData.isLoaded) {
-        return (<CircularProgress />);
+        return (
+            <Stack direction="column" spacing={2}>
+                <Card sx={{ boxShadow: 3, p: 1 }}>
+                    <CardContent>
+                        <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                            Personal Details
+                        </Typography>
+                        <Box display="flex" flexDirection="column" gap={2}>
+                            <Skeleton variant="text" width="40%" height={30} />
+                            <Skeleton variant="rectangular" width="100%" height={40} />
+                            <Skeleton variant="text" width="40%" height={30} />
+                            <Skeleton variant="rectangular" width="100%" height={40} />
+                            <Skeleton variant="text" width="40%" height={30} />
+                            <Skeleton variant="rectangular" width="100%" height={40} />
+                            <Skeleton variant="text" width="40%" height={30} />
+                            <Skeleton variant="rectangular" width="100%" height={40} />
+                        </Box>
+                    </CardContent>
+                </Card>
+                <Card sx={{ boxShadow: 3, p: 1 }}>
+                    <CardContent>
+                        <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                            Room Details
+                        </Typography>
+                        <Box display="flex" flexDirection="column" gap={2}>
+                            <Skeleton variant="text" width="60%" height={30} />
+                            <Skeleton variant="rectangular" width="100%" height={60} />
+                            <Skeleton variant="text" width="60%" height={30} />
+                            <Skeleton variant="rectangular" width="100%" height={60} />
+                        </Box>
+                    </CardContent>
+                </Card>
+            </Stack>
+        );
     } else {
         return (
             <Stack direction="column" spacing={2}>

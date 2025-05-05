@@ -31,7 +31,7 @@ function ViewBookingList() {
     // only render when the data is ready
     if (!bookingList.isLoaded) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" sx={{ mt: 5, mx: 'auto' }}>
                 <CircularProgress />
             </Box>
         );

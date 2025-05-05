@@ -7,6 +7,7 @@ import BookingContext from "./BookingContext";
 import Grid from '@mui/material/Grid'; // Grid version 1
 import { UserInfoReuseContext } from "./BookRooms";
 import { useSelector } from "react-redux";
+import Skeleton from '@mui/material/Skeleton';
 
 function BookingPayment({ nextStep, prevStep }) {
     const { bookingData, dispatch } = useContext(BookingContext);
@@ -112,7 +113,25 @@ function BookingPayment({ nextStep, prevStep }) {
     }
 
     if (!userInfoReuseData.isLoaded) {
-        return (<CircularProgress />);
+        return (
+            <Card sx={{ boxShadow: 3, p: 1.5, mb: 3, maxHeight: '50%' }}>
+                <CardContent>
+                    <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                        Payment Details
+                    </Typography>
+                    <Box display="flex" flexDirection="column" gap={2}>
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                    </Box>
+                </CardContent>
+            </Card>
+        );
     } else {
         return (<Card component="form" onSubmit={handleSubmit(onSubmit)} sx={{ boxShadow: 3, p: 1.5, mb: 3, maxHeight: '50%' }}>
             <CardContent>

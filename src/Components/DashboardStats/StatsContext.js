@@ -28,8 +28,6 @@ const StatsReducer = (state, action) => {
 };
 
 export const StatsContextProvider = ({ children }) => {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     // store the data from backend
     const [stats, dispatch] = useReducer(StatsReducer, initialStats);
 

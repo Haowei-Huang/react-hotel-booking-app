@@ -6,6 +6,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import HotelIcon from '@mui/icons-material/Hotel';
 import PaymentIcon from '@mui/icons-material/Payment';
 import dayjs from "dayjs";
+import { Skeleton } from "@mui/material";
 
 const today = dayjs();
 
@@ -25,7 +26,16 @@ function Stats() {
     var lastMonthRevenue;
 
     if (!stats.isLoaded) {
-        return (<CircularProgress />);
+        return (
+            <Container sx={{ margin: "auto" }} maxWidth="xl">
+                <Grid container spacing={2}>
+                    <Grid size={4}> <Skeleton variant="rectangular" height="10rem" width="100%" /></Grid>
+                    <Grid size={4}> <Skeleton variant="rectangular" height="10rem" width="100%" /></Grid>
+                    <Grid size={4}> <Skeleton variant="rectangular" height="10rem" width="100%" /></Grid>
+                    <Grid size={4}> <Skeleton variant="rectangular" height="10rem" width="100%" /></Grid>
+                </Grid>
+            </Container>
+        );
     } else {
         if (stats.hasOwnProperty("bookings")) {
             totalRevenue = stats.bookings.reduce((acc, booking) => acc + booking.totalPrice, 0); // calculate the sum of earnings

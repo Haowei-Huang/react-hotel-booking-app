@@ -9,9 +9,11 @@ import WifiIcon from '@mui/icons-material/Wifi';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { useDebounce } from "../../hooks/hooks";
 import { Grid } from "@mui/material";
+import { Skeleton } from "@mui/material";
 
 const initialDisplayData = {
-    itemList: []
+    itemList: [],
+    isLoaded: false,
 };
 
 const displayDataReducer = (state, action) => {
@@ -69,9 +71,20 @@ const displayDataReducer = (state, action) => {
             // finally return the filtered Hotel List
             return {
                 ...state,
-                itemList: filteredList
+                itemList: filteredList,
+                isLoaded: true
             };
-        }
+        };
+        case 'setIsLoading': // Add this case
+            return {
+                ...state,
+                isLoaded: false
+            };
+        case 'setIsLoaded':
+            return {
+                ...state,
+                isLoaded: true
+            };
         default: return state;
     }
 };
@@ -101,16 +114,25 @@ function ViewHotels() {
 
     // filter data
     useEffect(() => {
+        // If the source hotel list is empty, don't filter yet
         if (hotelList.length === 0) {
+            // Optionally set isLoaded to true to show "no results" instead of loading
+            dispatchDisplay({ type: 'setIsLoaded', payload: true });
             return;
         }
+
+        // Set loading state before starting the debounced filter
+        dispatchDisplay({ type: 'setIsLoading' });
+
         // only apply tag filter that is set to true
         const filteredTags = Object.keys(searchOption.tags).filter(key => searchOption.tags[key] === true);
+
         debouncedFilterData({
             type: "filterData",
             payload: { data: hotelList, minRating: searchOption.rating, location: searchOption.location, searchTags: filteredTags, priceRange: searchOption.price, numberOfGuest: searchOption.numberOfGuest }
-        })
-    }, [hotelList, debouncedFilterData, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest])
+        });
+        // Make sure debouncedFilterData is stable (using useCallback in useDebounce)
+    }, [hotelList, debouncedFilterData, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest]);
 
     return (<Container maxWidth="lg" disableGutters sx={{ display: "flex", flexDirection: "column", margin: "auto" }}>
         <Box sx={{ margin: "auto", my: 2 }} >
@@ -219,45 +241,50 @@ function ViewHotels() {
                 </Typography>
                 <Rating value={searchOption.rating} precision={0.5} name="rating" onChange={handleChange} />
             </Container>
-            <Container >
-                {displayData.itemList && displayData.itemList.map((item) => (
-                    <Grid container spacing={2} component={Paper} square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%', minWidth: '43rem' }} key={item._id}>
-                        <Grid size={3.5}>
-                            <Link to={`/Hotels/${item.id}`} sx={{ textDecoration: 'none', display: 'block' }}>
-                                <CardMedia
-                                    sx={{ height: "12rem", width: "12rem", objectFit: "cover" }}
-                                    image={item.Photo}
-                                    component="img"
-                                />
-                            </Link>
-                        </Grid>
-                        <Grid size={5.5}>
-                            <Typography variant="h5" gutterBottom>
-                                <Link to={`/Hotels/${item._id}`} style={{ textDecoration: 'none', color: 'primary' }}>
-                                    {item.HotelName}
-                                </Link>
-                            </Typography>
-                            <Box sx={{ display: "flex", alignItems: 'center', gap: 0.5 }}>
-                                <LocationOnIcon color="action" />
-                                <Typography variant="subtitle1" color="text.secondary">
-                                    {item.Address.StreetAddress}, {item.Address.City}
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        <Grid size={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                            <Box >
-                                <Stack direction="row" spacing={1} alignItems="center" justifySelf={"flex-end"}>
-                                    <Rating value={item.Rating} precision={0.5} readOnly />
-                                    <Avatar sx={{ bgcolor: "darkblue" }} variant="rounded">{item.Rating}</Avatar>
-                                </Stack>
-                            </Box>
-                            <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ alignSelf: 'end' }}>
-                                See availability
-                            </Button>
-                        </Grid>
+            <Container >{!displayData.isLoaded ? (
+                // Render Skeletons while loading
+                <>
+                    <Skeleton variant="rectangular" sx={{ my: 2, height: '14rem', width: '100%', minWidth: '43rem' }} />
+                    <Skeleton variant="rectangular" sx={{ my: 2, height: '14rem', width: '100%', minWidth: '43rem' }} />
+                    <Skeleton variant="rectangular" sx={{ my: 2, height: '14rem', width: '100%', minWidth: '43rem' }} />
+                </>
+            ) : (displayData.itemList.map((item) => (
+                <Grid container spacing={2} component={Paper} square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%', minWidth: '43rem' }} key={item._id}>
+                    <Grid size={3.5}>
+                        <Link to={`/Hotels/${item.id}`} sx={{ textDecoration: 'none', display: 'block' }}>
+                            <CardMedia
+                                sx={{ height: "12rem", width: "12rem", objectFit: "cover" }}
+                                image={item.Photo}
+                                component="img"
+                            />
+                        </Link>
                     </Grid>
-                ))
-                }
+                    <Grid size={5.5}>
+                        <Typography variant="h5" gutterBottom>
+                            <Link to={`/Hotels/${item._id}`} style={{ textDecoration: 'none', color: 'primary' }}>
+                                {item.HotelName}
+                            </Link>
+                        </Typography>
+                        <Box sx={{ display: "flex", alignItems: 'center', gap: 0.5 }}>
+                            <LocationOnIcon color="action" />
+                            <Typography variant="subtitle1" color="text.secondary">
+                                {item.Address.StreetAddress}, {item.Address.City}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid size={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                        <Box >
+                            <Stack direction="row" spacing={1} alignItems="center" justifySelf={"flex-end"}>
+                                <Rating value={item.Rating} precision={0.5} readOnly />
+                                <Avatar sx={{ bgcolor: "darkblue" }} variant="rounded">{item.Rating}</Avatar>
+                            </Stack>
+                        </Box>
+                        <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ alignSelf: 'end' }}>
+                            See availability
+                        </Button>
+                    </Grid>
+                </Grid>)
+            ))}
             </Container >
         </Stack >
     </Container >);

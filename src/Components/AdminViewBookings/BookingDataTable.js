@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { findHotelById } from '../../helpers/hotels';
 import { findUserById } from '../../helpers/users';
+import { Skeleton } from '@mui/material';
 
 // only for display, should have functionality from Context for delete and edit
 function BookingDataTable() {
@@ -162,7 +163,15 @@ function BookingDataTable() {
     const rows = bookingTable.itemList;
 
     if (!bookingTable.isLoaded) {
-        return <CircularProgress />
+        return (
+            <Box sx={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+            </Box>
+        );
     } else {
         return (
             <DataGrid

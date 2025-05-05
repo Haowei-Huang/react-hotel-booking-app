@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from './store';
-import authReducer, { logout, login, setToken } from './authSlice';
+import { logout, login, setToken } from './authSlice';
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_DB_URL,
@@ -27,19 +27,19 @@ api.interceptors.response.use(
     response => response,
     async (error) => {
         const originalRequest = error.config;
-        // console.log('Error response:', originalRequest.headers);
         // if access token expires, refresh
         if (error.response?.status === 401) {
             try {
                 // Attempt to refresh the access token
                 console.log('Refreshing access token...');
-                // use a new instance to avoid infinite loop, otherwise if refreshToken got 401 response, it will trigger the interceptor again
+                // use a new instance to avoid infinite loop, 
+                // otherwise if refreshToken got 401 response, it will trigger the interceptor again
+                // it will throw an error if the response is 4XX or 5XX
                 const res = await axios.post('/user/refreshAccessToken', null, {
                     baseURL: process.env.REACT_APP_DB_URL,
                     withCredentials: true // only send cookies when refreshing token
                 });
                 const accessToken = await res.data.token;
-                //console.log('New access token:', accessToken);
 
                 store.dispatch(setToken({
                     token: accessToken,

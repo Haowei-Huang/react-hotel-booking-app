@@ -33,21 +33,21 @@ function LoginAndRegisterForm({ open, onClose }) {
     }, [isAuthenticated])
 
     return (
-        <React.Fragment>
-            <LoginAndRegisterFormProvider>
-                <Dialog
-                    open={open}
-                    onClose={handleClose} >
-                    <DialogContent>
-                        {currentStep === 'EnterEmail' && <EnterEmail handleNavigate={handleNavigate} onClose={handleClose} />}
-                        {currentStep === 'Register' && <Register handleNavigate={handleNavigate} onClose={handleClose} />}
-                        {currentStep === 'Login' && <Login handleNavigate={handleNavigate} onClose={handleClose} />}
-                        {currentStep === 'LoginSuccess' && <LoginSuccess handleNavigate={handleNavigate} onClose={handleClose} />}
-                        {currentStep === 'RegisterSuccess' && <RegisterSuccess handleNavigate={handleNavigate} onClose={handleClose} />}
-                    </DialogContent>
-                </Dialog>
-            </LoginAndRegisterFormProvider>
-        </React.Fragment>
+        <LoginAndRegisterFormProvider>
+            <Dialog
+                maxWidth="xs"
+                fullWidth={true}
+                open={open}
+                onClose={handleClose} >
+                <DialogContent>
+                    {currentStep === 'EnterEmail' && <EnterEmail handleNavigate={handleNavigate} onClose={handleClose} />}
+                    {currentStep === 'Register' && <Register handleNavigate={handleNavigate} onClose={handleClose} />}
+                    {currentStep === 'Login' && <Login handleNavigate={handleNavigate} onClose={handleClose} />}
+                    {currentStep === 'LoginSuccess' && <LoginSuccess handleNavigate={handleNavigate} onClose={handleClose} />}
+                    {currentStep === 'RegisterSuccess' && <RegisterSuccess handleNavigate={handleNavigate} onClose={handleClose} />}
+                </DialogContent>
+            </Dialog>
+        </LoginAndRegisterFormProvider>
     );
 
 };

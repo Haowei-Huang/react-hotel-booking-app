@@ -251,7 +251,7 @@ function ViewHotels() {
             ) : (displayData.itemList.map((item) => (
                 <Grid container spacing={2} component={Paper} square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%', minWidth: '43rem' }} key={item._id}>
                     <Grid size={3.5}>
-                        <Link to={`/Hotels/${item.id}`} sx={{ textDecoration: 'none', display: 'block' }}>
+                        <Link to={`/Hotels/${item._id}`} sx={{ textDecoration: 'none', display: 'block' }}>
                             <CardMedia
                                 sx={{ height: "12rem", width: "12rem", objectFit: "cover" }}
                                 image={item.Photo}

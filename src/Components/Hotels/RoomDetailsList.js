@@ -147,7 +147,7 @@ function RoomDetailsList({ rooms }) {
                             </TableCell>
                             <TableCell align="left">
                                 <Checkbox
-                                    value={selectedRooms.includes(room.RoomId)}
+                                    value={selectedRooms.some(r => r.RoomId === room.RoomId)}
                                     onChange={handleCheck(room)}
                                 />
                             </TableCell>

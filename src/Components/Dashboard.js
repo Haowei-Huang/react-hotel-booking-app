@@ -23,13 +23,13 @@ import ManageHotels from './ManageHotels/ManageHotels';
 import AdminViewBookings from './AdminViewBookings/AdminViewBookings';
 import Stats from './DashboardStats/Stats';
 import { StatsContextProvider } from './DashboardStats/StatsContext';
-import { userLogout } from '../../helpers/authentication';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import MuiAppBar from '@mui/material/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { userLogout } from '../helpers/authentication'; // import the userLogout function
 
 const drawerWidth = "15%";
 

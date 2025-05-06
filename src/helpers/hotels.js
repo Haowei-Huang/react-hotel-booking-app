@@ -6,6 +6,7 @@ export async function findAllHotels() {
     console.log('findAllHotels called');
     try {
         const response = await api.get(FIND_ALL_HOTELS);
+        console.log("api base url:" + api.defaults.baseURL);
         const responseJson = await response.data;
         console.log('responseJson', responseJson);
         return responseJson.data;

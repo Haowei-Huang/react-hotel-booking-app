@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import { createBooking } from "../../helpers/bookings";;
 
 function BookingReview({ prevStep }) {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
     const { bookingData, dispatch } = useContext(BookingContext);
     const sessionKey = useSelector(state => state.auth.sessionKey);
     const navigate = useNavigate();

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import { Box, Button, } from '@mui/material';
 import ViewBookingsContext from './ViewBookingsContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { findHotelById } from '../../helpers/hotels';
 import { findUserById } from '../../helpers/users';
@@ -10,7 +10,6 @@ import { Skeleton } from '@mui/material';
 
 // only for display, should have functionality from Context for delete and edit
 function BookingDataTable() {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
     const { dispatch, bookingTable, reloadBookingTable } = useContext(ViewBookingsContext);
     const navigate = useNavigate();
 

@@ -29,7 +29,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import { styled, useTheme } from '@mui/material/styles';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { userLogout } from '../helpers/authentication'; // import the userLogout function
+import { userLogout } from '../helpers/authentication.js'; // import the userLogout function
 
 const drawerWidth = "15%";
 

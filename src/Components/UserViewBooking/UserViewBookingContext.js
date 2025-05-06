@@ -1,7 +1,7 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { findBookingByUserId } from '../../Helpers/bookings';
-import { getUserBookedHotels } from '../../Helpers/hotels';
+import { findBookingByUserId } from '../../helpers/bookings';
+import { getUserBookedHotels } from '../../helpers/hotels';
 
 const UserViewBookingContext = createContext();
 const initialBookingList = {

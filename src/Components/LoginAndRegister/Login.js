@@ -3,8 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
 import { useDispatch } from 'react-redux';
-import { login } from '../../authSlice';
-import { userLogin } from "../../Helpers/users";
+import { login } from '../../features/authSlice';
+import { userLogin } from "../../helpers/authentication";
 
 function Login({ handleNavigate }) {
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ function Login({ handleNavigate }) {
             if (user) {
                 setErrors({});
                 console.log(user);
-                dispatch(login({ username: user.email, sessionKey: user._id, role: user.role }));
+                dispatch(login({ username: user.email, sessionKey: user._id, role: user.role, token: loginResponse.token }));
                 handleNavigate("LoginSuccess");
             } else {
                 setErrors({ PasswordIncorrect: "The password you entered is incorrect, please try again" });
@@ -47,11 +47,11 @@ function Login({ handleNavigate }) {
         setRegistrationData({ ...registrationData, [event.target.name]: event.target.value });
     };
 
-    return (<React.Fragment>
-        <Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
-            Enter password
+    return (<Box sx={{ justifyContent: 'flex-start', p: 2, margin: 'auto' }}>
+        <Typography component="h1" variant="h5" gutterBottom>
+            Enter your password
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit}>
             <TextField
                 margin="normal"
                 required
@@ -67,14 +67,14 @@ function Login({ handleNavigate }) {
             <Button type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }} disabled={!registrationData.password.trim()}>Login</Button>
+                sx={{ mt: 2 }} disabled={!registrationData.password.trim()}>Login</Button>
             {<Alert severity="error" sx={{ visibility: Object.keys(errors).length > 0 ? 'visible' : 'hidden' }}>{Object.keys(errors).map((key) => (
-                <label key={key}>
+                <label key={key} sx={{ my: 1 }}>
                     {errors[key]}
                 </label>
             ))}</Alert>}
         </Box>
-    </React.Fragment>);
+    </Box>);
 }
 
 export default Login;

@@ -38,15 +38,24 @@ function UserProfileHome() {
     return (
         <UserProfileContextProvider>
             <FormProvider {...methods}>
-                <Stack direction="row" spacing={2} sx={{ margin: "auto", mt: 5, width: "1200px" }}>
-                    <Paper elevation={3} sx={{ p: 3 }}>
+                <Stack direction="row" spacing={3} sx={{ margin: "auto", my: 3, width: "80%", justifyContent: "center" }}>
+                    <Paper elevation={3} sx={{ height: '20%' }}>
                         <List>
-                            <ListItem disablePadding>
+                            <ListItem>
                                 <ListItemButton component={Link} to="/UserProfile">
-                                    <ListItemText primary="Account Info" />
+                                    <ListItemText primary="Account Info"
+                                        sx={{ my: 0 }}
+                                        slotProps={{
+                                            primary: {
+                                                sx: {
+                                                    fontSize: '1.25em',
+                                                    fontWeight: '500'
+                                                }
+                                            }
+                                        }} />
                                 </ListItemButton>
                             </ListItem>
-                            <ListItem disablePadding>
+                            <ListItem>
                                 <ListItemButton component={Link} to="/UserProfile/ClientInfo">
                                     <ListItemIcon>
                                         <AccountBoxIcon />
@@ -54,7 +63,7 @@ function UserProfileHome() {
                                     <ListItemText primary="Client Info" />
                                 </ListItemButton>
                             </ListItem>
-                            <ListItem disablePadding>
+                            <ListItem>
                                 <ListItemButton component={Link} to="/UserProfile/CardInfo">
                                     <ListItemIcon>
                                         <CreditCardIcon />
@@ -62,7 +71,7 @@ function UserProfileHome() {
                                     <ListItemText primary="Card Info" />
                                 </ListItemButton>
                             </ListItem>
-                            <ListItem disablePadding>
+                            <ListItem>
                                 <ListItemButton component={Link} to="/UserProfile/ChangePassword">
                                     <ListItemIcon>
                                         <KeyIcon />
@@ -72,7 +81,7 @@ function UserProfileHome() {
                             </ListItem>
                         </List>
                     </Paper>
-                    <Paper elevation={3} sx={{ p: 3 }}>
+                    <Paper elevation={3} sx={{ p: 3, maxWidth: "40%" }}>
                         <Routes>
                             <Route index element={<UserProfileDetails />} />
                             <Route path="ChangePassword" element={<ChangePassword />} />

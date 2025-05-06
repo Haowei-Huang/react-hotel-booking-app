@@ -3,17 +3,15 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Box, Button, Stack } from '@mui/material';
 import ManageHotelsContext from './ManageHotelsContext';
 import { Link } from 'react-router-dom';
-import { updateHotel } from '../../Helpers/hotels';
+import { updateHotel } from '../../helpers/hotels';
 
 // only for display, should have functionality from Context for delete and edit
 function HotelDataTable() {
     const { dispatch, hotelTable, reloadHotelTable } = useContext(ManageHotelsContext);
-    const DB_URL = process.env.REACT_APP_DB_URL;
 
     const handleEdit = async (row) => {
         console.log(row);
         const hotelId = row._id;
-        // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
 
         const newData = {
             ...row,
@@ -23,7 +21,7 @@ function HotelDataTable() {
         const isUpdated = await updateHotel(hotelId, newData);
 
         if (isUpdated) {
-            reloadHotelTable();
+            await reloadHotelTable();
         }
     };
 
@@ -49,8 +47,8 @@ function HotelDataTable() {
     {
         field: 'Street',
         headerName: 'Street',
-        valueGetter: (params) => {
-            return params.row.Address ? `${params.row.Address.StreetAddress}` : '';
+        valueGetter: (value, row) => {
+            return row.Address ? `${row.Address.StreetAddress}` : '';
         },
         width: 150,
         editable: false
@@ -58,8 +56,8 @@ function HotelDataTable() {
     {
         field: 'City',
         headerName: 'City',
-        valueGetter: (params) => {
-            return params.row.Address ? `${params.row.Address.City}` : '';
+        valueGetter: (value, row) => {
+            return row.Address ? `${row.Address.City}` : '';
         },
         width: 100,
         editable: false
@@ -67,8 +65,8 @@ function HotelDataTable() {
     {
         field: 'Province',
         headerName: 'Province',
-        valueGetter: (params) => {
-            return params.row.Address ? `${params.row.Address.StateProvince}` : '';
+        valueGetter: (value, row) => {
+            return row.Address ? `${row.Address.StateProvince}` : '';
         },
         width: 80,
         editable: false
@@ -76,8 +74,8 @@ function HotelDataTable() {
     {
         field: 'PostalCode',
         headerName: 'PostalCode',
-        valueGetter: (params) => {
-            return params.row.Address ? `${params.row.Address.PostalCode}` : '';
+        valueGetter: (value, row) => {
+            return row.Address ? `${row.Address.PostalCode}` : '';
         },
         width: 120,
         editable: false
@@ -85,8 +83,8 @@ function HotelDataTable() {
     {
         field: 'Country',
         headerName: 'Country',
-        valueGetter: (params) => {
-            return params.row.Address ? `${params.row.Address.Country}` : '';
+        valueGetter: (value, row) => {
+            return row.Address ? `${row.Address.Country}` : '';
         },
         width: 100,
         editable: false
@@ -98,10 +96,10 @@ function HotelDataTable() {
         width: 180,
         renderCell: ({ row }) => {
             return (
-                <Stack direction="row" spacing={1} sx={{ mr: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, my: 1 }}>
                     <Button variant="outlined" color="primary" size="small" onClick={() => (handleEdit(row))}>{row.isActive ? "Deactivate" : "Activate"}</Button>
                     <Button variant="outlined" color="primary" size="small" component={Link} to={`/Dashboard/ManageHotels/${row._id}`}>View</Button>
-                </Stack>
+                </Box>
             );
         }
     }
@@ -116,11 +114,20 @@ function HotelDataTable() {
             initialState={{
                 pagination: {
                     paginationModel: {
-                        pageSize: 20,
+                        pageSize: 10,
                     },
                 },
             }}
-            pageSizeOptions={[20]}
+            sx={{
+                boxShadow: 2,
+                border: 1,
+                borderColor: 'primary.light',
+                '& .MuiDataGrid-cell:hover': {
+                    color: 'primary.main',
+                },
+                bgcolor: '#f8fafc'
+            }}
+            pageSizeOptions={[10]}
             getRowId={(row) => row._id}
             disableRowSelectionOnClick
         />

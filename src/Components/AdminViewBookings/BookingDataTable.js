@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import { Box, Button, } from '@mui/material';
 import ViewBookingsContext from './ViewBookingsContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { findHotelById } from '../../Helpers/hotels';
-import { findUserById } from '../../Helpers/users';
+import { findHotelById } from '../../helpers/hotels';
+import { findUserById } from '../../helpers/users';
+import { Skeleton } from '@mui/material';
 
 // only for display, should have functionality from Context for delete and edit
 function BookingDataTable() {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
     const { dispatch, bookingTable, reloadBookingTable } = useContext(ViewBookingsContext);
     const navigate = useNavigate();
 
@@ -70,16 +70,16 @@ function BookingDataTable() {
         field: 'time',
         headerName: 'Booked at',
         width: 160,
-        valueGetter: (params) => {
-            return `${dayjs(params.row.time).format('MMM D, YYYY h:mm A')}`
+        valueGetter: (value, row) => {
+            return `${dayjs(row.time).format('MMM D, YYYY h:mm A')}`
         }, flex: 1
     },
     {
         field: 'from',
         headerName: 'From',
         width: 100,
-        valueGetter: (params) => {
-            return `${dayjs(params.row.from).format('MMM D, YYYY')}`
+        valueGetter: (value, row) => {
+            return `${dayjs(row.from).format('MMM D, YYYY')}`
         },
         editable: false, flex: 1
     },
@@ -87,43 +87,43 @@ function BookingDataTable() {
         field: 'to',
         headerName: 'To',
         width: 100,
-        valueGetter: (params) => {
-            return `${dayjs(params.row.to).format('MMM D, YYYY')}`
+        valueGetter: (value, row) => {
+            return `${dayjs(row.to).format('MMM D, YYYY')}`
         },
         editable: false, flex: 1
     },
     {
         field: 'totalPrice',
-        headerName: 'Total Price',
+        headerName: 'Price',
         width: 110,
-        valueGetter: (params) => {
-            return `$${params.row.totalPrice.toFixed(2)}`
+        valueGetter: (value, row) => {
+            return `$${row.totalPrice.toFixed(2)}`
         },
         editable: false, flex: 1
     },
     {
-        field: 'Cilent Fullname',
-        headerName: 'Cilent Fullname',
-        valueGetter: (params) => {
-            return `${params.row.clientInfo.firstName} ${params.row.clientInfo.lastName}`;
+        field: 'Client Name',
+        headerName: 'Client Name',
+        valueGetter: (value, row) => {
+            return `${row.clientInfo.firstName} ${row.clientInfo.lastName}`;
         },
         width: 150,
         editable: false, flex: 1
     },
     {
-        field: 'Cilent Email',
-        headerName: 'Cilent Email',
-        valueGetter: (params) => {
-            return `${params.row.clientInfo.email}`;
+        field: 'Client Email',
+        headerName: 'Client Email',
+        valueGetter: (value, row) => {
+            return `${row.clientInfo.email}`;
         },
         width: 180,
         editable: false, flex: 1
     },
     {
-        field: 'Cilent Phone',
-        headerName: 'Cilent Phone',
-        valueGetter: (params) => {
-            return `${params.row.clientInfo.phone}`;
+        field: 'Client Phone',
+        headerName: 'Client Phone',
+        valueGetter: (value, row) => {
+            return `${row.clientInfo.phone}`;
         },
         width: 110,
         editable: false, flex: 1
@@ -131,8 +131,8 @@ function BookingDataTable() {
     {
         field: 'Card Holder Name',
         headerName: 'Card Holder Name',
-        valueGetter: (params) => {
-            return `${params.row.cardInfo.cardName}`;
+        valueGetter: (value, row) => {
+            return `${row.cardInfo.cardName}`;
         },
         width: 150,
         editable: false, flex: 1
@@ -140,8 +140,8 @@ function BookingDataTable() {
     {
         field: 'Card Number',
         headerName: 'Card Number',
-        valueGetter: (params) => {
-            return `${params.row.cardInfo.cardNumber.substring(0, 4)}-xxxx-xxxx-${params.row.cardInfo.cardNumber.substring(params.row.cardInfo.cardNumber.length - 4)}`;
+        valueGetter: (value, row) => {
+            return `${row.cardInfo.cardNumber.substring(0, 4)}-xxxx-xxxx-${row.cardInfo.cardNumber.substring(row.cardInfo.cardNumber.length - 4)}`;
         },
         width: 200,
         editable: false, flex: 1
@@ -150,12 +150,10 @@ function BookingDataTable() {
         field: "action",
         headerName: "Action",
         sortable: false,
-        width: 180,
+        width: 100,
         renderCell: ({ row }) => {
             return (
-                <Stack direction="row" spacing={1}>
-                    <Button variant="outlined" color="primary" size="small" onClick={() => { checkBookingDetails(row) }}>View</Button>
-                </Stack>
+                <Button variant="outlined" color="primary" size="small" onClick={() => { checkBookingDetails(row) }}>View</Button>
             );
         }
     }
@@ -164,7 +162,15 @@ function BookingDataTable() {
     const rows = bookingTable.itemList;
 
     if (!bookingTable.isLoaded) {
-        return <CircularProgress />
+        return (
+            <Box sx={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+                <Skeleton variant="rectangular" height={40} width="100%" />
+            </Box>
+        );
     } else {
         return (
             <DataGrid
@@ -173,12 +179,22 @@ function BookingDataTable() {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 20,
+                            pageSize: 10,
                         },
                     },
                 }}
                 autoHeight
-                pageSizeOptions={[20]}
+
+                sx={{
+                    boxShadow: 2,
+                    border: 1,
+                    borderColor: 'primary.light',
+                    '& .MuiDataGrid-cell:hover': {
+                        color: 'primary.main',
+                    },
+                    bgcolor: '#f8fafc'
+                }}
+                pageSizeOptions={[10]}
                 getRowId={(row) => row._id}
                 disableRowSelectionOnClick
             />

@@ -91,8 +91,8 @@ function SearchBar() {
                         <RemoveIcon />
                     </IconButton>
                     <TextField
-                        id="numberOfGuests"
-                        value={searchOption.numberOfGuests}
+                        id="numberOfGuest"
+                        value={searchOption.numberOfGuest}
                         label="Guest Each Room"
                         sx={{ width: '100%' }}
                         slotProps={{

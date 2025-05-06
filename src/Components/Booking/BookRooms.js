@@ -11,7 +11,8 @@ import BookingReview from "./BookingReview"
 import BookingSuccess from "./BookingSuccess";
 import AdminRestrictedRoute from "../../AdminRestrictedRoute";
 import { useSelector } from "react-redux";
-import { findUserById } from "../../Helpers/users";
+import { findUserById } from "../../helpers/users";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const steps = ['Booking details', 'Payment details', 'Review your booking'];
 
@@ -43,6 +44,8 @@ function BookRooms() {
     const [activeStep, setActiveStep] = useState(0); //stepper value
     const { bookingData } = useContext(BookingContext);
     const [userInfoReuseData, userInfoReuseDispatch] = useReducer(userInfoReuseReducer, { isLoaded: false });
+    const theme = useTheme();
+    const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
     const methods = useForm({
         defaultValues: {
@@ -68,56 +71,46 @@ function BookRooms() {
     });
 
     useEffect(() => {
+        const loadUserProfile = async () => {
+            var userData;
+
+            try {
+                const responseData = await findUserById(sessionKey);
+                userData = responseData;
+            } catch (error) {
+                console.error('Error during finding user:', error);
+            }
+
+            // if userData found
+            if (userData) {
+                if (userData.clientInfo) {
+                    userInfoReuseDispatch({
+                        type: 'setClientInfo',
+                        payload: {
+                            data: userData.clientInfo
+                        }
+                    });
+                }
+                if (userData.cardInfo) {
+                    userInfoReuseDispatch({
+                        type: 'setCardInfo',
+                        payload: {
+                            data: userData.cardInfo
+                        }
+                    });
+                }
+            }
+        }
+
         // load user profile data if logged in
         if (sessionKey) {
             loadUserProfile();
         }
+
         userInfoReuseDispatch({
             type: 'setIsLoaded'
         });
     }, [sessionKey]);
-
-    useEffect(() => {
-        // load user profile data if logged in
-        if (sessionKey) {
-            loadUserProfile();
-        }
-        userInfoReuseDispatch({
-            type: 'setIsLoaded'
-        });
-    }, []);
-
-
-    const loadUserProfile = async () => {
-        var userData;
-
-        try {
-            const responseData = await findUserById(sessionKey);
-            userData = responseData;
-        } catch (error) {
-            console.error('Error during finding user:', error);
-        }
-
-        // if userData found
-        if (userData) {
-            if (userData.clientInfo) {
-                userInfoReuseDispatch({
-                    type: 'setClientInfo',
-                    payload: {
-                        data: userData.clientInfo
-                    }
-                });
-            }
-            if (userData.cardInfo) {
-                userInfoReuseDispatch({
-                    type: 'setCardInfo',
-                    payload: {
-                        data: userData.cardInfo
-                    }
-                });
-            }
-        }
-    }
 
     // use to control the stepper status
     const nextStep = () => {
@@ -133,7 +126,7 @@ function BookRooms() {
     } else {
         return (<FormProvider {...methods}>
             <AdminRestrictedRoute>
-                <Container disableGutters>
+                <Container sx={{ margin: 'auto', mb: 3 }} >
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
                         {steps.map((label) => (
                             <Step key={label}>
@@ -165,7 +158,7 @@ function BookRooms() {
                                 <Card sx={{ boxShadow: 3, mb: 2 }}>
                                     <CardContent>
                                         <Typography variant="h6" gutterBottom>Your booking details</Typography>
-                                        <Stack direction="row" alignItems="center" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
+                                        <Stack direction={{ xs: 'column', lg: 'row' }} alignItems="flex-start" spacing={2} divider={<Divider orientation={isLgUp ? "vertical" : 'horizontal'} flexItem />}>
                                             <Box>
                                                 <Typography color="text.secondary">Check-in</Typography>
                                                 <Typography variant="subtitle1">{dayjs(bookingData.from).format('dddd, MMMM D, YYYY')}</Typography>
@@ -189,7 +182,7 @@ function BookRooms() {
                                 <Card sx={{ boxShadow: 3 }}>
                                     <CardContent>
                                         <Typography variant="h6" gutterBottom>Your price summary</Typography>
-                                        <Box sx={{ display: "flex", justifyContent: "space-between", bgcolor: "primary.main", color: "common.white", p: 2, borderRadius: 1 }}>
+                                        <Box sx={{ display: "flex", flexWrap: 'wrap', justifyContent: { md: "space-between" }, bgcolor: "primary.main", color: "common.white", p: 2, borderRadius: 1 }}>
                                             <Typography variant="h5">Price</Typography>
                                             <Typography variant="h5">CAD {bookingData.totalPrice.toFixed(2)}</Typography>
                                         </Box>

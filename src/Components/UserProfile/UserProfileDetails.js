@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import UserProfileContext from "./UserProfileContext";
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import Grid from '@mui/material/Grid';
 
 function UserProfileDetails() {
     const { userProfile } = useContext(UserProfileContext);
@@ -12,27 +13,33 @@ function UserProfileDetails() {
             </Box>
         );
     } else {
-        return (<Grid container spacing={2}>
-            <Grid item xs={12}><Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
+        return (<Grid container spacing={2} sx={{ m: 2 }}>
+            <Grid size={12}><Typography component="h1" variant="h5" gutterBottom >
                 Account Details
             </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={5}>
                 <Typography>
                     User ID
                 </Typography>
             </Grid>
-            <Grid item xs={6}>
-                <Typography>
+            <Grid size={7}>
+                <Typography sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                }}>
                     {userProfile._id}
                 </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={5}>
                 <Typography>
                     Email
                 </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={7} sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+            }}>
                 <Typography>
                     {userProfile.email}
                 </Typography>

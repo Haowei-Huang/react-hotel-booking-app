@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Checkbox, CircularProgress, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Checkbox, CircularProgress, Divider, TextField, Typography } from "@mui/material";
 
 import React, { useContext, useEffect, useState } from "react";
 import { Controller, useForm, useFormContext } from "react-hook-form";
@@ -7,6 +7,7 @@ import BookingContext from "./BookingContext";
 import Grid from '@mui/material/Grid'; // Grid version 1
 import { UserInfoReuseContext } from "./BookRooms";
 import { useSelector } from "react-redux";
+import Skeleton from '@mui/material/Skeleton';
 
 function BookingPayment({ nextStep, prevStep }) {
     const { bookingData, dispatch } = useContext(BookingContext);
@@ -112,50 +113,68 @@ function BookingPayment({ nextStep, prevStep }) {
     }
 
     if (!userInfoReuseData.isLoaded) {
-        return (<CircularProgress />);
+        return (
+            <Card sx={{ boxShadow: 3, p: 1.5, mb: 3, maxHeight: '50%' }}>
+                <CardContent>
+                    <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                        Payment Details
+                    </Typography>
+                    <Box display="flex" flexDirection="column" gap={2}>
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                        <Skeleton variant="text" width="60%" height={30} />
+                        <Skeleton variant="rectangular" width="100%" height={40} />
+                    </Box>
+                </CardContent>
+            </Card>
+        );
     } else {
-        return (<Card component="form" onSubmit={handleSubmit(onSubmit)} sx={{ boxShadow: 3 }}>
+        return (<Card component="form" onSubmit={handleSubmit(onSubmit)} sx={{ boxShadow: 3, p: 1.5, mb: 3, maxHeight: '50%' }}>
             <CardContent>
-                <Typography variant="h6">Payment Details</Typography>
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom>Payment Details</Typography>
                 {isAuthenticated && userInfoReuseData.hasOwnProperty("cardInfo") &&
                     <Box display="flex" flexDirection="row" justifyContent="space-between" sx={{ p: 2, border: 1, my: 2 }}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
+                        <Grid container rowSpacing={0} columnSpacing={2}>
+                            <Grid size={6}>
                                 <Typography>
                                     Card Holder Name
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     {userInfoReuseData.cardInfo.cardName}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     Card Number
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     {"xxxx-xxxx-xxxx-" + userInfoReuseData.cardInfo.cardNumber.slice(-4)}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     Expiry Date
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     {`${userInfoReuseData.cardInfo.expDate.substring(0, 2)}/${userInfoReuseData.cardInfo.expDate.substring(2)}`}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     Billing Address
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid size={6}>
                                 <Typography>
                                     {userInfoReuseData.cardInfo.address.street}
                                 </Typography><Typography>
@@ -165,7 +184,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                     </Typography>
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} display="flex" flexDirection="row" alignItems="center" justifyContent="left">
+                            <Grid size={12} display="flex" flexDirection="row" alignItems="center" justifyContent="left">
                                 <Typography color="primary" sx={{ mr: 2 }}>
                                     Reuse this information
                                 </Typography>
@@ -177,11 +196,11 @@ function BookingPayment({ nextStep, prevStep }) {
                     </Box>}
 
                 {!useExistingInfo && <React.Fragment>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" sx={{ mt: 1 }} >
                         Card Info
                     </Typography>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={6}>
+                    <Grid container rowSpacing={0} columnSpacing={2}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.cardName"
@@ -206,7 +225,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.cardNumber"
@@ -231,7 +250,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.expDate"
@@ -257,7 +276,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid size={{ xs: 12, md: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.cvv"
@@ -282,18 +301,12 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                <FormControlLabel
-                    control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-                    label="Remember credit card details for next time"
-                />
-            </Grid> */}
                     </Grid>
-                    <Typography variant="h6" sx={{ my: 2 }} gutterBottom>
+                    <Typography variant="h6" sx={{ mt: 5 }} >
                         Billing Address
                     </Typography>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                    <Grid container rowSpacing={0} columnSpacing={2}>
+                        <Grid size={12}>
                             <Controller
                                 control={control}
                                 name="cardInfo.address.street"
@@ -318,7 +331,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.address.city"
@@ -342,7 +355,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.address.province"
@@ -366,7 +379,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.address.postalCode"
@@ -395,7 +408,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
                             <Controller
                                 control={control}
                                 name="cardInfo.address.country"
@@ -422,14 +435,8 @@ function BookingPayment({ nextStep, prevStep }) {
                                 )}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                    <FormControlLabel
-                        control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                        label="Use this address for payment details"
-                    />
-                </Grid> */}
                     </Grid></React.Fragment>}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}> {/* Use flexbox to align the button */}
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}> {/* Use flexbox to align the button */}
                     <Button
                         size="large"
                         onClick={goBack}

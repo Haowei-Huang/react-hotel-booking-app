@@ -1,9 +1,8 @@
-import { Container, Typography, Box, TextField, Button } from "@mui/material";
-import React, { useState, useEffect, useContext } from 'react';
+import { Typography, Box, TextField, Button } from "@mui/material";
+import React, { useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
-import { useNavigate } from 'react-router-dom';
-import { findUserByEmail } from "../../Helpers/users";
+import { findUserByEmail } from "../../helpers/users";
 
 function EnterEmail({ handleNavigate }) {
     const { registrationData, setRegistrationData, errors, setErrors } = useContext(LoginAndRegisterFormContext);
@@ -41,11 +40,14 @@ function EnterEmail({ handleNavigate }) {
         setRegistrationData({ ...registrationData, [event.target.name]: event.target.value });
     };
 
-    return (<React.Fragment>
+    return (<Box sx={{ justifyContent: 'flex-start', p: 2, margin: 'auto' }}>
         <Typography component="h1" variant="h5" gutterBottom>
             Sign in or create an account
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+            You can sign in using your account to access our services.
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit}>
             <TextField
                 margin="normal"
                 required
@@ -61,14 +63,14 @@ function EnterEmail({ handleNavigate }) {
             <Button type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }} disabled={!registrationData.email.trim()}>Continue with email</Button>
+                sx={{ mt: 2, textTransform: 'none', fontSize: '1rem' }} disabled={!registrationData.email.trim()}>Continue with email</Button>
             {<Alert severity="error" sx={{ visibility: Object.keys(errors).length > 0 ? 'visible' : 'hidden' }}>{Object.keys(errors).map((key) => (
-                <label key={key}>
+                <label key={key} sx={{ my: 1 }}>
                     {errors[key]}
                 </label>
             ))}</Alert>}
         </Box>
-    </React.Fragment>);
+    </Box>);
 }
 
 export default EnterEmail;

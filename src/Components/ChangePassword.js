@@ -1,11 +1,9 @@
 import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { findUserById, updateUser } from '../Helpers/users';
+import { findUserById, updateUser } from '../helpers/users';
 
 function ChangePassword() {
-    // const jwtToken = process.env.REACT_APP_JWT_TOKEN;
-    const DB_URL = process.env.REACT_APP_DB_URL;
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
     const sessionKey = useSelector(state => state.auth.sessionKey);
 
@@ -82,7 +80,7 @@ function ChangePassword() {
         const { password, confirmPassword } = newPassword;
 
         if (password.trim() && confirmPassword.trim()) {
-            //new pasword format wrong
+            //new password format wrong
             if (!passwordRegex.test(password)) {
                 errorsObject.passwordFormat = "password format is wrong, please use a minimum of 3 characters, including uppercase letters, lowercase letters and numbers.";
             } else if (password.trim() !== confirmPassword.trim()) { //passwords not matching
@@ -148,17 +146,17 @@ function ChangePassword() {
                 onChange={handleChange}
             />
             <Button type="submit"
-                fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }} disabled={Object.values(newPassword).some(value => !value.trim()) || Object.keys(errors).includes('passwordNotMatch') || Object.keys(errors).includes('passwordFormat')}
+                sx={{ my: 2, display: 'flex', justifySelf: 'center' }} disabled={Object.values(newPassword).some(value => !value.trim()) || Object.keys(errors).includes('passwordNotMatch') || Object.keys(errors).includes('passwordFormat')}
             >Change Password</Button>
-            {Object.keys(errors).length > 0 && <Alert severity="error">
-                {Object.keys(errors).map((key) => (
-                    <label key={key}>
-                        {errors[key]}
-                    </label>
-                ))}
-            </Alert>}
+            {Object.keys(errors).length > 0 &&
+                <Alert severity="error" sx={{ display: 'flex', justifySelf: 'center' }}>
+                    {Object.keys(errors).map((key) => (
+                        <label key={key}>
+                            {errors[key]}
+                        </label>
+                    ))}
+                </Alert>}
             {passwordChanged && <Alert severity="success">New password saved!</Alert>}
         </Box>
     </Container>);

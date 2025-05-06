@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import UserProfileContext from "./UserProfileContext";
 import { Controller, useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { updateUser } from "../../Helpers/users";
+import { updateUser } from "../../helpers/users";
 
 function UserProfileCardInfo() {
     const sessionKey = useSelector(state => state.auth.sessionKey);
@@ -16,13 +16,13 @@ function UserProfileCardInfo() {
         e.preventDefault();
         var cardInfoData = getValues("cardInfo");
         // card number trim
-        const trimedCardNumber = watchCardNumber.replace(/\s+/g, '');
+        const trimmedCardNumber = watchCardNumber.replace(/\s+/g, '');
         const cardNumberRegex = new RegExp('^[0-9]{16}$');
-        if (trimedCardNumber && !cardNumberRegex.test(trimedCardNumber)) {
+        if (trimmedCardNumber && !cardNumberRegex.test(trimmedCardNumber)) {
             setError("cardInfo.cardNumber", { type: "format", message: "The card number is invalid, it should be 16 digits." })
             return;
         } else {
-            setValue("cardInfo.cardNumber", trimedCardNumber);
+            setValue("cardInfo.cardNumber", trimmedCardNumber);
             clearErrors("cardInfo.cardNumber");
         }
 
@@ -102,16 +102,16 @@ function UserProfileCardInfo() {
             </Box>
         );
     } else {
-        return (<Grid container component="form" onSubmit={handleSubmit(onSubmit)} spacing={2}>
-            <Grid item xs={12}>
-                <Typography component="h1" variant="h5" gutterBottom sx={{ mt: 1 }}>
+        return (<Grid container component="form" sx={{ mx: 2 }} onSubmit={handleSubmit(onSubmit)} rowSpacing={1} columnSpacing={3}>
+            <Grid size={{ xs: 12 }}>
+                <Typography component="h1" variant="h5" >
                     Card Info
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
-                <Typography variant="h6">Save time for your next booking by providing the information below</Typography>
+            <Grid size={{ xs: 12 }}>
+                <Typography variant="h6" sx={{ color: 'text.secondary' }}>Save time for your next booking by providing the information below</Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.cardName"
@@ -136,7 +136,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.cardNumber"
@@ -161,7 +161,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.expDate"
@@ -187,7 +187,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.cvv"
@@ -212,12 +212,12 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12}>
-                <Typography component="h1" variant="h5" gutterBottom sx={{ my: 2 }}>
+            <Grid size={{ xs: 12 }}>
+                <Typography component="h1" variant="h5" sx={{ mt: 3 }}>
                     Billing Address
                 </Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.address.street"
@@ -242,7 +242,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.address.city"
@@ -266,7 +266,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.address.province"
@@ -290,7 +290,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.address.postalCode"
@@ -319,7 +319,7 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid size={{ xs: 12, md: 6 }}>
                 <Controller
                     control={control}
                     name="cardInfo.address.country"
@@ -348,18 +348,18 @@ function UserProfileCardInfo() {
                     )}
                 />
             </Grid>
-            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Grid size={{ xs: 12 }} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
                     variant="contained" size="large"
                     onClick={handleSubmit(onSubmit)}
                     color="primary"
-                    sx={{ mt: 1, alignSelf: 'center', width: "200px" }}  // Align the button to the end of the flex container
+                    sx={{ mt: 2, alignSelf: 'center', width: "20%" }}  // Align the button to the end of the flex container
                 >
                     Save
                 </Button>
             </Grid>
-            {infoChanged && <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Alert severity="success">Infomation Saved!</Alert>
+            {infoChanged && <Grid size={{ xs: 12 }} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Alert severity="success">Information Saved!</Alert>
             </Grid>}
         </Grid >);
     }

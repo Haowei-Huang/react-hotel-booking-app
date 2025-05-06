@@ -2,7 +2,7 @@ import { Container, Typography, Box, TextField, Button } from "@mui/material";
 import React, { useState, useEffect, useContext } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
-import { userRegister } from "../../Helpers/users";
+import { userRegister } from "../../helpers/authentication";
 
 function Register({ handleNavigate }) {
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');

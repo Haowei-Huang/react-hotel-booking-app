@@ -1,5 +1,5 @@
 import React, { useState, useReducer, createContext, useEffect } from 'react';
-import { findAllBookings } from '../../Helpers/bookings';
+import { findAllBookings } from '../../helpers/bookings';
 
 const ViewBookingsContext = createContext();
 

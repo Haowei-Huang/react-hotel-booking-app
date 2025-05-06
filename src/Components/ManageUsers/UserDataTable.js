@@ -4,7 +4,7 @@ import { Box, Button, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useFormContext } from 'react-hook-form';
 import ManageUsersContext from './ManageUsersContext';
-import { deleteUser } from '../../Helpers/users'
+import { deleteUser } from '../../helpers/users'
 
 // only for display, should have functionality from Context for delete and edit
 function UserDataTable() {
@@ -60,10 +60,10 @@ function UserDataTable() {
         width: 180,
         renderCell: ({ row }) => {
             return (
-                <Stack direction="row" spacing={1}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, my: 1 }}>
                     <Button variant="outlined" color="primary" size="small" onClick={() => (handleEdit(row))}>Edit</Button>
                     <Button variant="outlined" color="primary" size="small" onClick={() => (handleDelete(row))}>Delete</Button>
-                </Stack>
+                </Box>
             );
         }
     }
@@ -72,18 +72,27 @@ function UserDataTable() {
     const rows = userTable.itemList;
 
     return (
-        <Box sx={{ height: 800, width: '100%', pt: 5 }}>
+        <Box sx={{ maxWidth: '90%', pt: 5 }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 20,
+                            pageSize: 10,
                         },
                     },
                 }}
-                pageSizeOptions={[20]}
+                sx={{
+                    boxShadow: 2,
+                    border: 1,
+                    borderColor: 'primary.light',
+                    '& .MuiDataGrid-cell:hover': {
+                        color: 'primary.main',
+                    },
+                    bgcolor: '#f8fafc'
+                }}
+                pageSizeOptions={[10]}
                 getRowId={(row) => row._id}
                 disableRowSelectionOnClick
             />

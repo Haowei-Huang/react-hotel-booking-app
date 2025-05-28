@@ -3,6 +3,7 @@ const FIND_ALL_HOTELS = '/hotel/findAllHotels';
 //const GET_HOTEL_COUNT = '/document/countDocuments/hotels';
 
 export async function findAllHotels() {
+
     //console.log('findAllHotels called');
     try {
         const response = await api.get(FIND_ALL_HOTELS);

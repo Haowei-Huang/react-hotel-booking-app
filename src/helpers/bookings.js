@@ -4,6 +4,7 @@ const CREATE_BOOKING = '/booking/createBooking';
 //const GET_BOOKING_COUNT = '/document/countDocuments/bookings';
 
 export async function findAllBookings() {
+
     //console.log('findAllBookings called');
     try {
         const response = await api.get(FIND_ALL_BOOKINGS);
@@ -16,6 +17,7 @@ export async function findAllBookings() {
 }
 
 export async function findBookingByUserId(userId) {
+
     //console.log('findBookingByUserId called: ', userId);
     try {
         const response = await api.get(`/booking/findBookingByUserId/${userId}`);

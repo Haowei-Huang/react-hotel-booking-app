@@ -12,6 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Menu, MenuItem } from '@mui/material';
 import LoginAndRegisterForm from '../LoginAndRegister/LoginRegisterForm';
 import { userLogout } from '../../helpers/authentication';
+import HotelIcon from '@mui/icons-material/Hotel';
 
 function MainHeader() {
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
@@ -53,19 +54,28 @@ function MainHeader() {
                 }}>
                     {/* Empty Box to reserve left space */}
                     <Box />
-                    {/* Logo in the center of the header */}
-                    <Typography component={Link}
-                        to="/"
-                        variant="h4"
-                        color="inherit"
-                        noWrap
-                        sx={{
-                            textDecoration: 'none',
-                            fontWeight: 'bold',
-                            justifySelf: 'center' // the key to center the logo text
-                        }}>
-                        SimpliiBook
-                    </Typography>
+                    <Box sx={{
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1,
+                        '&:hover': {
+                            transform: 'scale(1.05)',
+                            transition: 'transform 0.3s ease-in-out',
+                        }
+                    }}>
+                        {/* Logo in the center of the header */}
+                        <HotelIcon sx={{ fontSize: 32, color: 'white' }} />
+                        <Typography component={Link}
+                            to="/"
+                            variant="h4"
+                            color="inherit"
+                            noWrap
+                            sx={{
+                                textDecoration: 'none',
+                                fontWeight: 'bold',
+                                justifySelf: 'center' // the key to center the logo text
+                            }}>
+                            SimpliiBook
+                        </Typography>
+                    </Box>
                     {/*display buttons on the right side of the header */}
                     <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
                         {!isAuthenticated ?
@@ -75,8 +85,7 @@ function MainHeader() {
                             </>) : (
                                 <>
                                     {role === 'admin' && <Button color="inherit" component={Link} to="/Dashboard" variant="outlined">Dashboard</Button>}
-                                    <Button color="inherit" variant="outlined" onClick={handleLogout}>Logout</Button>
-                                    {role === 'user' && <div>
+                                    <div>
                                         <IconButton id="basic-button"
                                             aria-controls={open ? 'basic-menu' : undefined}
                                             aria-haspopup="true"
@@ -91,11 +100,11 @@ function MainHeader() {
                                                 'aria-labelledby': 'basic-button',
                                             }}
                                         >
-                                            <MenuItem component={Link} to="/UserProfile">Profile</MenuItem>
-                                            <MenuItem component={Link} to="/Bookings">My bookings</MenuItem>
-                                            {/* <MenuItem component={Link} to="/UserProfile">Logout</MenuItem> */}
+                                            {role === 'user' && <MenuItem component={Link} to="/UserProfile">Profile</MenuItem>}
+                                            {role === 'user' && <MenuItem component={Link} to="/Bookings">My bookings</MenuItem>}
+                                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                         </Menu>
-                                    </div>}
+                                    </div>
                                 </>
                             )
                         }

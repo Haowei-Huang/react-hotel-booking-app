@@ -3,12 +3,12 @@ const FIND_ALL_HOTELS = '/hotel/findAllHotels';
 //const GET_HOTEL_COUNT = '/document/countDocuments/hotels';
 
 export async function findAllHotels() {
-    console.log('findAllHotels called');
+    //console.log('findAllHotels called');
     try {
         const response = await api.get(FIND_ALL_HOTELS);
         console.log("api base url:" + api.defaults.baseURL);
         const responseJson = await response.data;
-        console.log('responseJson', responseJson);
+        //console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);
@@ -16,11 +16,11 @@ export async function findAllHotels() {
 }
 
 export async function findHotelById(hotelId) {
-    console.log('findHotelById called: ', hotelId);
+    //console.log('findHotelById called: ', hotelId);
     try {
         const response = await api.get(`/hotel/findHotelById/${hotelId}`);
         const responseJson = await response.data;
-        console.log('responseJson', responseJson);
+        //console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);
@@ -28,11 +28,11 @@ export async function findHotelById(hotelId) {
 }
 
 // export async function getHotelCount() {
-//     console.log('getHotelCount called');
+//     //console.log('getHotelCount called');
 //     try {
 //         const response = await api.get(GET_HOTEL_COUNT);
 //         const responseJson = await response.data;
-//         console.log('responseJson', responseJson);
+//         //console.log('responseJson', responseJson);
 //         return responseJson.count;
 //     } catch (error) {
 //         console.error('Error during fetching hotel data:', error);
@@ -40,7 +40,7 @@ export async function findHotelById(hotelId) {
 // }
 
 export async function updateHotel(hotelId, newData) {
-    console.log('updateHotel called: ', hotelId);
+    //console.log('updateHotel called: ', hotelId);
     const newHotelData = JSON.stringify({
         ...newData
     });
@@ -55,11 +55,11 @@ export async function updateHotel(hotelId, newData) {
 }
 
 export async function getUserBookedHotels(userId) {
-    console.log('getUserBookedHotels called: ', userId);
+    //console.log('getUserBookedHotels called: ', userId);
     try {
         const response = await api.get(`/hotel/getUserBookedHotels/${userId}`);
         const responseJson = await response.data;
-        console.log('responseJson', responseJson);
+        //console.log('responseJson', responseJson);
         return responseJson.data;
     } catch (error) {
         console.error('Error during fetching hotel data:', error);

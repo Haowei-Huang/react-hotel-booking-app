@@ -17,7 +17,7 @@ api.interceptors.request.use(
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
         }
-        console.log(config);
+        //console.log(config);
         return config;
     },
     error => Promise.reject(error)
@@ -31,7 +31,7 @@ api.interceptors.response.use(
         if (error.response?.status === 401) {
             try {
                 // Attempt to refresh the access token
-                console.log('Refreshing access token...');
+                //console.log('Refreshing access token...');
                 // use a new instance to avoid infinite loop, 
                 // otherwise if refreshToken got 401 response, it will trigger the interceptor again
                 // it will throw an error if the response is 4XX or 5XX
@@ -47,7 +47,7 @@ api.interceptors.response.use(
                 }));
 
                 originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
-                console.log('Retrying original request with new access token: ', originalRequest);
+                //console.log('Retrying original request with new access token: ', originalRequest);
                 // Retry the original request with a new instance
                 return axios(originalRequest, {
                     baseURL: process.env.REACT_APP_DB_URL,

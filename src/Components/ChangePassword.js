@@ -29,7 +29,6 @@ function ChangePassword() {
         //verify old password is correct
         try {
             const user = await findUserById(sessionKey);
-            console.log(user);
 
             //set error message if password is wrong
             if (user.password !== newPassword.oldPassword) {

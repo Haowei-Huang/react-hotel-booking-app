@@ -10,7 +10,7 @@ function HotelDataTable() {
     const { dispatch, hotelTable, reloadHotelTable } = useContext(ManageHotelsContext);
 
     const handleEdit = async (row) => {
-        console.log(row);
+        //console.log(row);
         const hotelId = row._id;
 
         const newData = {

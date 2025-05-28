@@ -78,7 +78,11 @@ export const WelcomePage = () => {
                             <SearchBar />
                         </Box>
                     </Stack>
-                    <Paper sx={{ width: '70%', justifySelf: 'center', p: 3, textAlign: 'left', backgroundColor: 'grey.50' }} elevation={3}>
+                    <Paper sx={{
+                        width: '70%', justifySelf: 'center', p: 3, textAlign: 'left', backgroundColor: 'grey.50',
+                        animation: `${fadeInUp} 1s ease-out`
+                    }}
+                        elevation={3}>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, justifyContent: 'center' }}>
                             <SecurityIcon sx={{ mr: 2, color: 'primary.main' }} />
                             <Typography variant="h5" component="h3">

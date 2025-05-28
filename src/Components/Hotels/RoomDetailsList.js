@@ -89,7 +89,7 @@ function RoomDetailsList({ rooms }) {
     };
 
     return (<React.Fragment>
-        <TableContainer component={Paper} square={true} sx={{ mb: 2 }}>
+        <TableContainer component={Paper} square={false} elevation={4} sx={{ mb: 3 }}>
             <Table aria-label="simple table">
                 <TableHead >
                     <TableRow>

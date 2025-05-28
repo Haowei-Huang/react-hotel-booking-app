@@ -4,13 +4,13 @@ const USER_LOGOUT = '/user/logout';
 const USER_REGISTER = '/user/register';
 
 export async function userLogin(email, password) {
-    console.log('userLogin called: ', email);
+    //console.log('userLogin called: ', email);
     const loginData = JSON.stringify({ email: email, password: password });
     try {
         const response = await api.post(USER_LOGIN, loginData);
         if (response.status === 200) {
             const responseJson = await response.data;
-            console.log('responseJson', responseJson);
+            //console.log('responseJson', responseJson);
             return responseJson; // not sure
         } else {
             throw new Error('Login failed');
@@ -36,14 +36,14 @@ export async function userLogout() {
 }
 
 export async function userRegister(email, password, role) {
-    console.log('userRegister called: ', email);
+    //console.log('userRegister called: ', email);
     const registrationData = JSON.stringify({ email: email, password: password, role: role, isActive: true });
 
     try {
         const response = await api.post(USER_REGISTER, registrationData);
         if (response.status === 200) {
             const responseJson = await response.data;
-            console.log('responseJson', responseJson);
+            //console.log('responseJson', responseJson);
             return responseJson; // not sure
         } else {
             throw new Error('Register failed');

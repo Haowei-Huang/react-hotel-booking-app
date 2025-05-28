@@ -29,7 +29,7 @@ function Register({ handleNavigate }) {
         if (response) {
             handleNavigate("RegisterSuccess")
         } else {
-            console.log("RegisterFailed")
+            //console.log("RegisterFailed")
         }
 
         setErrors({});

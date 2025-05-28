@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, CardMedia, Checkbox, Container, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper, Rating, Slider, Stack, Switch, Typography } from "@mui/material";
+import { Avatar, Box, Button, CardMedia, Checkbox, Container, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper, Rating, Slider, Stack, Switch, Typography, Chip, Card, CardContent } from "@mui/material";
 import SearchBar from "../SearchHotelContext/SearchBar";
 import HotelDisplayContext from "./HotelDisplayContext";
 import { useContext, useEffect, useReducer, useState } from "react";
@@ -7,9 +7,38 @@ import { Link } from "react-router-dom";
 import SearchContext from "../SearchHotelContext/SearchContext";
 import WifiIcon from '@mui/icons-material/Wifi';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import LocalLaundryServiceIcon from '@mui/icons-material/LocalLaundryService';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
+import PoolIcon from '@mui/icons-material/Pool';
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast';
+import TuneIcon from '@mui/icons-material/Tune';
+import StarIcon from '@mui/icons-material/Star';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useDebounce } from "../../hooks/hooks";
 import { Grid } from "@mui/material";
 import { Skeleton } from "@mui/material";
+
+const facilityIcons = {
+    wifi: <WifiIcon sx={{ fontSize: 20, color: 'primary.main' }} />,
+    parking: <LocalParkingIcon sx={{ fontSize: 20, color: 'primary.main' }} />,
+    laundry: <LocalLaundryServiceIcon sx={{ fontSize: 20, color: 'primary.main' }} />,
+    bar: <LocalBarIcon sx={{ fontSize: 20, color: 'primary.main' }} />,
+    restaurant: <RestaurantIcon sx={{ fontSize: 20, color: 'primary.main' }} />,
+    pool: <PoolIcon sx={{ fontSize: 20, color: 'primary.main' }} />,
+    breakfast: <FreeBreakfastIcon sx={{ fontSize: 20, color: 'primary.main' }} />
+};
+
+const facilityLabels = {
+    wifi: 'Wi-Fi',
+    parking: 'Parking',
+    laundry: 'Laundry',
+    bar: 'Bar',
+    restaurant: 'Restaurant',
+    pool: 'Pool',
+    breakfast: 'Breakfast'
+};
 
 const initialDisplayData = {
     itemList: [],
@@ -134,160 +163,302 @@ function ViewHotels() {
         // Make sure debouncedFilterData is stable (using useCallback in useDebounce)
     }, [hotelList, debouncedFilterData, searchOption.rating, searchOption.location, searchOption.tags, searchOption.price, searchOption.numberOfGuest]);
 
-    return (<Container maxWidth="lg" disableGutters sx={{ display: "flex", flexDirection: "column", margin: "auto" }}>
-        <Box sx={{ margin: "auto", my: 2 }} >
-            <SearchBar sx={{ margin: "auto" }} />
-        </Box>
-        <Divider />
-        <Stack direction="row" sx={{ margin: "auto", width: "90%" }} >
-            <Container component={Paper} square={false} elevation={3} sx={{ my: 2, p: 4, width: "35%", height: '50%', position: 'sticky', top: '1rem' }}>
-                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                    Filter by
-                </Typography>
-                <Divider sx={{ my: 1 }} />
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }} gutterBottom>
-                    Price
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="text">
-                        $ {searchOption.price[0]} - $ {searchOption.price[1]}
-                    </Typography>
-                    <Typography variant="text">
-                        Each night
-                    </Typography>
+    return (
+        <Box sx={{ backgroundColor: 'grey.50', minHeight: '100vh' }}>
+            <Container maxWidth="xl" sx={{ py: 3 }}>
+                <Box sx={{ my: 3, justifySelf: 'center' }} >
+                    <SearchBar />
                 </Box>
-                <Slider
-                    getAriaLabel={() => 'Price range'}
-                    name="price"
-                    min={0}
-                    step={1}
-                    max={500}
-                    value={searchOption.price}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    sx={{ my: 1, mx: 'auto' }}
-                />
-                <Divider />
-                <Typography variant="subtitle1" sx={{ my: 1, fontWeight: 'bold' }} gutterBottom>
-                    Facilities
-                </Typography>
-                <List disablePadding
-                    sx={{ bgcolor: 'background.paper' }}
-                    spacing={1}
-                    alignItems="flex-start"
-                    dense
-                >
-                    <ListItem disablePadding key="wifi">
-                        <Checkbox
-                            checked={searchOption.tags.wifi}
-                            onChange={handleCheck}
-                            name="wifi"
-                        />
-                        <ListItemText id="switch-list-label-wifi" primary="Wi-Fi" />
-                    </ListItem>
-                    <ListItem disablePadding key="parking">
-                        <Checkbox
-                            checked={searchOption.tags.parking}
-                            onChange={handleCheck}
-                            name="parking"
-                        />
-                        <ListItemText id="switch-list-label-parking" primary="Parking" />
-                    </ListItem>
-                    <ListItem disablePadding key="laundry">
-                        <Checkbox
-                            checked={searchOption.tags.laundry}
-                            onChange={handleCheck}
-                            name="laundry"
-                        />
-                        <ListItemText id="switch-list-label-laundry" primary="Laundry" />
-                    </ListItem>
-                    <ListItem disablePadding key="bar">
-                        <Checkbox
-                            checked={searchOption.tags.bar}
-                            onChange={handleCheck}
-                            name="bar"
-                        />
-                        <ListItemText id="switch-list-label-bar" primary="Bar" />
-                    </ListItem>
-                    <ListItem disablePadding key="restaurant">
-                        <Checkbox
-                            checked={searchOption.tags.restaurant}
-                            onChange={handleCheck}
-                            name="restaurant"
-                        />
-                        <ListItemText id="switch-list-label-restaurant" primary="Restaurant" />
-                    </ListItem>
-                    <ListItem disablePadding key="pool">
-                        <Checkbox
-                            checked={searchOption.tags.pool}
-                            onChange={handleCheck}
+                <Divider sx={{ my: 3 }} />
+                <Grid container spacing={3}>
+                    <Grid size={{ xs: 12, md: 4, lg: 3 }}>
+                        <Card
+                            elevation={3}
+                            sx={{
+                                position: 'sticky',
+                                top: 90,
+                                borderRadius: 2,
+                                overflow: 'hidden'
+                            }}
+                        >
+                            <CardContent sx={{ p: 0 }}>
+                                <Box sx={{
+                                    bgcolor: 'primary.main',
+                                    color: 'white',
+                                    p: 3,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1
+                                }}>
+                                    <TuneIcon />
+                                    <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                                        Filter by
+                                    </Typography>
+                                </Box>
 
-                            name="pool"
-                        />
-                        <ListItemText id="switch-list-label-pool" primary="Pool" />
-                    </ListItem>
-                    <ListItem disablePadding key="breakfast">
-                        <Checkbox
-                            checked={searchOption.tags.breakfast}
-                            onChange={handleCheck}
-                            name="breakfast"
-                        />
-                        <ListItemText id="switch-list-label-breakfast" primary="Breakfast" />
-                    </ListItem>
-                </List>
-                <Divider sx={{ my: 1 }} />
-                <Typography variant="subtitle1" sx={{ my: 1, fontWeight: 'bold' }} gutterBottom>
-                    Rating
-                </Typography>
-                <Rating value={searchOption.rating} precision={0.5} name="rating" onChange={handleChange} />
-            </Container>
-            <Container >{!displayData.isLoaded ? (
-                // Render Skeletons while loading
-                <>
-                    <Skeleton variant="rectangular" sx={{ my: 2, height: '14rem', width: '100%', minWidth: '43rem' }} />
-                    <Skeleton variant="rectangular" sx={{ my: 2, height: '14rem', width: '100%', minWidth: '43rem' }} />
-                    <Skeleton variant="rectangular" sx={{ my: 2, height: '14rem', width: '100%', minWidth: '43rem' }} />
-                </>
-            ) : (displayData.itemList.map((item) => (
-                <Grid container spacing={2} component={Paper} square={false} elevation={3} sx={{ my: 2, p: 2, width: '100%', minWidth: '43rem' }} key={item._id}>
-                    <Grid size={3.5}>
-                        <Link to={`/Hotels/${item._id}`} sx={{ textDecoration: 'none', display: 'block' }}>
-                            <CardMedia
-                                sx={{ height: "12rem", width: "12rem", objectFit: "cover" }}
-                                image={item.Photo}
-                                component="img"
-                            />
-                        </Link>
+                                <Box sx={{ p: 3, display: 'flex', flexDirection: 'column' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                        <AttachMoneyIcon color="primary" />
+                                        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                                            Price Range
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        mb: 1,
+                                        p: 2,
+                                        bgcolor: 'grey.100',
+                                        borderRadius: 1
+                                    }}>
+                                        <Typography variant="text">
+                                            $ {searchOption.price[0]} - {searchOption.price[1]}
+                                        </Typography>
+                                        <Typography variant="caption" color="text.secondary">
+                                            per night
+                                        </Typography>
+                                    </Box>
+
+                                    <Slider
+                                        getAriaLabel={() => 'Price range'}
+                                        name="price"
+                                        min={0}
+                                        step={1}
+                                        max={500}
+                                        value={searchOption.price}
+                                        onChange={handleChange}
+                                        valueLabelDisplay="auto"
+                                        valueLabelFormat={(value) => `$${value}`}
+                                        sx={{ my: 1, mx: 'auto', justifyContent: 'center', width: '95%' }}
+                                    />
+                                </Box>
+
+                                <Divider />
+                                <Box sx={{ p: 3 }}>
+                                    <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
+                                        Facilities
+                                    </Typography>
+                                    <Grid container spacing={1}>
+                                        {Object.keys(facilityLabels).map((facility) => (
+                                            <Grid size={{ xs: 12, sm: 6 }} key={facility}>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        p: 1.5,
+                                                        borderRadius: 1,
+                                                        border: '1px solid',
+                                                        borderColor: searchOption.tags[facility] ? 'primary.main' : 'grey.300',
+                                                        backgroundColor: searchOption.tags[facility] ? 'primary.50' : 'transparent',
+                                                        cursor: 'pointer',
+                                                        transition: 'all 0.2s ease-in-out',
+                                                        '&:hover': {
+                                                            borderColor: 'primary.main',
+                                                            backgroundColor: 'primary.50'
+                                                        }
+                                                    }}
+                                                    onClick={() => handleCheck({ target: { name: facility, checked: !searchOption.tags[facility] } })}
+                                                >
+                                                    <Checkbox
+                                                        checked={searchOption.tags[facility]}
+                                                        onChange={handleCheck}
+                                                        name={facility}
+                                                        size="small"
+                                                        sx={{ p: 0, mr: 1 }}
+                                                    />
+                                                    {facilityIcons[facility]}
+                                                    <Typography variant="body2" sx={{ ml: 1, fontWeight: 500 }}>
+                                                        {facilityLabels[facility]}
+                                                    </Typography>
+                                                </Box>
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                </Box>
+                                <Divider />
+                                <Box sx={{ p: 3 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                        <StarIcon color="primary" />
+                                        <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                                            Minimum Rating
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{
+                                        p: 2,
+                                        bgcolor: 'grey.100',
+                                        borderRadius: 1,
+                                        textAlign: 'center'
+                                    }}>
+                                        <Rating
+                                            value={searchOption.rating}
+                                            precision={0.5}
+                                            name="rating"
+                                            onChange={handleChange}
+                                            size="large"
+                                        />
+                                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>
+                                            {searchOption.rating} stars and above
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                            </CardContent>
+                        </Card>
                     </Grid>
-                    <Grid size={5.5}>
-                        <Typography variant="h5" gutterBottom>
-                            <Link to={`/Hotels/${item._id}`} style={{ textDecoration: 'none', color: 'primary' }}>
-                                {item.HotelName}
-                            </Link>
-                        </Typography>
-                        <Box sx={{ display: "flex", alignItems: 'center', gap: 0.5 }}>
-                            <LocationOnIcon color="action" />
-                            <Typography variant="subtitle1" color="text.secondary">
-                                {item.Address.StreetAddress}, {item.Address.City}
+                    <Grid size={{ xs: 12, md: 8, lg: 9 }}>
+                        <Box sx={{ mb: 2 }}>
+                            <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+                                {displayData.isLoaded ? `${displayData.itemList.length} hotels found` : 'Searching hotels...'}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {searchOption.location && `in ${searchOption.location}`}
                             </Typography>
                         </Box>
-                    </Grid>
-                    <Grid size={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                        <Box >
-                            <Stack direction="row" spacing={1} alignItems="center" justifySelf={"flex-end"}>
-                                <Rating value={item.Rating} precision={0.5} readOnly />
-                                <Avatar sx={{ bgcolor: "darkblue" }} variant="rounded">{item.Rating}</Avatar>
+                        {!displayData.isLoaded ? (
+                            // Render Skeletons while loading
+                            <Stack spacing={3}>
+                                {[1, 2, 3].map((index) => (
+                                    <Card key={index} elevation={2} sx={{ borderRadius: 2 }}>
+                                        <CardContent sx={{ p: 3 }}>
+                                            <Grid container spacing={3}>
+                                                <Grid size={{ xs: 12, sm: 4 }}>
+                                                    <Skeleton variant="rectangular" height={200} sx={{ borderRadius: 1 }} />
+                                                </Grid>
+                                                <Grid size={{ xs: 12, sm: 8 }}>
+                                                    <Skeleton variant="text" height={40} width="60%" />
+                                                    <Skeleton variant="text" height={20} width="80%" sx={{ my: 1 }} />
+                                                    <Skeleton variant="text" height={20} width="40%" />
+                                                    <Box sx={{ mt: 2 }}>
+                                                        <Skeleton variant="rectangular" height={36} width={150} />
+                                                    </Box>
+                                                </Grid>
+                                            </Grid>
+                                        </CardContent>
+                                    </Card>
+                                ))}
                             </Stack>
-                        </Box>
-                        <Button variant="contained" component={Link} to={`/Hotels/${item._id}`} sx={{ alignSelf: 'end' }}>
-                            See availability
-                        </Button>
-                    </Grid>
-                </Grid>)
-            ))}
+                        ) : displayData.itemList.length === 0 ? (
+                            // No Results Found
+                            <Card elevation={2} sx={{ borderRadius: 2, textAlign: 'center', py: 6 }}>
+                                <CardContent>
+                                    <Typography variant="h6" color="text.secondary" gutterBottom>
+                                        No hotels found
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Try adjusting your search criteria or filters
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <Stack spacing={3}>
+                                {displayData.itemList.map((item) => (
+                                    <Card
+                                        key={item._id}
+                                        elevation={2}
+                                        sx={{
+                                            borderRadius: 2,
+                                            transition: 'all 0.3s ease-in-out',
+                                            '&:hover': {
+                                                transform: 'translateY(-2px)',
+                                                boxShadow: '0 8px 25px rgba(0,0,0,0.15)'
+                                            }
+                                        }}
+                                    >
+                                        <CardContent sx={{ p: 3 }}>
+                                            <Grid container spacing={3}>
+                                                <Grid size={{ xs: 12, sm: 4 }}>
+                                                    <Link to={`/Hotels/${item._id}`} style={{ textDecoration: 'none' }}>
+                                                        <CardMedia
+                                                            component="img"
+                                                            height="200"
+                                                            image={item.Photo}
+                                                            alt={item.HotelName}
+                                                            sx={{
+                                                                borderRadius: 1,
+                                                                objectFit: 'cover',
+                                                                transition: 'transform 0.3s ease-in-out',
+                                                                '&:hover': {
+                                                                    transform: 'scale(1.02)'
+                                                                }
+                                                            }}
+                                                        />
+                                                    </Link>
+                                                </Grid>
+                                                <Grid size={{ xs: 12, sm: 8 }}>
+                                                    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                                                            <Box>
+                                                                <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+                                                                    <Link
+                                                                        to={`/Hotels/${item._id}`}
+                                                                        style={{
+                                                                            textDecoration: 'none',
+                                                                            color: 'inherit',
+                                                                            '&:hover': { color: 'primary.main' }
+                                                                        }}
+                                                                    >
+                                                                        {item.HotelName}
+                                                                    </Link>
+                                                                </Typography>
+
+                                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                                                                    <LocationOnIcon color="action" sx={{ fontSize: 20 }} />
+                                                                    <Typography variant="body2" color="text.secondary">
+                                                                        {item.Address.StreetAddress}, {item.Address.City}
+                                                                    </Typography>
+                                                                </Box>
+                                                            </Box>
+
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+                                                                <Rating value={item.Rating} precision={0.5} readOnly size="regular" />
+                                                                <Chip
+                                                                    label={item.Rating}
+                                                                    color="primary"
+                                                                    size="regular"
+                                                                    sx={{ fontWeight: 'bold' }}
+                                                                />
+                                                            </Box>
+                                                        </Box>
+
+                                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
+                                                            <Box>
+                                                                <Typography variant="caption" color="text.secondary">
+                                                                    Starting from
+                                                                </Typography>
+                                                                <Typography variant="h6" color="primary.main" sx={{ fontWeight: 'bold' }}>
+                                                                    ${Math.min(...item.Rooms.filter(room => room.isActive).map(room => room.BaseRate))}
+                                                                    <Typography component="span" variant="caption" color="text.secondary">
+                                                                        /night
+                                                                    </Typography>
+                                                                </Typography>
+                                                            </Box>
+
+                                                            <Button
+                                                                variant="contained"
+                                                                component={Link}
+                                                                to={`/Hotels/${item._id}`}
+                                                                sx={{
+                                                                    borderRadius: 2,
+                                                                    px: 3,
+                                                                    py: 1,
+                                                                    fontWeight: 'bold',
+                                                                    textTransform: 'none'
+                                                                }}
+                                                            >
+                                                                View Details
+                                                            </Button>
+                                                        </Box>
+                                                    </Box>
+                                                </Grid>
+                                            </Grid>
+                                        </CardContent>
+                                    </Card>)
+                                )}
+                            </Stack>)}
+                    </Grid >
+                </Grid >
             </Container >
-        </Stack >
-    </Container >);
+        </Box>);
 };
 
 export default ViewHotels;

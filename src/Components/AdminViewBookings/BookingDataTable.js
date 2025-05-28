@@ -17,7 +17,7 @@ function BookingDataTable() {
         var hotelData;
         var userData;
 
-        console.log("Booking data: ", row.hotel);
+        // console.log("Booking data: ", row.hotel);
         // get hotel data
         try {
             const hotelDataResponse = await findHotelById(row.hotel);

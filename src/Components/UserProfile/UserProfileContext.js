@@ -30,7 +30,7 @@ export const UserProfileContextProvider = ({ children }) => {
         const userData = await findUserById(sessionKey);
 
         if (userData) {
-            console.log(userData);
+            //console.log(userData);
             dispatch({
                 type: 'initialize',
                 payload: {
@@ -38,7 +38,7 @@ export const UserProfileContextProvider = ({ children }) => {
                 }
             })
         } else {
-            console.log("Failed to load user profile data");
+            //console.log("Failed to load user profile data");
         }
     }
 

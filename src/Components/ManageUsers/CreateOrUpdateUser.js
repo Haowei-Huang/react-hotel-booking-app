@@ -25,6 +25,11 @@ const CreateOrUpdateUser = () => {
     const onSubmit = async (data, e) => {
         e.preventDefault();
         const userData = getValues();
+
+        if (userData.email === "admin@abc.com") {
+            setError('email', { type: 'custom', message: 'You can\'t create or update this root admin user for demo' });
+            return;
+        }
         // if the input _id is null, we can create but not update 
         // if is not null, we can update but not create
         if (userData._id === null) {
@@ -180,12 +185,18 @@ const CreateOrUpdateUser = () => {
 
             <Grid size={{ xs: 12 }} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Button id="updateData" variant="contained" type="submit"
-                    disabled={!watchEmail.trim() || !watchPassword.trim() || errors.length > 0 || updateDisabled()} onClick={handleSubmit(onSubmit)}>Update</Button>
+                    disabled={!watchEmail.trim() ||
+                        !watchPassword.trim()
+                        || errors.length > 0
+                        || updateDisabled()} onClick={handleSubmit(onSubmit)}>Update</Button>
 
                 <Button id="resetForm" variant="contained" onClick={resetForm}>Reset</Button>
 
                 <Button id="createData" variant="contained" type="submit"
-                    disabled={!watchEmail.trim() || !watchPassword.trim() || errors.length > 0 || createDisabled()} onClick={handleSubmit(onSubmit)}>Create</Button>
+                    disabled={!watchEmail.trim()
+                        || !watchPassword.trim()
+                        || errors.length > 0
+                        || createDisabled()} onClick={handleSubmit(onSubmit)}>Create</Button>
             </Grid>
         </Grid>);
 }

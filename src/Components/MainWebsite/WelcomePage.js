@@ -83,14 +83,14 @@ export const WelcomePage = () => {
                         animation: `${fadeInUp} 1s ease-out`
                     }}
                         elevation={3}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, justifyContent: 'center' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, justifyContent: 'center' }}>
                             <SecurityIcon sx={{ mr: 2, color: 'primary.main' }} />
                             <Typography variant="h5" component="h3">
                                 Admin Access
                             </Typography>
                         </Box>
-                        <Typography variant="body1" sx={{ textAlign: 'center', mb: 3, color: 'text.secondary' }} gutterBottom >
-                            To view the admin dashboard, please create your admin account first in the database following this format:
+                        <Typography variant="body1" sx={{ textAlign: 'center', mb: 1, color: 'text.secondary' }} gutterBottom >
+                            To view the admin dashboard, you can login with this admin account for demo.
                         </Typography>
                         <Paper
                             sx={{
@@ -106,9 +106,8 @@ export const WelcomePage = () => {
                         >
                             <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
                                 {JSON.stringify({
-                                    email: "[adminEmail]",
-                                    role: "admin",
-                                    password: "[adminPassword]"
+                                    email: "admin@abc.com",
+                                    password: "abc"
                                 }, null, 2)}
                             </pre>
                         </Paper>

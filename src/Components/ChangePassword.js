@@ -6,6 +6,7 @@ import { findUserById, updateUser } from '../helpers/users';
 function ChangePassword() {
     const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
     const sessionKey = useSelector(state => state.auth.sessionKey);
+    const username = useSelector(state => state.auth.username);
 
     const [userData, setUserData] = useState({});
     const [passwordChanged, setPasswordChanged] = useState(false);
@@ -25,6 +26,11 @@ function ChangePassword() {
     const handleSubmit = async (event) => {
         setErrors({});
         event.preventDefault();
+
+        if (username === "admin@abc.com") {
+            setErrors({ ...errors, restrictedAction: 'You can\'t change the password for this root admin user for demo' });
+            return;
+        }
 
         //verify old password is correct
         try {
@@ -107,7 +113,9 @@ function ChangePassword() {
         <Typography variant="body" gutterBottom>
             Use a minimum of 3 characters, including uppercase letters, lowercase letters and numbers.
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        {username === 'admin@abc.com' ? (<div>
+            <Alert sx={{ mt: 2 }} severity="error">Sorry, you can't change the password of the root admin for demo, maybe try login with another admin's account.</Alert>
+        </div>) : (<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
                 margin="normal"
                 required
@@ -146,7 +154,11 @@ function ChangePassword() {
             />
             <Button type="submit"
                 variant="contained"
-                sx={{ my: 2, display: 'flex', justifySelf: 'center' }} disabled={Object.values(newPassword).some(value => !value.trim()) || Object.keys(errors).includes('passwordNotMatch') || Object.keys(errors).includes('passwordFormat')}
+                sx={{ my: 2, display: 'flex', justifySelf: 'center' }} disabled={Object.values(newPassword).some(value => !value.trim())
+                    || Object.keys(errors).includes('passwordNotMatch')
+                    || Object.keys(errors).includes('passwordFormat')
+                    || Object.keys(errors).includes('restrictedAction')
+                }
             >Change Password</Button>
             {Object.keys(errors).length > 0 &&
                 <Alert severity="error" sx={{ display: 'flex', justifySelf: 'center' }}>
@@ -157,7 +169,8 @@ function ChangePassword() {
                     ))}
                 </Alert>}
             {passwordChanged && <Alert severity="success">New password saved!</Alert>}
-        </Box>
+        </Box>)
+        }
     </Container>);
 }
 

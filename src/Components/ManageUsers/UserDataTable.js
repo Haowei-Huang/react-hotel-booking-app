@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, ownerDocument, Stack } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useFormContext } from 'react-hook-form';
+import { set, useFormContext } from 'react-hook-form';
 import ManageUsersContext from './ManageUsersContext';
 import { deleteUser } from '../../helpers/users'
 
@@ -16,17 +16,22 @@ function UserDataTable() {
     const handleDelete = async (row) => {
         const userId = row._id;
 
+        if (row.email === "admin@abc.com") {
+            setError("email", { type: 'custom', message: 'You can delete this root admin user for demo' });
+            return;
+        }
+
         if (sessionKey === userId) {
             setError("email", { type: 'custom', message: 'You can\'t delete your own account' });
             return;
-        } else {
-            const isDeleted = await deleteUser(userId);
-            if (isDeleted) {
-                if (getValues("email").toLowerCase() === row.email.toLowerCase()) {
-                    reset();
-                }
-                reloadUserTable();
+        }
+
+        const isDeleted = await deleteUser(userId);
+        if (isDeleted) {
+            if (getValues("email").toLowerCase() === row.email.toLowerCase()) {
+                reset();
             }
+            reloadUserTable();
         }
     };
 
@@ -61,8 +66,8 @@ function UserDataTable() {
         renderCell: ({ row }) => {
             return (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, my: 1 }}>
-                    <Button variant="outlined" color="primary" size="small" onClick={() => (handleEdit(row))}>Edit</Button>
-                    <Button variant="outlined" color="primary" size="small" onClick={() => (handleDelete(row))}>Delete</Button>
+                    <Button variant="outlined" color="primary" size="small" onClick={() => (handleEdit(row))} disabled={row.email === 'admin@abc.com'}>Edit</Button>
+                    <Button variant="outlined" color="primary" size="small" onClick={() => (handleDelete(row))} disabled={row.email === 'admin@abc.com'}>Delete</Button>
                 </Box>
             );
         }

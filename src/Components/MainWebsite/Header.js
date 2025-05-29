@@ -73,7 +73,7 @@ function MainHeader() {
                                 fontWeight: 'bold',
                                 justifySelf: 'center' // the key to center the logo text
                             }}>
-                            SimpliiBook
+                            SimpliBook
                         </Typography>
                     </Box>
                     {/*display buttons on the right side of the header */}

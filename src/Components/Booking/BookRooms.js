@@ -64,6 +64,7 @@ function BookRooms() {
                     street: '',
                     city: '',
                     province: '',
+                    postalCode: '',
                     country: ''
                 }
             }
@@ -143,13 +144,13 @@ function BookRooms() {
                                             Hotel Info
                                         </Typography>
                                         <Typography variant="h6" gutterBottom>
-                                            {bookingData.hotel.HotelName}
+                                            {bookingData.hotel.hotelName}
                                         </Typography>
                                         <Stack direction="row" alignItems="center" spacing={1}>
                                             <LocationOnIcon color="action" />
                                             <Typography variant="body2" color="text.secondary">
-                                                {bookingData.hotel.Address
-                                                    ? `${bookingData.hotel.Address.StreetAddress}, ${bookingData.hotel.Address.City}, ${bookingData.hotel.Address.StateProvince}, ${bookingData.hotel.Address.PostalCode}, ${bookingData.hotel.Address.Country}`
+                                                {bookingData.hotel.address
+                                                    ? `${bookingData.hotel.address.street}, ${bookingData.hotel.address.city}, ${bookingData.hotel.address.province}, ${bookingData.hotel.address.postalCode}, ${bookingData.hotel.address.country}`
                                                     : 'Address not available'}
                                             </Typography>
                                         </Stack>
@@ -175,7 +176,7 @@ function BookRooms() {
                                         <Typography color="text.secondary" mt={1}>You selected</Typography>
                                         <Typography variant="body1">{bookingData.rooms.length} {bookingData.rooms.length > 1 ? "rooms" : "room"} for {bookingData.numberOfGuest} {bookingData.numberOfGuest > 1 ? "guests" : "guest"}</Typography>
                                         {bookingData.rooms.map((room) => (
-                                            <Typography key={room.RoomId} variant="body2" mt={0.5}>{room.Description}</Typography>
+                                            <Typography key={room.roomId} variant="body2" mt={0.5}>{room.description}</Typography>
                                         ))}
                                     </CardContent>
                                 </Card>

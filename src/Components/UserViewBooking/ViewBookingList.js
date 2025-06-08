@@ -14,9 +14,9 @@ function ViewBookingList() {
         // prepare corresponding hotel data
         const hotelData = bookingList.hotels.find(hotel => hotel._id === booking.hotel);
         // find the rooms data
-        const roomsData = hotelData.Rooms.filter(room => booking.rooms.includes(room.RoomId));
+        const roomsData = hotelData.rooms.filter(room => booking.rooms.includes(room.roomId));
         // delete room data from the hotel Data to save space
-        const { Rooms, ...pureHotelData } = hotelData;
+        const { rooms, ...pureHotelData } = hotelData;
         navigate(`/Bookings/${bookingId}`, {
             state: {
                 bookingDetails: {
@@ -63,7 +63,7 @@ function ViewBookingList() {
                                             Booking ID: {booking._id}
                                         </Typography>
                                         <Typography variant="h6">
-                                            {bookingList.hotels.find(hotel => hotel._id === booking.hotel).HotelName}
+                                            {bookingList.hotels.find(hotel => hotel._id === booking.hotel).hotelName}
                                         </Typography>
                                         <Typography variant="body1">
                                             Check in: {dayjs(booking.from).format('MMMM D, YYYY')} 16:00

@@ -31,32 +31,32 @@ function ViewHotelDetails() {
                 <CardMedia
                     component="img"
                     height="300"
-                    image={hotelData.Photo}
-                    alt={hotelData.HotelName}
+                    image={hotelData.photo}
+                    alt={hotelData.hotelName}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {hotelData.HotelName}
+                        {hotelData.hotelName}
                     </Typography>
                     <Typography variant="body2" >
-                        {hotelData.Description}
+                        {hotelData.description}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, mb: 2 }}>
-                        <Rating value={parseFloat(hotelData.Rating)} precision={0.5} readOnly />
+                        <Rating value={parseFloat(hotelData.rating)} precision={0.5} readOnly />
                         <Typography sx={{ ml: 1 }} variant="subtitle1" >
-                            {hotelData.Rating}
+                            {hotelData.rating}
                         </Typography>
                     </Box>
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <LocationOnIcon color="action" />
                         <Typography variant="body2" >
-                            {hotelData.Address
-                                ? `${hotelData.Address.StreetAddress}, ${hotelData.Address.City}, ${hotelData.Address.StateProvince}, ${hotelData.Address.PostalCode}, ${hotelData.Address.Country}`
+                            {hotelData.address
+                                ? `${hotelData.address.street}, ${hotelData.address.city}, ${hotelData.address.province}, ${hotelData.address.postalCode}, ${hotelData.address.country}`
                                 : 'Address not available'}
                         </Typography>
                     </Stack>
                     <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {hotelData.Tags && hotelData.Tags.map((tag, index) => (
+                        {hotelData.tags && hotelData.tags.map((tag, index) => (
                             <Chip label={tag} key={index} />
                         ))}
                     </Box>
@@ -77,22 +77,22 @@ function ViewHotelDetails() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {hotelData.Rooms.map((room) => {
-                            //const totalPrice = room.BaseRate * bookingData.duration;
+                        {hotelData.rooms.map((room) => {
+                            //const totalPrice = room.baseRate * bookingData.duration;
                             return (<TableRow
-                                key={room.RoomId}
+                                key={room.roomId}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell align="left">
                                     <Typography variant="h6" >
-                                        {room.RoomId}
+                                        {room.roomId}
                                     </Typography>
                                 </TableCell>
                                 <TableCell align="left">
                                     <Typography gutterBottom variant="h6" component="div">
-                                        {room.Description}
+                                        {room.description}
                                     </Typography>
-                                    {room.Tags && room.Tags.map((tag, tagIndex) => (
+                                    {room.tags && room.tags.map((tag, tagIndex) => (
                                         <Chip label={tag} key={tagIndex} color="primary" variant="outlined" sx={{ mr: 1 }} />
                                     ))}
                                 </TableCell>
@@ -103,17 +103,17 @@ function ViewHotelDetails() {
                                 </TableCell>
                                 <TableCell align="left">
                                     <Typography variant="h6" >
-                                        {room.BedOptions}
+                                        {room.bedOptions}
                                     </Typography>
                                 </TableCell>
                                 <TableCell align="left">
                                     <Typography variant="h6" >
-                                        {room.SleepsCount}
+                                        {room.sleepsCount}
                                     </Typography>
                                 </TableCell>
                                 <TableCell align="left">
                                     <Typography variant="h6">
-                                        ${room.BaseRate.toFixed(2)}
+                                        ${room.baseRate.toFixed(2)}
                                     </Typography>
                                 </TableCell>
                             </TableRow>);

@@ -27,10 +27,10 @@ export async function userLogout() {
         if (response.status === 200) {
             return true;
         } else {
-            throw new Error('Login failed');
+            throw new Error('Logout failed');
         }
     } catch (error) {
-        console.error('Error during login:', error);
+        console.error('Error during logout:', error);
         return false; // error occurred
     }
 }

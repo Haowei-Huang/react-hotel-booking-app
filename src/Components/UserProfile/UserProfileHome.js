@@ -28,6 +28,7 @@ function UserProfileHome() {
                     street: '',
                     city: '',
                     province: '',
+                    postalCode: '',
                     country: ''
                 }
             }

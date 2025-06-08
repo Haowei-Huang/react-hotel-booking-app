@@ -52,7 +52,8 @@ function UserProfileCardInfo() {
             street: cardInfoData.address.street.toUpperCase(),
             city: cardInfoData.address.city.toUpperCase(),
             province: cardInfoData.address.province.toUpperCase(),
-            country: cardInfoData.address.country.toUpperCase()
+            country: cardInfoData.address.country.toUpperCase(),
+            postalCode: cardInfoData.address.postalCode.toUpperCase()
         });
 
         cardInfoData = getValues("cardInfo");
@@ -229,9 +230,9 @@ function UserProfileCardInfo() {
                             required
                             fullWidth
                             id={name}
-                            label="Street"
+                            label="street"
                             name={name}
-                            autoComplete="billing address-Street"
+                            autoComplete="billing address-street"
                             variant="standard"
                             type="text"
                             error={!!error}
@@ -254,7 +255,7 @@ function UserProfileCardInfo() {
                             required
                             fullWidth
                             id={name}
-                            label="City"
+                            label="city"
                             name={name}
                             variant="standard"
                             type="text"
@@ -278,7 +279,7 @@ function UserProfileCardInfo() {
                             required
                             fullWidth
                             id={name}
-                            label="State/Province/Region"
+                            label="State/province/Region"
                             name={name}
                             variant="standard"
                             type="text"
@@ -336,7 +337,7 @@ function UserProfileCardInfo() {
                             required
                             fullWidth
                             id={name}
-                            label="Country"
+                            label="country"
                             name={name}
                             variant="standard"
                             type="text"

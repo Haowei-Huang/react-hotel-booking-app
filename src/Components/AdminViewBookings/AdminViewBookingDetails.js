@@ -41,12 +41,12 @@ function AdminViewBookingDetails() {
                     <Grid size={6} variant="body1"><Typography>Hotel Id</Typography></Grid>
                     <Grid size={6} variant="body1"><Typography>{location.state.bookingDetails.hotel._id}</Typography></Grid>
                     <Grid size={6} variant="body1"><Typography>Hotel Name</Typography></Grid>
-                    <Grid size={6} variant="body1"><Typography>{location.state.bookingDetails.hotel.HotelName}</Typography></Grid>
+                    <Grid size={6} variant="body1"><Typography>{location.state.bookingDetails.hotel.hotelName}</Typography></Grid>
                     <Grid size={6} variant="body1"><Typography>Hotel Address</Typography></Grid>
                     <Grid size={6} variant="body1">
                         <Typography>
-                            {location.state.bookingDetails.hotel.Address
-                                ? `${location.state.bookingDetails.hotel.Address.StreetAddress}, ${location.state.bookingDetails.hotel.Address.City}, ${location.state.bookingDetails.hotel.Address.StateProvince}, ${location.state.bookingDetails.hotel.Address.PostalCode}, ${location.state.bookingDetails.hotel.Address.Country}`
+                            {location.state.bookingDetails.hotel.address
+                                ? `${location.state.bookingDetails.hotel.address.street}, ${location.state.bookingDetails.hotel.address.city}, ${location.state.bookingDetails.hotel.address.province}, ${location.state.bookingDetails.hotel.address.postalCode}, ${location.state.bookingDetails.hotel.address.country}`
                                 : 'Address not available'}
                         </Typography>
                     </Grid>
@@ -73,8 +73,8 @@ function AdminViewBookingDetails() {
                     <Grid size={6}>
                         <Typography>
                             {location.state.bookingDetails.rooms.map((room) => (
-                                <Typography key={room.RoomId} mt={0.5}>
-                                    {room.Description}
+                                <Typography key={room.roomId} mt={0.5}>
+                                    {room.description}
                                 </Typography>
                             ))}
                         </Typography>

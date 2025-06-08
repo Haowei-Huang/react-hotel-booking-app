@@ -33,58 +33,58 @@ function HotelDataTable() {
         editable: false
     },
     {
-        field: 'HotelName',
+        field: 'hotelName',
         headerName: 'Hotel Name',
         width: 200,
         editable: false
     },
     {
-        field: 'Rating',
+        field: 'rating',
         headerName: 'Rating',
         width: 70,
         editable: false
     },
     {
-        field: 'Street',
+        field: 'street',
         headerName: 'Street',
         valueGetter: (value, row) => {
-            return row.Address ? `${row.Address.StreetAddress}` : '';
+            return row.address ? `${row.address.street}` : '';
         },
         width: 150,
         editable: false
     },
     {
-        field: 'City',
+        field: 'city',
         headerName: 'City',
         valueGetter: (value, row) => {
-            return row.Address ? `${row.Address.City}` : '';
+            return row.address ? `${row.address.city}` : '';
         },
         width: 100,
         editable: false
     },
     {
-        field: 'Province',
+        field: 'province',
         headerName: 'Province',
         valueGetter: (value, row) => {
-            return row.Address ? `${row.Address.StateProvince}` : '';
+            return row.address ? `${row.address.province}` : '';
         },
         width: 80,
         editable: false
     },
     {
-        field: 'PostalCode',
+        field: 'postalCode',
         headerName: 'PostalCode',
         valueGetter: (value, row) => {
-            return row.Address ? `${row.Address.PostalCode}` : '';
+            return row.address ? `${row.address.postalCode}` : '';
         },
         width: 120,
         editable: false
     },
     {
-        field: 'Country',
+        field: 'country',
         headerName: 'Country',
         valueGetter: (value, row) => {
-            return row.Address ? `${row.Address.Country}` : '';
+            return row.address ? `${row.address.country}` : '';
         },
         width: 100,
         editable: false

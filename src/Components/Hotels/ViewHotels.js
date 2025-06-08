@@ -1,8 +1,7 @@
-import { Avatar, Box, Button, CardMedia, Checkbox, Container, Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper, Rating, Slider, Stack, Switch, Typography, Chip, Card, CardContent } from "@mui/material";
+import { Avatar, Box, Button, CardMedia, Checkbox, Container, Divider, Rating, Slider, Stack, Switch, Typography, Chip, Card, CardContent } from "@mui/material";
 import SearchBar from "../SearchHotelContext/SearchBar";
 import HotelDisplayContext from "./HotelDisplayContext";
-import { useContext, useEffect, useReducer, useState } from "react";
-import { Image } from "@mui/icons-material";
+import { useContext, useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
 import SearchContext from "../SearchHotelContext/SearchContext";
 import WifiIcon from '@mui/icons-material/Wifi';
@@ -58,22 +57,22 @@ const displayDataReducer = (state, action) => {
 
             const filteredList = data.itemList.filter(hotel => {
                 // Filter by location
-                if (hotel.Address.City.toLowerCase() !== location.toLowerCase()) {
+                if (hotel.address.city.toLowerCase() !== location.toLowerCase()) {
                     return false;
                 }
 
                 // Filter by minimum rating
-                if (hotel.Rating < minRating) {
+                if (hotel.rating < minRating) {
                     return false;
                 }
 
                 // only filter active rooms and rooms can serve enough guests
-                const activeRooms = hotel.Rooms.filter(room => room.isActive && room.SleepsCount >= numberOfGuest);
+                const activeRooms = hotel.rooms.filter(room => room.isActive && room.sleepsCount >= numberOfGuest);
                 if (activeRooms.length === 0) {
                     return false; // No active rooms, skip this hotel
                 }
                 // if no room is in the price range, skip the hotel 
-                const baseRates = activeRooms.map(room => room.BaseRate);
+                const baseRates = activeRooms.map(room => room.baseRate);
                 const hasValidPrice = baseRates.some(rate => (rate >= priceRange[0] && rate <= priceRange[1]));
                 //console.log(hasValidPrice);
                 if (!hasValidPrice) {
@@ -83,10 +82,10 @@ const displayDataReducer = (state, action) => {
                 // Filter by tags
                 if (searchTags.length > 0) {
                     // first get hotel tags
-                    const hotelTags = new Set(hotel.Tags.map(tag => tag.toLowerCase()));
+                    const hotelTags = new Set(hotel.tags.map(tag => tag.toLowerCase()));
                     // get rooms' tag
-                    hotel.Rooms.forEach(room => {
-                        room.Tags.forEach(tag => hotelTags.add(tag.toLowerCase()));
+                    hotel.rooms.forEach(room => {
+                        room.tags.forEach(tag => hotelTags.add(tag.toLowerCase()));
                     });
                     // convert tags to lower case
                     const lowercaseHotelTags = Array.from(hotelTags);
@@ -371,8 +370,8 @@ function ViewHotels() {
                                                         <CardMedia
                                                             component="img"
                                                             height="200"
-                                                            image={item.Photo}
-                                                            alt={item.HotelName}
+                                                            image={item.photo}
+                                                            alt={item.hotelName}
                                                             sx={{
                                                                 borderRadius: 1,
                                                                 objectFit: 'cover',
@@ -397,22 +396,22 @@ function ViewHotels() {
                                                                             '&:hover': { color: 'primary.main' }
                                                                         }}
                                                                     >
-                                                                        {item.HotelName}
+                                                                        {item.hotelName}
                                                                     </Link>
                                                                 </Typography>
 
                                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                                                     <LocationOnIcon color="action" sx={{ fontSize: 20 }} />
                                                                     <Typography variant="body2" color="text.secondary">
-                                                                        {item.Address.StreetAddress}, {item.Address.City}
+                                                                        {item.address.street}, {item.address.city}
                                                                     </Typography>
                                                                 </Box>
                                                             </Box>
 
                                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                                                                <Rating value={item.Rating} precision={0.5} readOnly size="regular" />
+                                                                <Rating value={item.rating} precision={0.5} readOnly size="regular" />
                                                                 <Chip
-                                                                    label={item.Rating}
+                                                                    label={item.rating}
                                                                     color="primary"
                                                                     size="regular"
                                                                     sx={{ fontWeight: 'bold' }}
@@ -426,7 +425,7 @@ function ViewHotels() {
                                                                     Starting from
                                                                 </Typography>
                                                                 <Typography variant="h6" color="primary.main" sx={{ fontWeight: 'bold' }}>
-                                                                    ${Math.min(...item.Rooms.filter(room => room.isActive).map(room => room.BaseRate))}
+                                                                    ${Math.min(...item.rooms.filter(room => room.isActive).map(room => room.baseRate))}
                                                                     <Typography component="span" variant="caption" color="text.secondary">
                                                                         /night
                                                                     </Typography>

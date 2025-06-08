@@ -27,11 +27,11 @@ function BookingDataTable() {
             return;
         }
 
-        //const roomsData = hotelData.Rooms.filter(room => row.rooms.includes(room.RoomId));
+        //const roomsData = hotelData.rooms.filter(room => row.rooms.includes(room.roomId));
         if (hotelData) {
             // get the rooms' data 
-            const roomsData = hotelData.Rooms.filter(room => row.rooms.includes(room.RoomId));
-            const { Rooms, ...pureHotelData } = hotelData;
+            const roomsData = hotelData.rooms.filter(room => row.rooms.includes(room.roomId));
+            const { rooms, ...pureHotelData } = hotelData;
 
             //get user data
             try {

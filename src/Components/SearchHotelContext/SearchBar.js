@@ -63,7 +63,7 @@ function SearchBar() {
                 <TextField
                     required
                     id="location"
-                    label="City"
+                    label="city"
                     name="location"
                     value={searchOption.location || "Toronto"}
                     onChange={handleChange}

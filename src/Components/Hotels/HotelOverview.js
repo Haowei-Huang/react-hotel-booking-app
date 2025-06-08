@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { Card, CardContent, CardMedia, Typography, Chip, Box, Stack, Divider, CircularProgress, Avatar, Paper } from '@mui/material';
-import Rating from '@mui/material/Rating';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StarIcon from '@mui/icons-material/Star';
 import HotelIcon from '@mui/icons-material/Hotel';
 import Grid from '@mui/material/Grid';
 const HotelOverview = ({ hotel }) => {
     // Destructure the hotel object for easier access to its properties.
-    const { Photo, HotelName, Description, Rating: hotelRating, Address, Tags } = hotel;
+    const { photo, hotelName, description, rating: hotelRating, address, tags } = hotel;
 
     const getRatingCategory = (rating) => {
         if (rating >= 4.5) return { text: 'Excellent', color: '#4caf50' };
@@ -18,9 +17,9 @@ const HotelOverview = ({ hotel }) => {
         return { text: 'Poor', color: '#f44336' };
     };
 
-    // Ensure Address is an object with the necessary properties.
-    const fullAddress = Address
-        ? `${Address.StreetAddress}, ${Address.City}, ${Address.StateProvince}, ${Address.PostalCode}, ${Address.Country}`
+    // Ensure address is an object with the necessary properties.
+    const fullAddress = address
+        ? `${address.street}, ${address.city}, ${address.province}, ${address.postalCode}, ${address.country}`
         : 'Address not available';
 
     const ratingInfo = getRatingCategory(parseFloat(hotelRating));
@@ -41,8 +40,8 @@ const HotelOverview = ({ hotel }) => {
                 <CardMedia
                     component="img"
                     height="400"
-                    image={Photo}
-                    alt={HotelName}
+                    image={photo}
+                    alt={hotelName}
                     sx={{
                         objectFit: 'cover',
                         filter: 'brightness(0.9)'
@@ -62,7 +61,7 @@ const HotelOverview = ({ hotel }) => {
                     }}
                 />
 
-                {/* Rating Badge */}
+                {/* rating Badge */}
                 <Paper
                     elevation={3}
                     sx={{
@@ -134,7 +133,7 @@ const HotelOverview = ({ hotel }) => {
 
             <CardContent sx={{ p: 4 }}>
                 <Stack direction="column" spacing={2} alignItems="left">
-                    {/* Hotel Name and Description */}
+                    {/* Hotel Name and description */}
                     <Box sx={{ mb: 3 }}>
                         <Typography
                             variant="h4"
@@ -145,7 +144,7 @@ const HotelOverview = ({ hotel }) => {
                                 lineHeight: 1.2
                             }}
                         >
-                            {HotelName}
+                            {hotelName}
                         </Typography>
 
                         <Typography
@@ -156,11 +155,11 @@ const HotelOverview = ({ hotel }) => {
                                 fontSize: '1.1rem'
                             }}
                         >
-                            {Description}
+                            {description}
                         </Typography>
                     </Box>
 
-                    {/* Location Section */}
+                    {/* location Section */}
                     <Box>
                         <Typography
                             variant="subtitle1"
@@ -170,7 +169,7 @@ const HotelOverview = ({ hotel }) => {
                                 color: 'text.primary'
                             }}
                         >
-                            Location
+                            location
                         </Typography>
                         <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
                             <LocationOnIcon
@@ -191,8 +190,8 @@ const HotelOverview = ({ hotel }) => {
                             </Typography>
                         </Box>
                     </Box>
-                    {/* Amenities/Tags Section */}
-                    {Tags && Tags.length > 0 && (
+                    {/* Amenities/tags Section */}
+                    {tags && tags.length > 0 && (
                         <Box>
                             <Typography
                                 variant="subtitle1"
@@ -209,7 +208,7 @@ const HotelOverview = ({ hotel }) => {
                                 flexWrap: 'wrap',
                                 gap: 1.5
                             }}>
-                                {Tags.map((tag) => (
+                                {tags.map((tag) => (
                                     <Chip
                                         key={tag}
                                         label={tag}

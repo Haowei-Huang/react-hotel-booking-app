@@ -25,13 +25,13 @@ function ViewBookingDetails() {
                             Hotel Info
                         </Typography>
                         <Typography variant="h6" gutterBottom>
-                            {location.state.bookingDetails.hotel.HotelName}
+                            {location.state.bookingDetails.hotel.hotelName}
                         </Typography>
                         <Stack direction="row" alignItems="center" spacing={1}>
                             <LocationOnIcon color="action" />
                             <Typography variant="body2" color="text.secondary">
-                                {location.state.bookingDetails.hotel.Address
-                                    ? `${location.state.bookingDetails.hotel.Address.StreetAddress}, ${location.state.bookingDetails.hotel.Address.City}, ${location.state.bookingDetails.hotel.Address.StateProvince}, ${location.state.bookingDetails.hotel.Address.PostalCode}, ${location.state.bookingDetails.hotel.Address.Country}`
+                                {location.state.bookingDetails.hotel.address
+                                    ? `${location.state.bookingDetails.hotel.address.street}, ${location.state.bookingDetails.hotel.address.city}, ${location.state.bookingDetails.hotel.address.province}, ${location.state.bookingDetails.hotel.address.postalCode}, ${location.state.bookingDetails.hotel.address.country}`
                                     : 'Address not available'}
                             </Typography>
                         </Stack>
@@ -57,7 +57,7 @@ function ViewBookingDetails() {
                         <Typography color="text.secondary" mt={1}>You selected</Typography>
                         <Typography variant="body1">{location.state.bookingDetails.rooms.length} {location.state.bookingDetails.rooms.length > 1 ? "rooms" : "room"} for {location.state.bookingDetails.numberOfGuest} {location.state.bookingDetails.numberOfGuest > 1 ? "guests" : "guest"}</Typography>
                         {location.state.bookingDetails.rooms.map((room) => (
-                            <Typography key={room.RoomId} variant="body2" mt={0.5}>{room.Description}</Typography>
+                            <Typography key={room.roomId} variant="body2" mt={0.5}>{room.description}</Typography>
                         ))}
                     </CardContent>
                 </Card>

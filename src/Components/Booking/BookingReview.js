@@ -23,7 +23,7 @@ function BookingReview({ prevStep }) {
         // if log in, save the user id
         // save order time
         // save only hotel Id and room Id
-        const roomIdList = bookingData.rooms.map(room => room.RoomId);
+        const roomIdList = bookingData.rooms.map(room => room.roomId);
         const hotelId = bookingData.hotel._id;
 
         setBookingDetail({

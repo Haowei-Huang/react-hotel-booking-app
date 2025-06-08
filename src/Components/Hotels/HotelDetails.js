@@ -25,7 +25,7 @@ function HotelDetails() {
             return;
         }
 
-        const { Rooms, ...pureHotelData } = hotel;
+        const { rooms, ...pureHotelData } = hotel;
         const from = dayjs(searchOption.from);
         const to = dayjs(searchOption.to);
         const duration = to.diff(from, 'day');
@@ -51,7 +51,7 @@ function HotelDetails() {
                 <Route index element={
                     <Container sx={{ minWidth: '70%' }}>
                         <HotelOverview hotel={hotelData} />
-                        {hotelData.Rooms && <RoomDetailsList rooms={hotelData.Rooms} />}
+                        {hotelData.rooms && <RoomDetailsList rooms={hotelData.rooms} />}
                     </Container>}>
                 </Route>
                 <Route path="booking/*" element={

@@ -77,7 +77,8 @@ function BookingPayment({ nextStep, prevStep }) {
                 street: cardInfo.address.street.toUpperCase(),
                 city: cardInfo.address.city.toUpperCase(),
                 province: cardInfo.address.province.toUpperCase(),
-                country: cardInfo.address.country.toUpperCase()
+                country: cardInfo.address.country.toUpperCase(),
+                postalCode: cardInfo.address.postalCode.toUpperCase()
             });
 
             dispatch({
@@ -318,9 +319,9 @@ function BookingPayment({ nextStep, prevStep }) {
                                         required
                                         fullWidth
                                         id={name}
-                                        label="Street"
+                                        label="street"
                                         name={name}
-                                        autoComplete="billing address-Street"
+                                        autoComplete="Billing Address-Street"
                                         variant="standard"
                                         type="text"
                                         error={!!error}
@@ -343,7 +344,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                         required
                                         fullWidth
                                         id={name}
-                                        label="City"
+                                        label="city"
                                         name={name}
                                         variant="standard"
                                         type="text"
@@ -423,7 +424,7 @@ function BookingPayment({ nextStep, prevStep }) {
                                         required
                                         fullWidth
                                         id={name}
-                                        label="Country"
+                                        label="country"
                                         name={name}
                                         variant="standard"
                                         type="text"

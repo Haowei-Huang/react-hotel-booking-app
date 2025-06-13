@@ -41,6 +41,7 @@
                     "description": "Deluxe Room, 2 Double Beds (City View)",
                     "isActive": true,
                     "baseRate": 150.99,
+                    "type": "Deluxe Room",
                     "bedOptions": "2 Double Beds",
                     "sleepsCount": 2,
                     "tags": [

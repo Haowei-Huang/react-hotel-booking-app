@@ -51,8 +51,10 @@ function ViewBookingList() {
                         My Bookings
                     </Typography>
                     <Grid container rowSpacing={2} columnSpacing={5} sx={{ mt: 3, alignItems: "center", justifyContent: "center" }}>
-                        {bookingList.bookings.map((booking) => (
-                            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={booking._id}>
+                        {bookingList.bookings.map((booking) => {
+                            let hotel = bookingList.hotels.find(hotel => hotel._id === booking.hotel);
+                            console.log(hotel);
+                            return (<Grid size={{ xs: 12, sm: 6, md: 4 }} key={booking._id}>
                                 <Card sx={{ ":hover": { boxShadow: 6 }, boxShadow: 3, pt: 1 }}>
                                     <CardContent sx={{
                                         display: 'flex', flexDirection: 'column',
@@ -63,7 +65,7 @@ function ViewBookingList() {
                                             Booking ID: {booking._id}
                                         </Typography>
                                         <Typography variant="h6">
-                                            {bookingList.hotels.find(hotel => hotel._id === booking.hotel).hotelName}
+                                            {hotel.hotelName}
                                         </Typography>
                                         <Typography variant="body1">
                                             Check in: {dayjs(booking.from).format('MMMM D, YYYY')} 16:00
@@ -82,8 +84,8 @@ function ViewBookingList() {
                                         </Button>
                                     </CardContent>
                                 </Card>
-                            </Grid>
-                        ))}
+                            </Grid>)
+                        })}
                     </Grid>
                 </Container>
             );

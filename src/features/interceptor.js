@@ -10,6 +10,8 @@ const api = axios.create({
     }
 });
 
+
+
 // attach access token when sending request
 api.interceptors.request.use(
     (config) => {
@@ -28,16 +30,18 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         // if access token expires, refresh
-        if (error.response?.status === 401) {
+        if (error.response?.status === 401 && !originalRequest._retry) {
             try {
                 // Attempt to refresh the access token
                 //console.log('Refreshing access token...');
                 // use a new instance to avoid infinite loop, 
                 // otherwise if refreshToken got 401 response, it will trigger the interceptor again
                 // it will throw an error if the response is 4XX or 5XX
+                originalRequest._retry = true; // mark the request as retried
                 const res = await axios.post('/user/refreshAccessToken', null, {
                     baseURL: process.env.REACT_APP_DB_URL,
-                    withCredentials: true // only send cookies when refreshing token
+                    withCredentials: true, // only send cookies when refreshing token
+                    timeout: 10000 // set a timeout for the request
                 });
                 const accessToken = await res.data.token;
 

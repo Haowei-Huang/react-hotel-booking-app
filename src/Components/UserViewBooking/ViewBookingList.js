@@ -53,7 +53,7 @@ function ViewBookingList() {
                     <Grid container rowSpacing={2} columnSpacing={5} sx={{ mt: 3, alignItems: "center", justifyContent: "center" }}>
                         {bookingList.bookings.map((booking) => {
                             let hotel = bookingList.hotels.find(hotel => hotel._id === booking.hotel);
-                            console.log(hotel);
+                            // console.log(hotel);
                             return (<Grid size={{ xs: 12, sm: 6, md: 4 }} key={booking._id}>
                                 <Card sx={{ ":hover": { boxShadow: 6 }, boxShadow: 3, pt: 1 }}>
                                     <CardContent sx={{

@@ -1,11 +1,12 @@
 import { Container, Typography, Box, TextField, Button } from "@mui/material";
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import Alert from '@mui/material/Alert';
 import LoginAndRegisterFormContext from "./LoginAndRegisterFormContext";
 import { userRegister } from "../../helpers/authentication";
 
+const PASSWORD_REGEX = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
 function Register({ handleNavigate }) {
-    const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
+
     const { registrationData, setRegistrationData, errors, setErrors } = useContext(LoginAndRegisterFormContext);
 
     const handleSubmit = async (event) => {
@@ -14,7 +15,7 @@ function Register({ handleNavigate }) {
         // check two passwords' matching and format
         if (registrationData.password.trim() !== registrationData.confirmPassword.trim()) {
             setErrors({ ...errors, passwordNotMatch: "Passwords are not matching" });
-        } else if (!passwordRegex.test(registrationData.password.trim())) {
+        } else if (!PASSWORD_REGEX.test(registrationData.password.trim())) {
             setErrors({ ...errors, passwordFormat: "Password format is wrong" });
         }
 
@@ -46,14 +47,14 @@ function Register({ handleNavigate }) {
         const { password, confirmPassword } = registrationData;
 
         if (password.trim() && confirmPassword.trim()) {
-            if (!passwordRegex.test(password)) {
+            if (!PASSWORD_REGEX.test(password)) {
                 errorsObject.passwordFormat = "password format is wrong, please use a minimum of 3 characters, including uppercase letters, lowercase letters, and numbers.";
             } else if (password !== confirmPassword.trim()) {
                 errorsObject.passwordNotMatch = "Passwords are not matching";
             }
         }
         setErrors(errorsObject);
-    }, [registrationData.password, registrationData.confirmPassword, passwordRegex]);
+    }, [registrationData.password, registrationData.confirmPassword, PASSWORD_REGEX]);
 
 
 

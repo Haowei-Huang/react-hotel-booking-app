@@ -58,7 +58,7 @@ export async function updateUser(userId, newData) {
     });
 
     try {
-        const response = await api.put(`/user/updateUser/${userId}`, newUserData);
+        const response = await api.post(`/user/updateUser/${userId}`, newUserData);
         await response.data;
         return true; // update successfully
     } catch (error) {

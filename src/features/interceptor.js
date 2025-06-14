@@ -39,6 +39,25 @@ api.interceptors.request.use(
     error => Promise.reject(error)
 );
 
+// Scenario: 
+// 2 requests get 401 almost simultaneously
+
+//  Request 1:
+// if (isRefreshing) { /* false */ }
+// isRefreshing = true;
+// if (!refreshPromise) { /* true - create promise */ }
+// refreshPromise = axios.post('/refresh'); // ← ONLY HTTP CALL
+
+//  Request 2 (microseconds later):
+// if (isRefreshing) { /* true - goes to queue */ }
+//  Never reaches the refresh promise creation!
+
+//  OR if Request 2 somehow gets past the first check:
+// if (isRefreshing) { /* false initially */ }
+// isRefreshing = true;
+// if (!refreshPromise) { /* false - promise already exists! */ }
+//  Skips creating new promise, awaits existing one
+
 api.interceptors.response.use(
     response => response,
     async (error) => {
@@ -49,6 +68,7 @@ api.interceptors.response.use(
             // Mark request as retried to prevent infinite loops
             originalRequest._retry = true;
 
+            // first check if we are already refreshing the token
             if (isRefreshing) {
                 // If already refreshing, wait for the same refresh promise
                 return new Promise((resolve, reject) => {
@@ -67,75 +87,85 @@ api.interceptors.response.use(
 
             isRefreshing = true;
 
-            // Create a single refresh promise that all requests will share
-            refreshPromise = (async () => {
-                try {
-                    // this is only called for the first request that encounters a 401
-                    // so the token is only refreshed once for all queued requests
-                    // this is very important
-                    /*
-                    react render twice, so it will send two request when a api is called in an event handler or useEffect,
-                    hence, we will receive two 401 errors, but we only want to refresh the token once,
-                    that's why we use isRefreshing and refreshPromise to ensure that there is only one refresh request
-                    and all other requests will wait for the same refresh promise
-                    If we don't do this, we will end up with multiple refresh requests being sent to the server,
-                    it will cause the first refresh token to be deleted from the database, resulting in the second request failing with a 401,
-                    which fails to refresh the token as a result.
-                    */
-                    // Attempt to refresh the access token
-                    const res = await axios.post('/user/refreshAccessToken', null, {
-                        baseURL: process.env.REACT_APP_DB_URL,
-                        withCredentials: true,
-                        timeout: 10000
-                    });
+            // second check - prevent duplicate refresh promises
+            // this is to prevent 2 failed requests got passed with the same isRefreshing state of false
+            // multiple refresh requests might be sent
+            if (!refreshPromise) {
+                // Only create refresh promise if none exists
+                refreshPromise = (async () => {
+                    try {
+                        // this is only called for the first request that encounters a 401
+                        // so the token is only refreshed once for all queued requests
+                        // this is very important
+                        /*
+                        react render twice, so it will send two request when a api is called in an event handler or useEffect,
+                        hence, we will receive two 401 errors, but we only want to refresh the token once,
+                        that's why we use isRefreshing and refreshPromise to ensure that there is only one refresh request
+                        and all other requests will wait for the same refresh promise
+                        If we don't do this, we will end up with multiple refresh requests being sent to the server,
+                        it will cause the first refresh token to be deleted from the database, resulting in the second request failing with a 401,
+                        which fails to refresh the token as a result.
+                        */
+                        // Attempt to refresh the access token
+                        console.log('🔄 Making refresh token request to backend');
 
-                    const { token: accessToken } = res.data;
+                        const res = await axios.post('/user/refreshAccessToken', null, {
+                            baseURL: process.env.REACT_APP_DB_URL,
+                            withCredentials: true,
+                            timeout: 10000
+                        });
 
-                    // Update token in store
-                    store.dispatch(setToken({
-                        token: accessToken,
-                        sessionKey: store.getState().auth.sessionKey
-                    }));
+                        const { token: accessToken } = res.data;
+                        console.log('✅ Refresh token request successful');
+                        // Update token in store
+                        store.dispatch(setToken({
+                            token: accessToken,
+                            sessionKey: store.getState().auth.sessionKey
+                        }));
 
-                    // Process any queued requests with the new token
-                    processQueue(null, accessToken);
+                        // Process any queued requests with the new token
+                        processQueue(null, accessToken);
 
-                    return accessToken;
+                        return accessToken;
 
-                } catch (refreshError) {
-                    console.error('Error refreshing access token:', refreshError);
+                    } catch (refreshError) {
+                        console.error('❌ Refresh token request failed:', refreshError);
 
-                    // Process failed queue - all queued requests will fail
-                    processQueue(refreshError, null);
 
-                    // Handle different refresh error scenarios
-                    if (refreshError.response?.status === 401) {
-                        // Refresh token is invalid/expired/already used
-                        console.log('Refresh token expired, invalid, or already used - logging out');
-                        store.dispatch(logout());
+                        // Process failed queue - all queued requests will fail
+                        processQueue(refreshError, null);
 
-                        // Optional: Clear any remaining auth cookies
-                        try {
-                            await axios.post('/user/logout', null, {
-                                baseURL: process.env.REACT_APP_DB_URL,
-                                withCredentials: true,
-                                timeout: 5000
-                            });
-                        } catch (logoutError) {
-                            console.error('Logout request failed:', logoutError);
+                        // Handle different refresh error scenarios
+                        if (refreshError.response?.status === 401) {
+                            // Refresh token is invalid/expired/already used
+                            console.log('🚪 Refresh token expired/invalid - logging out');
+                            store.dispatch(logout());
+
+                            try {
+                                await axios.post('/user/logout', null, {
+                                    baseURL: process.env.REACT_APP_DB_URL,
+                                    withCredentials: true,
+                                    timeout: 5000
+                                });
+                            } catch (logoutError) {
+                                console.error('Logout request failed:', logoutError);
+                            }
+                        } else if (refreshError.response?.status === 403) {
+                            console.log('🚫 Refresh forbidden - logging out');
+                            store.dispatch(logout());
+                        } else if (refreshError.code === 'ECONNABORTED' || refreshError.code === 'NETWORK_ERROR') {
+                            console.log('Network error during token refresh - not logging out');
+                        } else {
+                            console.log('Unexpected error during token refresh:', refreshError.message);
                         }
-                    } else if (refreshError.response?.status === 403) {
-                        console.log('Refresh forbidden - logging out');
-                        store.dispatch(logout());
-                    } else if (refreshError.code === 'ECONNABORTED' || refreshError.code === 'NETWORK_ERROR') {
-                        console.log('Network error during token refresh - not logging out');
-                    } else {
-                        console.log('Unexpected error during token refresh:', refreshError.message);
-                    }
 
-                    throw refreshError;
-                }
-            })();
+                        throw refreshError;
+                    } finally {
+                        // Reset the refresh promise to allow new refresh requests
+                        refreshPromise = null;
+                    }
+                })();
+            }
 
             try {
                 // Wait for the refresh to complete
@@ -152,7 +182,6 @@ api.interceptors.response.use(
             } finally {
                 // Reset state
                 isRefreshing = false;
-                refreshPromise = null;
             }
         }
 

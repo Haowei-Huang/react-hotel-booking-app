@@ -80,7 +80,7 @@ function AdminViewBookingDetails() {
                         </Typography>
                     </Grid>
                     <Grid size={6} variant="body1"><Typography>Total Price</Typography></Grid>
-                    <Grid size={6} variant="body1"><Typography>$ {location.state.bookingDetails.totalPrice}</Typography></Grid>
+                    <Grid size={6} variant="body1"><Typography>$ {location.state.bookingDetails.totalPrice.toFixed(2)}</Typography></Grid>
                 </Grid>
                 <Grid size={12}>
                     <Divider />

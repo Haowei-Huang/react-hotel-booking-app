@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { findUserById, updateUser } from '../helpers/users';
 
+const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
+
 function ChangePassword() {
-    const passwordRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{3,20}$');
     const sessionKey = useSelector(state => state.auth.sessionKey);
     const username = useSelector(state => state.auth.username);
 
@@ -18,6 +19,22 @@ function ChangePassword() {
     });
 
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        // fetch user data by sessionKey
+        const fetchUserData = async () => {
+            try {
+                const user = await findUserById(sessionKey);
+                setUserData(user);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        if (sessionKey) {
+            fetchUserData();
+        }
+    }, [sessionKey]);
 
     const handleChange = (event) => {
         setNewPassword({ ...newPassword, [event.target.name]: event.target.value });
@@ -68,7 +85,6 @@ function ChangePassword() {
                     password: '',
                     confirmPassword: ''
                 });
-                setUserData({});
             } else {
                 console.error('Error during changing password:');
                 setErrors({ ...errors, errorDuringUpdate: 'An error occurred during updating password' });
@@ -93,7 +109,7 @@ function ChangePassword() {
             }
         }
         setErrors(errorsObject);
-    }, [newPassword.password, newPassword.confirmPassword]);
+    }, [newPassword]);
 
     // when password changed, set the alert to disappear 5 seconds later
     // notice that only when the passwordChanged is set to true, the alert would show

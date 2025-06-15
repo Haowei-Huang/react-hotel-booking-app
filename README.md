@@ -56,7 +56,8 @@ npm start
     - React
     - Material-UI (for styling and UI components)
     - React Hook Form (for form handling)
-- Backend: https://github.com/Haowei-Huang/express-mongoDB-backend
-    - MongoDB
-    - Node.js
-    - Express.js
+- Backend: The backend is available in 2 versions
+    - [Fast API + Python](https://github.com/Haowei-Huang/fast-api-backend)
+    - [Express.js + JavaScript + Node.js](https://github.com/Haowei-Huang/express-mongoDB-backend)
+- Database
+  - MongoDB
